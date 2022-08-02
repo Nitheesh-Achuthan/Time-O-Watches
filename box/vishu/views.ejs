@@ -1,0 +1,10 @@
+<% if(userobj[i].isBlocked){ %> 
+    <form action="<%= userobj[i]._id %>?_method=PATCH" method="post">
+      <td><button class="btn btn-outline-warning" type="submit">Suspended</button></td>
+    </form>
+    <% } %>
+    <% if(!userobj[i].isBlocked){ %> 
+      <form action="<%= userobj[i]._id %>?_method=PATCH" method="post">
+        <td><button class="btn btn-outline-success" type="submit">Active</button></td>
+      </form>
+    <% } %>
