@@ -7,4 +7,4 @@ const cartSchema = new mongoose.Schema({
     },
     products: Array
 });
-const cartModel = mongoose.
+const cartModel = mongoose.model()

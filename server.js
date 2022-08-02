@@ -8,6 +8,7 @@ const { v4: uuidv4 } = require('uuid');
 const methodOverride = require('method-override');
 const fileUpload = require('express-fileupload');
 const imageZoom = require('js-image-zoom');
+require('dotenv').config();
 
 app.set("view engine","ejs");
 
