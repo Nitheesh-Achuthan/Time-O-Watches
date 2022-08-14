@@ -25526,6 +25526,7 @@ body:not(.dark-version) .sidenav.bg-transparent .collapse .nav-item .nav-link.ac
 .table.align-items-center td,
 .table.align-items-center th {
   vertical-align: middle;
+  text-align: center;
 }
 
 .table tbody tr:last-child td {

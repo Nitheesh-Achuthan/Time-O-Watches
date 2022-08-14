@@ -10,33 +10,34 @@ const fileUpload = require('express-fileupload');
 const imageZoom = require('js-image-zoom');
 require('dotenv').config();
 
+const port = process.env.PORT
+
 app.set("view engine","ejs");
-
-mongoose.connect('mongodb://localhost:27017/watch',(err)=>{
+  
+mongoose.connect(process.env.MONGO_URL,(err)=>{
     if(err){
-        console.log("Could not connect to database");
+     console.log("Could not connect to database");
+    }else{
+        console.log('mongodb connected successfully');
     }            
-});                
-                
-// override the method in form 
-app.use(methodOverride('_method')); 
-                
-app.use(morgan('tiny'));    
-
-app.use(express.json()); 
+});                 
+                 
+// override the method in form   
+app.use(methodOverride('_method'));  
+                    
+app.use(morgan('tiny'));     
+ 
+app.use(express.json());  
     
-app.use(express.urlencoded({extended:true})); 
+app.use(express.urlencoded({extended:true}));
 app.use(fileUpload());
-
-// app.use(     
-//     session({secret: "Key",cookie:{maxAge:600000}}))   
  
 app.use(
     session({   
         secret: uuidv4(), 
-        resave: false, 
+        resave: false,  
         saveUninitialized: true,  
-    })
+    }) 
 );
    
 //static files
@@ -47,23 +48,10 @@ app.use('/js',express.static(path.join(__dirname,"/public/js")));
 app.use('/images',express.static(path.join(__dirname,"/public/images")));
 
 
-var options1 = {
-    width: 400,
-    zoomWidth: 500,
-    offset: {vertical: 0, horizontal: 10}
-};
-
-// If the width and height of the image are not known or to adjust the image to the container of it
-var options2 = {
-    fillContainer: true,
-    offset: {vertical: 0, horizontal: 10}
-};
-
-
   
-app.use('/admin',require("./server/routes/adminRouter"));
+app.use('/admin',require("./server/routes/adminRouter")); 
 app.use('/',require("./server/routes/userRouter")); 
              
-app.listen(9000,()=>{   
-    console.log('http://localhost:9000');         
-});                                               
+app.listen(port,()=>{   
+    console.log(`http://localhost:${port}`);       
+});           

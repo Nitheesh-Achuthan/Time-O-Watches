@@ -28,5 +28,5 @@ const userSchema = new Schema({
     isBlocked: { type: Boolean, default: false }
 });
 
-const model = mongoose.model('UserDb',userSchema);
+const model = mongoose.model('userDb',userSchema);
 module.exports = model;

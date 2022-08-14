@@ -3,6 +3,7 @@ let adminDb = require('../model/adminModel');
 let categoryDb = require('../model/categoryModel');
 let productDb = require('../model/productModel');
 let services = require('../services/categoryService');
+let cartServices = require('../services/cartService'); 
 const bcrypt = require('bcrypt')
 
 
@@ -38,32 +39,21 @@ exports.Create = (req, res) => {
 }
 
 exports.logg =async (req,res)=>{
+    let cartCount = await cartServices.count(req.session.user._id) 
     const product = await productDb.find()
-    res.render('user/home',{ watches:product })
+    res.render('user/home',{ watches:product,cartCount})
 }
 
-exports.Find = async (req, res) => {
-    // console.log('email : ',req.body.email);
-    // console.log('password : ',req.body.password);
-    
-
-    const user = await userDb.findOne({ email: req.body.email, password: req.body.password });
-    const product = await productDb.find()
-    
-    console.log(user);
-
+exports.Find = async (req, res) => {    
+    const user = await userDb.findOne({ email: req.body.email, password: req.body.password });    
     if (user) {
           req.session.loggedIn=true
           req.session.user = user   
-        // req.session.isUserLogin = true;
         
         if(user.isBlocked){
-            // console.log(user.isBlocked);
             res.render('user/login',{error:"You are suspended for a while"})
-        }else{
-            console.log(product);
-            
-            res.render('user/home',{ watches:product })
+        }else{            
+            res.redirect('/home')
         }
        
 

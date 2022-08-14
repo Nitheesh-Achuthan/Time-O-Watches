@@ -100,6 +100,9 @@ adminRoute.post('/category',controller.createcat);
 adminRoute.get('/update',controller.updatepage);
 adminRoute.put('/update/:id',controller.update);  
 adminRoute.delete('/delete/:id',controller.delete);
+adminRoute.get('/orderManagement',(req,res)=>{
+    res.render('admin/orderManagement')
+})
     
 
      

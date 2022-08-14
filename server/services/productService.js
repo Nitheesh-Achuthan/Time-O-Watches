@@ -2,13 +2,12 @@ let userDb = require('../model/model');
 let adminDb = require('../model/adminModel');
 let categoryDb = require('../model/categoryModel');
 let productDb = require('../model/productModel');
-let productController = require('../controller/productController');
 
 
 exports.editProducts = async (id)=>{
-    console.log(id,'productedittttttt');
+    // console.log(id,'productedittttttt');
     const edit = await productDb.findOne({_id:id}); 
-    console.log(edit);
+    // console.log(edit);
     return edit;
 }
 
@@ -18,7 +17,8 @@ exports.updateProduct = async (proId,proDetails)=>{
             name:proDetails.name,
             price:proDetails.price,
             quantity:proDetails.quantity,
-            category:proDetails.category 
+            category:proDetails.category,
+            description:proDetails.description 
 
         }})
         return update;

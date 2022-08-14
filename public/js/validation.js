@@ -1,5 +1,4 @@
 function fnamevalid() {
-    // console.log('va;iid');
     value1 = false;
     if ($("#fname").val().match(/^[A-Za-z][A-Za-z ]*$/)) {
         value1 = true;

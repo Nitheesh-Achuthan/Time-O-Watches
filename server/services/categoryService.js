@@ -1,11 +1,4 @@
-let userDb = require('../model/model');
-let adminDb = require('../model/adminModel');
 let categoryDb = require('../model/categoryModel');
-let productDb = require('../model/productModel');
-let controller = require('../controller/controller');
-
-
-
 
 exports.addCate = (name)=>{
     // console.log('Im serviceeeeeeee',name);
