@@ -16,25 +16,40 @@
       <div class="row" style="padding: 5rem 0; padding-left: 15rem;">
         <form class="row contact_form" id="checkout-form" action="/order-data" method="post" novalidate="novalidate">
           <div class="col-lg-5">
+
             <h3>Billing Details</h3>
+
             <div class="col-md-12 form-group p_star">
-              <input type="text" class="form-control" id="first" placeholder="First Name" name="fname"
-                oninput="fnamevalid()" />
+              <input type="text" class="form-control" id="fname" placeholder="First Name" name="fname"
+                oninput="firstnamevalid()" />
+                <p id="pfname" style="color:red;padding-left:1rem;display: none;"></p>
+
             </div>
             <div class="col-md-12 form-group p_star">
-              <input type="text" class="form-control" id="last" placeholder="Last Name" name="lname" />
+              <input type="text" class="form-control" id="lname" placeholder="Last Name" name="lname" 
+              oninput="lastnamevalid()"/>
+              <p id="plname" style="color:red;padding-left:1rem;display: none;"></p>
+
             </div>
             <div class="col-md-12 form-group p_star">
-              <input type="text" class="form-control" id="number" placeholder="Mobile" name="number" />
+              <input type="text" class="form-control" id="mobile" placeholder="Mobile" name="number"
+              oninput="mobvalid()" />
+              <p id="pmob" style="color: red; padding-left:1rem;display: none;"></p>
+
             </div>
             <div class="col-md-12 form-group p_star">
-              <input type="text" class="form-control" id="email" placeholder="Email" name="email" />
+              <input type="text" class="form-control" id="email" placeholder="Email" name="email" 
+              oninput="emailvalid()"/>
+              <p id="ename" style="color: red; padding-left:1rem;display: none;"></p>
+
             </div>
             <div class="col-md-12  form-group p_star">
-              <input type="text" class="form-control" id="country" placeholder="Country" name="country" />
+              <input type="text" class="form-control" id="country" placeholder="Country" name="country" 
+              oninput="countryvalid()"/>
+              <p id="pcountry" style="color: red; padding-left:1rem;display: none;"></p>
               <input type="text" name="userId" id="" value="<%=user._id %>" hidden>
-              
-              
+
+
 
               <!-- <select class="country_select">
                         <option value="1">Country</option>
@@ -43,7 +58,10 @@
                       </select> -->
             </div>
             <div class="col-md-12  form-group p_star">
-              <textarea class="form-control" name="address" id="address" rows="1" placeholder="Address"></textarea>
+              <textarea class="form-control" name="address" id="address" rows="1" placeholder="Address" 
+              oninput="addressvalid()"></textarea>
+              <p id="paddress" style="color: red; padding-left:1rem;display: none;"></p>
+
             </div>
             <!-- <div class="col-md-12 form-group p_star">
                       <input type="text" class="form-control" id="add1" name="add1" />
@@ -89,10 +107,10 @@
               <ul class="list">
                 <li>
                   <a href="#">Product
-                    <span>Total</span>
+                    <span>Watch</span>
                   </a>
                 </li>
-                <li>
+                <!-- <li>
                   <a href="#">Fresh Blackberry
                     <span class="middle">x 02</span>
                     <span class="last">$720.00</span>
@@ -121,7 +139,7 @@
                   <a href="#">Shipping
                     <span>Flat rate: $50.00</span>
                   </a>
-                </li>
+                </li> -->
                 <li>
                   <a href="#">Total
                     <span>
@@ -133,24 +151,24 @@
 
               <!-- radio button  -->
 
-              
-              <div class="payment_item">
-                      <div class="radion_btn">
-                        <input type="radio" id="payment" name="paymentmethod" value='cash on delivery' />
-                        <label for="payment">Cash on delivery</label>
-                        <div class="check"></div>
-                      </div>
-                    </div>
-                    <div class="payment_item active">
-                      <div class="radion_btn">
-                        <input type="radio" id="payment2" name="paymentmethod" value="paypal" />
-                        <label for="payment2">Paypal </label>
-                        <img src="img/product/single-product/card.jpg" alt="" />
-                        <div class="check"></div>
-                      </div>
-                    </div>
 
-            <!-- radio btn new -->
+              <div class="payment_item">
+                <div class="radion_btn">
+                  <input type="radio" id="payment" name="paymentmethod" value='Cash On Delivery' />
+                  <label for="payment">Cash on delivery</label>
+                  <div class="check"></div>
+                </div>
+              </div>
+              <div class="payment_item active">
+                <div class="radion_btn">
+                  <input type="radio" id="payment2" name="paymentmethod" value="paypal" />
+                  <label for="payment2">Paypal </label>
+                  <img src="img/product/single-product/card.jpg" alt="" />
+                  <div class="check"></div>
+                </div>
+              </div>
+
+              <!-- radio btn new -->
 
               <!-- <input type="radio" id="cod" name="cod" value="cash on delivery">
               <label for="cod">Cash on delivery</label><br>
@@ -161,7 +179,7 @@
 
               <div class="creat_account">
               </div>
-              <button style="width: 100%;cursor:pointer" class="btn_3" type="submit">Proceed</button>
+              <button style="width: 100%;cursor:pointer" class="btn_3" type="submit" onclick="firstnamevalid();lastnamevalid();mobvalid();emailvalid();countryvalid();addressvalid()">Proceed</button>
             </div>
         </form>
       </div>
@@ -272,19 +290,30 @@
   </div>
   <!-- Search model end -->
 
-   
+
 
   <script>
-    $("#checkout-form").submit((e)=>{
+    $("#checkout-form").submit((e) => {
       e.preventDefault()
+      if(value1 && value2 && value3 && value4 && value5 && value6 && value7 && value8){
       $.ajax({
-        url:'/place-order',
-        method:'post',
-        data:$('#checkout-form').serialize(),
-        success:(response)=>{
+        url: '/place-order',
+        method: 'post',
+        data: $('#checkout-form').serialize(),
+        success: (response) => {
+          Swal.fire({
+            position: 'centre',
+            icon: 'success',
+            title: 'You have ordered successfully!!',
+            showConfirmButton: false,
+            // timer: 1500
+          })
+          setTimeout(function () {
+                  location.href='/home'
+                }, 1500);
 
         }
-      })
+      })}
     })
 
   </script>

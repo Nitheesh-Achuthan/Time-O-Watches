@@ -67,6 +67,10 @@ userRoute.post('/homePage/:number',(req,res)=>{
 
 userRoute.post('/home',controller.Find);
 
+userRoute.get('/watch',(req,res)=>{
+      res.render('user/watch',{error:""})
+});
+
 // ====================middleware for checking user====================//
 userRoute.use((req, res, next) => {
     if (!req.session.loggedIn) {
@@ -88,9 +92,6 @@ userRoute.use(async (req,res,next) => {
 
 userRoute.get('/home',controller.logg);
 
-userRoute.get('/watch',(req,res)=>{
-      res.render('user/watch',{error:""})
-});
 
 userRoute.get('/product-details/:id', async (req,res)=>{
 
@@ -101,24 +102,22 @@ userRoute.get('/product-details/:id', async (req,res)=>{
 })
 
 
-// userRoute.get('/product-details',(req,res)=>{
-//     const proid = req.session.productId 
-//     console.log(proid);
-//     res.render('user/product-details',{watches:proid})
-
-// })
 
 
-// userRoute.use((req, res, next) => {
-//     if (req.query._method == "DELETE") {
-//         req.method = "DELETE";
-//         req.url = req.path;
-//     } else if (req.query._method == "PUT") {
-//         req.method = "PUT";
-//         req.url = req.path;
-//     }
-//     next();
-// });
+// middleware //
+userRoute.use((req, res, next) => {
+    if (req.query._method == "DELETE") {
+        req.method = "DELETE";
+        req.url = req.path;
+    } else if (req.query._method == "PUT") {
+        req.method = "PUT";
+        req.url = req.path;
+    }
+    next();
+});
+
+
+
 
 
 
@@ -146,6 +145,8 @@ userRoute.get('/checkout',cartController.checkout);
 
 // userRoute.post('/order-data',orderController.create)
 userRoute.post('/place-order',orderController.placeOrder)
+userRoute.get('/my-orders',orderController.myOrders)
+userRoute.put('/cancel-order-user/:id',orderController.cancelOrderUser)
 
 
   

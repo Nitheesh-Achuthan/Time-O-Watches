@@ -35,7 +35,7 @@ exports.cancelOrder = async(req,res)=>{
     const id = req.params?.id;
     const order = await orderDb.findOne({_id:ObjectId(id)})
         const proId = order.products[0]._id
-            await orderDb.updateOne({_id:id},{$set: {"status":"canceled"}})
+            await orderDb.updateOne({_id:id},{$set: {"status":"Canceled"}})
             res.redirect('/admin/orderManagement')
 
 } 
@@ -43,3 +43,18 @@ exports.statusUpdate = async(req,res)=>{
     const status = await orderServices.updateStatus(req.body);
     res.json(true);
 }
+
+exports.myOrders = async(req,res)=>{
+    let cartCount = await cartServices.count(req.session.user._id) 
+    let myOrder = await orderServices.myOrders(req.session.user._id)
+
+    res.render('user/my-orders',{cartCount,myOrder})
+}
+exports.cancelOrderUser = async(req,res)=>{
+    const id = req.params?.id;
+    const order = await orderDb.findOne({_id:ObjectId(id)})
+        const proId = order.products[0]._id
+            await orderDb.updateOne({_id:id},{$set: {"status":"Canceled"}})
+            res.redirect('/my-orders')
+
+} 

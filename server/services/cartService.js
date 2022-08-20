@@ -149,14 +149,12 @@ exports.totalAmount = async (userId)=>{
         }
     }
   ])
-//   console.log(total[0].total,'gggggggggggggggggggggggggggggggggg');
   return total[0]?.total;
 }
 
 
 exports.getCartProductList = async(userId)=>{
  const cart = await cartDb.findOne({user:ObjectId(userId)})
- console.log(cart.products,'==================================================');
  return cart.products;
 }
 // === from ordercontroller ===//

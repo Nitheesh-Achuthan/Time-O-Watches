@@ -5,7 +5,7 @@ const ObjectId = require('mongoose').Types.ObjectId;
 
 
 exports.placeOrder = async (order, product, totalPrice) => {
-    let status = order.paymentmethod === 'cash on delivery' ? 'ordered' : 'pending'
+    let status = order.paymentmethod === 'Cash On Delivery' ? 'Ordered' : 'Pending'
     let orderObj = new orderDb ({
         deliveryDetails: {
             firstName: order.fname,
@@ -45,7 +45,7 @@ exports.orders = async () => {
                 deliveryDetails: 1, userId: 1, paymentMethod: 1, date: 1,
                 totalAmount: 1, status: 1, 
                 item:'$products.item',
-            quantity:'$products.quantity'  
+                quantity:'$products.quantity'  
             }
         }, 
         {
@@ -67,16 +67,49 @@ exports.orders = async () => {
         }
 
     ])
-    // console.log(orderPro,'iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiioooooooooooooooooooooooooooooo');
     return orderPro;
 }
 
 exports.updateStatus = async (datas) => {
     let status = datas.status;
     let orderId = datas.orderId;
-    // console.log(status,orderId,'this@@@@@@@@@@@@@@@@@@@@@@');
     await orderDb.updateOne({ _id: ObjectId(orderId) },
         {
             $set: { status: status }
         })
+}
+
+exports.myOrders = async(userId)=>{
+    const orders = await orderDb.aggregate([
+        {
+            $match:{userId:ObjectId(userId)}
+        },
+        {
+            $unwind:'$products'
+        },
+        {
+            $project: {
+                deliveryDetails: 1, userId: 1, paymentMethod: 1, date: 1,
+                totalAmount: 1, status: 1, 
+                item:'$products.item',
+                quantity:'$products.quantity'
+            }
+        },
+        {
+            $lookup:{
+                from:'productDb',
+                localField:'item',
+                foreignField:'_id',
+                as:'product'
+            }
+        },
+        {
+            $project:{
+                deliveryDetails: 1, userId: 1, paymentMethod: 1, date: 1,
+                totalAmount: 1, status: 1, 
+                item:1,quantity:1,product: { $arrayElemAt:['$product',0]}
+            }
+        }
+    ])
+   return orders;
 }

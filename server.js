@@ -12,7 +12,7 @@ require('dotenv').config();
 
 const port = process.env.PORT
 
-app.set("view engine","ejs");
+app.set("view engine","ejs"); 
   
 mongoose.connect(process.env.MONGO_URL,(err)=>{
     if(err){ 
@@ -52,6 +52,6 @@ app.use('/images',express.static(path.join(__dirname,"/public/images")));
 app.use('/admin',require("./server/routes/adminRouter"));  
 app.use('/',require("./server/routes/userRouter")); 
              
-app.listen(port,()=>{   
+app.listen(port,()=>{     
     console.log(`http://localhost:${port}`);       
 });                       

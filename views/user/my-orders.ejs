@@ -1,7 +1,7 @@
 <%-include('../include/user-header')%>
   <main>
       <!-- Hero Area Start-->
-      <div class="slider-area ">
+      <!-- <div class="slider-area ">
           <div class="single-slider slider-height2 d-flex align-items-center">
               <div class="container">
                   <div class="row">
@@ -13,7 +13,7 @@
                   </div>
               </div>
           </div>
-      </div>
+      </div> -->
       <!--================Order Area =================-->
       <section class="cart_area section_padding">
         <div class="container">
@@ -22,18 +22,22 @@
               <table class="table">
                 <thead>
                   <tr>
-                    <th scope="col">Product</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Payment</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Action</th>
+                    <th scope="col"><h4>Product</h4></th>
+                    <th scope="col"><h4>Name</h4></th>
+                    <th scope="col"><h4>Date</h4></th>
+                    <th scope="col"><h4>Price</h4></th>
+                    <th scope="col"><h4>Quantity</h4></th>
+                    <th scope="col"><h4>Payment</h4></th>
+                    <th scope="col"><h4>Status</h4></th>
+                    <th scope="col"><h4>Action</h4></th>
                   </tr>
                 </thead>
                 <tbody>
+                  <% for(i=0; i< myOrder.length; i++ ) { %>
                   <tr>
                     <td>
+                      <img style="width: 70px; height: 70px" src="<%= myOrder[i].product.image %>" alt="">
+
                       <!-- <div class="media">
                         <div class="d-flex">
                           <img src="assets/img/gallery/card1.png" alt="" />
@@ -44,112 +48,47 @@
                       </div> -->
                     </td>
                     <td>
-                      <h5></h5>
+                      <h5><%= myOrder[i].product.name %></h5>
                     </td>
                     <td>
-                      
+                      <h5><%= myOrder[i].date.toDateString() %></h5>
                     </td>
                     <td>
-                      <h5></h5>
+                      <h5><%= myOrder[i].product.price %></h5>
+                    </td>
+                    <td>
+                      <h5><%= myOrder[i].quantity %></h5>
+                    </td>
+                    <td>
+                      <h5><%= myOrder[i].paymentMethod %></h5>
+                    </td>
+                    <td>
+                      <h5><%= myOrder[i].status %></h5>
+                    </td>
+                    <td>
+                      <!-- <h5>cancel</h5> -->
+                      <% if(myOrder[i].status=='Canceled' || myOrder[i].status=='Delivered' ) { %>
+                        <button type="button" disabled class="btn btn-primary"
+                          onclick="orderCancel('<%= myOrder[i]._id %>')">Cancelled</button>
+
+
+                        <% } else { %>
+
+                          <button class="btn btn-primary" style="height: 5px;"
+                            onclick="orderCancel('<%= myOrder[i]._id %>')">Cancel</button>
+                          <% } %>
+
+
+
                     </td>
                   </tr>
-                  <tr>
-                    <td>
-                      <div class="media">
-                        <div class="d-flex">
-                          <img src="assets/img/gallery/card2.png" alt="" />
-                        </div>
-                        <div class="media-body">
-                          <p>Minimalistic shop for multipurpose use</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <h5>$360.00</h5>
-                    </td>
-                    <td>
-                      <div class="product_count">
-                          <span class="input-number-decrement"> <i class="ti-minus"></i></span>
-                          <input class="input-number" type="text" value="1" min="0" max="10">
-                          <span class="input-number-increment"> <i class="ti-plus"></i></span>
-                      </div>
-                    </td>
-                    <td>
-                      <h5>$720.00</h5>
-                    </td>
-                  </tr>
-                  <tr class="bottom_button">
-                    <td>
-                      <a class="btn_1" href="#">Update Cart</a>
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                      <div class="cupon_text float-right">
-                        <a class="btn_1" href="#">Close Coupon</a>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td>
-                      <h5>Subtotal</h5>
-                    </td>
-                    <td>
-                      <h5>$2160.00</h5>
-                    </td>
-                  </tr>
-                  <tr class="shipping_area">
-                    <td></td>
-                    <td></td>
-                    <td>
-                      <h5>Shipping</h5>
-                    </td>
-                    <td>
-                      <div class="shipping_box">
-                        <ul class="list">
-                          <li>
-                            Flat Rate: $5.00
-                            <input type="radio" aria-label="Radio button for following text input">
-                          </li>
-                          <li>
-                            Free Shipping
-                            <input type="radio" aria-label="Radio button for following text input">
-                          </li>
-                          <li>
-                            Flat Rate: $10.00
-                            <input type="radio" aria-label="Radio button for following text input">
-                          </li>
-                          <li class="active">
-                            Local Delivery: $2.00
-                            <input type="radio" aria-label="Radio button for following text input">
-                          </li>
-                        </ul>
-                        <h6>
-                          Calculate Shipping
-                          <i class="fa fa-caret-down" aria-hidden="true"></i>
-                        </h6>
-                        <select class="shipping_select">
-                          <option value="1">Bangladesh</option>
-                          <option value="2">India</option>
-                          <option value="4">Pakistan</option>
-                        </select>
-                        <select class="shipping_select section_bg">
-                          <option value="1">Select a State</option>
-                          <option value="2">Select a State</option>
-                          <option value="4">Select a State</option>
-                        </select>
-                        <input class="post_code" type="text" placeholder="Postcode/Zipcode" />
-                        <a class="btn_1" href="#">Update Details</a>
-                      </div>
-                    </td>
-                  </tr>
+                                
+                  <% } %>
                 </tbody>
               </table>
               <div class="checkout_btn_inner float-right">
-                <a class="btn_1" href="#">Continue Shopping</a>
-                <a class="btn_1 checkout_btn_1" href="#">Proceed to checkout</a>
+                <!-- <a class="btn_1" href="#">Continue Shopping</a> -->
+                <!-- <a class="btn_1 checkout_btn_1" href="#">Proceed to checkout</a> -->
               </div>
             </div>
           </div>
@@ -251,6 +190,29 @@
       </div>
   </div>
   <!-- Search model end -->
+
+
+  <script>
+    function orderCancel(id) {
+      Swal.fire({
+        title: 'Are you want to Cancel ?',
+        icon: 'error',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Cancel Order'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          location.href = `/cancel-order-user/${id}?_method=PUT`
+          Swal.fire(
+            'Order Canceled!',
+            'Your order has been canceled.',
+            'success'
+          )
+        }
+      })
+    }
+  </script>
 
   <!-- JS here -->
 
