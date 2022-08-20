@@ -8,15 +8,30 @@ exports.addCart = async (req,res)=>{
     res.json({status:true});
 }
 exports.cart = async (req,res)=>{
+    let user = req.session.user;
     const products = await cartServices.cartView(req.session.user._id);
     // console.log(products,'lllllllllllllllllllllllllllllllllllllllll');
     let cartCount = await cartServices.count(req.session.user._id) 
+    let totalValue = await cartServices.totalAmount(req.session.user._id)
 
-    res.render('user/cart',{products,cartCount});
+
+    res.render('user/cart',{products,cartCount,user,totalValue});
 }
 
-exports.changeProductQuantity = async(req,res,next)=>{
-    let changeProQty = await cartServices.changeQty(req.body);
-    res.json(changeProQty);
+exports.changeProductQuantity = async(req,res)=>{
+   const changeProQty = await cartServices.changeQty(req.body);
+    const total = await cartServices.totalAmount(req.body.user)  
+    console.log(changeProQty,'--------------------------------------------------'); 
+    res.status(200).json({total,changeProQty});
+}
+ exports.removeProCart = async (req,res)=>{
+    const removePro = await cartServices.removeProduct(req.body)
+    res.json(removePro)
+ }
+exports.checkout = async(req,res)=>{
+    let user = req.session.user;
+    let cartCount = await cartServices.count(req.session.user._id)
+    let total = await cartServices.totalAmount(req.session.user._id)
+    res.render('user/checkout',{cartCount,user,total})
 }
         

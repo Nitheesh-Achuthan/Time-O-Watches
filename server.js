@@ -15,11 +15,11 @@ const port = process.env.PORT
 app.set("view engine","ejs");
   
 mongoose.connect(process.env.MONGO_URL,(err)=>{
-    if(err){
+    if(err){ 
      console.log("Could not connect to database");
     }else{
         console.log('mongodb connected successfully');
-    }            
+    }             
 });                 
                  
 // override the method in form   
@@ -49,9 +49,9 @@ app.use('/images',express.static(path.join(__dirname,"/public/images")));
 
 
   
-app.use('/admin',require("./server/routes/adminRouter")); 
+app.use('/admin',require("./server/routes/adminRouter"));  
 app.use('/',require("./server/routes/userRouter")); 
              
 app.listen(port,()=>{   
     console.log(`http://localhost:${port}`);       
-});           
+});                       

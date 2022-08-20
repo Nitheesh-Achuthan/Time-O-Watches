@@ -1,78 +1,45 @@
 const cartServices = require('../services/cartService')
 const orderDb = require('../model/orderModel')
+const orderServices = require('../services/orderService')
+const ObjectId = require('mongoose').Types.ObjectId;
 
-exports.create = async(req,res)=>{
 
-    const cartItems =  await cartServices.userCart(req.session.user._id)
-    console.log(cartItems,'sssssssssssssssssssssssssssssssssssssssssssssssssssggggggggggggggggggggg');
-    
 
-    // console.log('8888888888888888888888888888', req.body);
+exports.placeOrder = async(req,res)=>{
+    console.log(req.body.userId,'*****************************************');
+    const product = await cartServices.getCartProductList(req.body.userId)
+    const totalPrice = await cartServices.totalAmount(req.body.userId)
+    const orders = await orderServices.placeOrder(req.body,product,totalPrice)
+    res.json({status:true})
+}
 
-    if (!req.body) {
-        // console.log('jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj');
+exports.orders = async(req,res)=>{
+    const orderDetails = await orderServices.orders()
+    // console.log(orderDetails,'orders3333333445566');
+    res.render('admin/orderManagement',{orderDetails})
+}
 
-        res.status(400).send({ message: "content cannot be empty" });
+// exports.cancelOrder = async(req,res)=>{
+//     const id = req.params?.id;
+//     const order = await orderDb.findOne({_id:ObjectId(id)})
+//     const proId = order.products[0]._id
+//     await orderDb.updateOne({_id:id},{$set: {"status":"Canceled"}})
+//     await productDb.updateOne({"_id": ObjectId(proId)},
+//     {
+//         $inc: { Quantity : 1 }
+//     })
+//     res.redirect('/admin/admin-orders')
+// }
 
-    } else {
-        const deliveryDetails = {
-                 firstName: req.body.fname,
-                lastName: req.body.lname,
-                mobile:req.body.number,
-                email: req.body.email,
-                country:req.body.country,
-                address:req.body.address
-               }
-               console.log(deliveryDetails,'ddddddddddddddddddddddddddddddddddddddddddddddddddddddddd');
+exports.cancelOrder = async(req,res)=>{
+    const id = req.params?.id;
+    const order = await orderDb.findOne({_id:ObjectId(id)})
+        const proId = order.products[0]._id
+            await orderDb.updateOne({_id:id},{$set: {"status":"canceled"}})
+            res.redirect('/admin/orderManagement')
 
-               const userid = req.session.user._id
-               console.log(userid,'uddddddddddddssssssssssssssssss');
-
-               const cod = req.body.paymentmethod
-               console.log(cod,'coooooooooooooooooooooooooooood');
-
-               const date = Date.now()
-               console.log(date,'daaaaaaaaaaaaaaaaattttttttteeeeeee');
-
-               const status = "ordered";
-               console.log(status,'staaaaaaaaaaaatus');
-
-               const amount = 4444444
-
-               const products = cartItems
-               console.log(products,'prooooooooooooooooddddddddddddddddddddd');
-
-               const order = new orderDb({
-                 deliveryDetails:deliveryDetails,
-                 userId:userid,
-                 paymentMethod:cod,
-                 date:date,
-                 products:products,
-                 totalAmount:amount,
-                 status:status
-               });
-               await order.save()
-               res.redirect('/') 
-            //    console.log(product,'caaaaaaaaaarrrrrrrrrrrtttttt');
-        // const order = new orderDb({
-        //    deliveryDetails:{
-        //      firstName: req.body.fname,
-        //     lastName: req.body.lname,
-        //     mobile:req.body.mobile,
-        //     email: req.body.email,
-        //     country:req.body.country,
-        //     address:req.body.address
-        //    }
-
-        // });
-        // console.log(order,'pppppppppppppppppppppppppppppppppppppppppppppppppp');
-        // order.save()  
-        //     .then(() => {
-        //         res.redirect('/')
-        //         // res.json({ user })
-        //     })
-        //     .catch(err => {
-        //         console.log(err.message);
-        //     })
-    }
+} 
+exports.statusUpdate = async(req,res)=>{
+    const status = await orderServices.updateStatus(req.body);
+    res.json(true);
 }

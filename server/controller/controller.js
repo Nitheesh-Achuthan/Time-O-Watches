@@ -71,12 +71,12 @@ exports.find = async (req,res) => {
     
             if (admin) {
 
-                userDb.find()
+                userDb.find() 
                 .then(data=>{
 
-                    console.log(data);    
+                    // console.log(data);     
 
-                console.log('jjjjjjj');        
+                // console.log('jjjjjjj');        
                 req.session.admin=req.body.email;
                 req.session.isAdminLogin=true;
                 res.render('admin/tables',{users:data})
@@ -85,7 +85,7 @@ exports.find = async (req,res) => {
                 
             }else{
 
-                console.log('hhhhhhhhhh');
+                // console.log('hhhhhhhhhh');
                 res.render('admin/sign-in')
             }
         

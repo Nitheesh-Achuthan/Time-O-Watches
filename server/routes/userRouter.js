@@ -109,6 +109,19 @@ userRoute.get('/product-details/:id', async (req,res)=>{
 // })
 
 
+// userRoute.use((req, res, next) => {
+//     if (req.query._method == "DELETE") {
+//         req.method = "DELETE";
+//         req.url = req.path;
+//     } else if (req.query._method == "PUT") {
+//         req.method = "PUT";
+//         req.url = req.path;
+//     }
+//     next();
+// });
+
+
+
 userRoute.get('/logout',(req,res)=>{
     req.session.loggedIn = null
     req.session.user = null
@@ -121,16 +134,22 @@ userRoute.get('/add-to-cart/:id',cartController.addCart);
 
 userRoute.post('/change-product-quantity',cartController.changeProductQuantity);
 
-userRoute.get('/checkout',async (req,res)=>{
+userRoute.post('/remove-product-cart',cartController.removeProCart)
 
-    let cartCount = await cartServices.count(req.session.user._id) 
+userRoute.get('/checkout',cartController.checkout);
+// async (req,res)=>{
 
-    res.render('user/checkout',{cartCount})
-})
+    // let cartCount = await cartServices.count(req.session.user._id) 
 
-userRoute.post('/order-data',orderController.create)
+    // res.render('user/checkout',{cartCount})
+// })
+
+// userRoute.post('/order-data',orderController.create)
+userRoute.post('/place-order',orderController.placeOrder)
+
+
   
  
-
+   
 
 module.exports=userRoute;    

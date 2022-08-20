@@ -84,28 +84,82 @@ exports.changeQty = async(details)=>{
     let cartProduct = {}
     if(details.count==-1 && details.quantity==1){
 
-        cartProduct = await cartDb.updateOne({_id:ObjectId(details.cart)},
+         cartProduct = await cartDb.updateOne({_id:ObjectId(details.cart)},
             {
                $pull:{products:{item:ObjectId(details.product)}}
 
             })
             cartProduct.removeProduct = true;
-
+            
+            
         }
-          else{
+        else{
             await cartDb.updateOne({_id:ObjectId(details.cart),'products.item':ObjectId(details.product )},
             {
                 $inc:{'products.$.quantity':details.count}
             })
-              
-    }
+            
+        }
+        console.log(cartProduct,'dddddddddddddddddddddddddddddddddddddddddddd');
+        return cartProduct;
 
     // console.log('kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk');
-    // console.log(cartProduct,'dddddddddddddddddddddddddddddddddddddddddddd');
-    return cartProduct;
  } 
+ exports.removeProduct = async (body)=>{
+    const cartId = body.cart;
+    const proId = body.product;
+    const product = await cartDb.updateOne({_id:ObjectId(cartId)},
+    {
+        $pull:{products:{item:ObjectId(proId)}}
+    })
+    return product;
+}
+
+exports.totalAmount = async (userId)=>{
+  const total = await cartDb.aggregate([
+    {
+        $match:{user:ObjectId(userId)}
+    },
+    {
+        $unwind:'$products'
+    },
+    {
+        $project:{
+            item:'$products.item',
+            quantity:'$products.quantity'
+        }
+    },
+    {
+        $lookup:{
+            from:'productDb',
+            localField:'item',
+            foreignField:'_id',
+            as:'product'
+        }
+    },
+    {
+        $project:{
+            item:1,quantity:1,product: {$arrayElemAt: ['$product',0]}
+        }
+    },
+    {
+        $group:{
+            _id:null,
+            total:{$sum:{$multiply:['$quantity','$product.price']}}
+        }
+    }
+  ])
+//   console.log(total[0].total,'gggggggggggggggggggggggggggggggggg');
+  return total[0]?.total;
+}
 
 
+exports.getCartProductList = async(userId)=>{
+ const cart = await cartDb.findOne({user:ObjectId(userId)})
+ console.log(cart.products,'==================================================');
+ return cart.products;
+}
+// === from ordercontroller ===//
  exports.userCart = async(userId)=>{
   let cart=  await cartDb.findOne({user:userId})
   return cart;

@@ -5,6 +5,7 @@ const productDb = require('../model/productModel');
 const adminDb = require('../model/adminModel');
 const controller = require('../controller/controller');
 const productController = require('../controller/productController');
+const orderController = require('../controller/orderController')
 const categoryDb = require('../model/categoryModel');
 const services = require('../services/categoryService')
 
@@ -26,6 +27,20 @@ adminRoute.get('/', (req, res) => {
 // adminRoute.get('/tables',(req,res)=>{
 //     res.redirect('/admin')
 // })
+
+// middleware///
+
+adminRoute.use((req, res, next) => {
+    if (req.query._method == "DELETE") {
+        req.method = "DELETE";
+        req.url = req.path;
+    } else if (req.query._method == "PUT") {
+        req.method = "PUT";
+        req.url = req.path;
+    }
+    next();
+});
+
 
 
 adminRoute.post('/tables', controller.find);
@@ -100,10 +115,15 @@ adminRoute.post('/category',controller.createcat);
 adminRoute.get('/update',controller.updatepage);
 adminRoute.put('/update/:id',controller.update);  
 adminRoute.delete('/delete/:id',controller.delete);
-adminRoute.get('/orderManagement',(req,res)=>{
-    res.render('admin/orderManagement')
-})
+
+//=== orders===//
+
+adminRoute.get('/orderManagement',orderController.orders);
+
+adminRoute.put('/cancel-order/:id', orderController.cancelOrder);
+
+adminRoute.post('/statusUpdate',orderController.statusUpdate);
     
 
      
-module.exports = adminRoute;             
+module.exports = adminRoute;              

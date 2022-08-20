@@ -19,6 +19,13 @@
     <!--================Cart Area =================-->
 
 
+    <% if (products.length==0){ %>
+      <div style="display: flex;">
+        <img src="https://hakimitr.com/assets/website/images/empty-cart.gif" style="width:50rem">
+        <h1 style="margin:auto 0">Cart is Empty<hr></h1>
+      </div>
+      <% } else { %>
+
     <section class="cart_area section_padding">
       <div class="container">
         <div class="cart_inner">
@@ -26,10 +33,11 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th scope="col">Product</th>
-                  <th scope="col">Price</th>
-                  <th scope="col">Quantity</th>
-                  <th scope="col">Total</th>
+                  <th scope="col"><h5>Product</h5></th>
+                  <th scope="col"><h5>Name</h5></th>
+                  <th scope="col"><h5>Price</h5></th>
+                  <th scope="col"><h5>Quantity</h5></th>
+                  <th scope="col"><h5>Action</h5></th>
                 </tr>
               </thead>
               <tbody>
@@ -42,22 +50,30 @@
                           <img style="width: 70px; height: 70px" src="<%= products[i].product.image %>" alt="">
 
                         </div>
-                        <div class="media-body">
+                        <!-- <div class="media-body">
                           <p>
                             <%= products[i].product.name %>
                           </p>
 
-                        </div>
+                        </div> -->
                       </div>
                     </td>
+
+                    <td>
+                      <h5>
+                        <%= products[i].product.name %>
+                      </h5>
+                    </td>
+
                     <td>
                       <h5>
                         <%= products[i].product.price %>
                       </h5>
                     </td>
+                    
                     <td>
                       <button class="cart-item-count mr-3" style="background-color: orangered;"
-                        onclick="changeQuantity('<%=products[i]._id%>' , '<%=products[i].product._id%>',  -1)">
+                        onclick="changeQuantity('<%=products[i]._id%>' , '<%=products[i].product._id%>','<%=user._id%>',  -1)">
                         -
                       </button>
 
@@ -68,7 +84,7 @@
                       </span>
 
                       <button class="cart-item-count ml-3" style="background-color: orangered;"
-                        onclick="changeQuantity('<%=products[i]._id%>' , '<%=products[i].product._id%>',  1)">
+                        onclick="changeQuantity('<%=products[i]._id%>' , '<%=products[i].product._id%>','<%=user._id%>',  1)">
                         +
                       </button>
                       <!-- <div class="product_count">
@@ -77,17 +93,21 @@
                           <span class="input-number-increment"> <i class="ti-plus"></i></span>
                         </div> -->
                     </td>
-                    <td>
-                      <h5>
-                        <%= products[i].product.price %>
-                      </h5>
+                    
+                    <td> 
+                      <button onclick="removeProcart('<%=products[i]._id%>' , '<%=products[i].product._id%>')"
+                         class="btn btn-danger" style="padding:15px 20px; margin: 4px 2px;">Remove</button>
                     </td>
-                    <td>
-                      <a href="" class="btn btn-danger" style="padding:15px 20px; margin: 4px 2px;">Remove</a>
-                    </td>
+
+
+
                   </tr>
 
                   <% } %>
+
+
+
+                  
 
 
 
@@ -188,27 +208,30 @@
                     </tr>
               </tbody>
             </table>
-            <div class="checkout_btn_inner float-right">
+            
+            <div class="checkout_btn_inner float-right pr-5">
               <!-- <a class="btn_1" href="#">Continue Shopping</a> -->
+              <h5 class="float-left mr-5" style="padding-top: 10px;">TOTAL: RS.<span id="total"><%=totalValue%><hr></span></h5>
               <a class="btn_1 checkout_btn_1" href='/checkout'>Proceed to checkout</a>
             </div>
           </div>
         </div>
     </section>
+    <% } %>
 
     <!-- change qty -->
 
     <script>
-      function changeQuantity(cartId, proId, count) {
+      function changeQuantity(cartId, proId, userId,count) {
         const quantity = parseInt(document.getElementById(proId).innerHTML)
-        console.log(document.getElementById(proId).innerHTML)
-        console.log(quantity, 'lllllllllllllllllllllllllllllllll');
+        // console.log(userId, 'lllllllllllllllllllllllllllllllll');
         // console.log(count);
         count = parseInt(count)
         // console.log(count);
         $.ajax({
           url: '/change-product-quantity',
           data: {
+            user: userId,
             cart: cartId,
             product: proId,
             count: count,
@@ -216,7 +239,8 @@
           },
           method: 'post',
           success: (res) => {
-            if (res.removeProduct) {
+            if (res.changeProQty.removeProduct) {
+
 
               Swal.fire({
                 title: 'Are you sure?',
@@ -242,7 +266,10 @@
                 // location.reload()
               })
             } else {
+              // console.log(res)
               document.getElementById(proId).innerHTML = quantity + count
+              document.getElementById("total").innerHTML = res.total
+              // console.log(res.total,'000000000000000000000000');
             }
 
 
@@ -251,11 +278,39 @@
           }
         })
       }
+
+
+      function removeProcart(cartId, proId) {
+        Swal.fire({
+            title: 'Are you want to Remove?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Remove'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/remove-product-cart',
+                    data: {
+                        cart: cartId,
+                        product: proId
+                    },
+                    dataType: 'json',
+                    success: (response) => {
+                        location.reload()
+                    }
+                })
+            }
+        })
+    }
+
     </script>
 
 
     <!--================End Cart Area =================-->
-  </main>>
+  </main>
   <footer>
     <!-- Footer Start-->
     <div class="footer-area footer-padding">
@@ -266,11 +321,11 @@
               <div class="single-footer-caption mb-30">
                 <!-- logo -->
                 <div class="footer-logo">
-                  <a href="index.html"><img src="assets/img/logo/logo2_footer.png" alt=""></a>
+                  <!-- <a href="index.html"><img src="assets/img/logo/logo2_footer.png" alt=""></a> -->
                 </div>
                 <div class="footer-tittle">
                   <div class="footer-pera">
-                    <p>Asorem ipsum adipolor sdit amet, consectetur adipisicing elitcf sed do eiusmod tem.</p>
+                    <!-- <p>Asorem ipsum adipolor sdit amet, consectetur adipisicing elitcf sed do eiusmod tem.</p> -->
                   </div>
                 </div>
               </div>
