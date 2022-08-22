@@ -8,6 +8,7 @@ const { v4: uuidv4 } = require('uuid');
 const methodOverride = require('method-override');
 const fileUpload = require('express-fileupload');
 const imageZoom = require('js-image-zoom');
+const Razorpay = require('razorpay')
 require('dotenv').config();
 
 const port = process.env.PORT
@@ -19,7 +20,7 @@ mongoose.connect(process.env.MONGO_URL,(err)=>{
      console.log("Could not connect to database");
     }else{
         console.log('mongodb connected successfully');
-    }             
+    }               
 });                 
                  
 // override the method in form   
@@ -53,5 +54,5 @@ app.use('/admin',require("./server/routes/adminRouter"));
 app.use('/',require("./server/routes/userRouter")); 
              
 app.listen(port,()=>{     
-    console.log(`http://localhost:${port}`);       
-});                       
+    console.log(`http://localhost:${port}`);          
+});                             

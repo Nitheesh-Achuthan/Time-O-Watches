@@ -44,7 +44,7 @@ exports.create = (req,res)=>{
 exports.editProduct = async (req,res)=>{
 
     const editPro = await productServices.editProducts(req.params.id);
-    console.log(editPro,'###########################################################');
+    // console.log(editPro,'###########################################################');
       res.render('admin/updateProduct',{watches:editPro})
 };
 exports.updateProducts = async(req,res)=>{

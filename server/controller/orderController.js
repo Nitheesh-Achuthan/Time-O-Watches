@@ -6,11 +6,18 @@ const ObjectId = require('mongoose').Types.ObjectId;
 
 
 exports.placeOrder = async(req,res)=>{
-    console.log(req.body.userId,'*****************************************');
+    // console.log(req.body.userId,'*****************************************');
     const product = await cartServices.getCartProductList(req.body.userId)
     const totalPrice = await cartServices.totalAmount(req.body.userId)
     const orders = await orderServices.placeOrder(req.body,product,totalPrice)
-    res.json({status:true})
+        // console.log(orders,'-=-=-=-===-=-=-=-=-=-=-=-=-========================--------------------'); 
+
+    if(req.body['paymentmethod']=='Cash On Delivery'){
+
+        res.json({status:true})
+    }else{
+        await orderServices.generateRazorpay(orders)
+    }
 }
 
 exports.orders = async(req,res)=>{

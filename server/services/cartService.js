@@ -62,9 +62,6 @@ exports.cartView = async (userId)=>{
             }
         }
     ])  
-    // const cartProd =await cartItems[0].cartItems;
-    // console.log(cartProd,'kkkkkkkkkkkkkkkkkkkkkkkk'); 
-    // console.log(cartItems,'kkkkkkkkkkkkkkkkkkkkkkkkqqqqqqqqqqqqqqqqqqqqqqqq');  
 
     return cartItems;
 }      
@@ -100,10 +97,8 @@ exports.changeQty = async(details)=>{
             })
             
         }
-        console.log(cartProduct,'dddddddddddddddddddddddddddddddddddddddddddd');
         return cartProduct;
 
-    // console.log('kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk');
  } 
  exports.removeProduct = async (body)=>{
     const cartId = body.cart;

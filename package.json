@@ -9,6 +9,7 @@
     "js-image-zoom": "^0.7.0",
     "method-override": "^3.0.0",
     "mongoose": "^6.4.4",
+    "razorpay": "^2.8.3",
     "sweetalert": "^2.1.2",
     "twilio": "^3.79.0",
     "uuid": "^8.3.2"

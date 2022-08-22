@@ -7,6 +7,13 @@ let cartServices = require('../services/cartService');
 const bcrypt = require('bcrypt')
 
 
+
+// exports.landing = async (req,res)=>{
+//     let product = await productDb.find()
+//     res.render('user/landing-page',{ watches:product})
+// }
+
+
 exports.Create = (req, res) => {
 
     // console.log('8888888888888888888888888888', req.body);
@@ -22,9 +29,7 @@ exports.Create = (req, res) => {
             lastName: req.body.lname,
             email: req.body.email,
             mobile:req.body.mobile,
-            password: req.body.password
-               
-
+            password: req.body.password             
         });
         console.log(user);
         user.save()  
@@ -74,9 +79,6 @@ exports.find = async (req,res) => {
                 userDb.find() 
                 .then(data=>{
 
-                    // console.log(data);     
-
-                // console.log('jjjjjjj');        
                 req.session.admin=req.body.email;
                 req.session.isAdminLogin=true;
                 res.render('admin/tables',{users:data})
@@ -85,7 +87,6 @@ exports.find = async (req,res) => {
                 
             }else{
 
-                // console.log('hhhhhhhhhh');
                 res.render('admin/sign-in')
             }
         
@@ -116,7 +117,7 @@ exports.find = async (req,res) => {
     };
 
     exports.updatepage = async(req,res)=>{
-        console.log('aaaaaaaaaaaaaaa');
+        // console.log('aaaaaaaaaaaaaaa');
         const category = await categoryDb.findOne({_id:req.query.id});
         console.log(category);
         res.render('admin/update-category',{cate:category})
@@ -132,7 +133,6 @@ exports.find = async (req,res) => {
     }
  
     exports.delete = (req,res)=>{ 
-        // console.log('njaan compiler',req.params.id);
         const id = services.deleteCate(req.params.id);
         
             res.redirect('/admin/category')   

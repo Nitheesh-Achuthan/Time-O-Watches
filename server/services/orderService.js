@@ -1,7 +1,13 @@
 const orderDb = require('../model/orderModel')
 const cartDb = require('../model/cartModel')
 const productDb = require('../model/productModel')
+const Razorpay = require('razorpay')
 const ObjectId = require('mongoose').Types.ObjectId;
+
+var instance = new Razorpay({
+    key_id: 'rzp_test_MoPjF88yCdpr2R',
+    key_secret: '9KEIrz0MsZbicVP13JQc5N3u'
+  });
 
 
 exports.placeOrder = async (order, product, totalPrice) => {
@@ -25,9 +31,15 @@ exports.placeOrder = async (order, product, totalPrice) => {
             status:status,
             date:new Date()
     })
-    const saving = await orderObj.save()
+    const orders = await orderObj.save()
     await cartDb.deleteOne({user:ObjectId(order.userId)})
+    // console.log(orders._id,'-=-=-=-===-=-=-=-=-=-=-=-=-========================--------------------');
+    return orders._id;
 
+}
+
+exports.generateRazorpay =  async (orderId) =>{
+     
 }
 
 

@@ -17,6 +17,10 @@ const accountSID = process.env.accountSID
 const authToken = process.env.authToken
 const client = require('twilio')(accountSID,authToken)
 
+
+// userRoute.get('/',controller.landing)
+
+
 userRoute.get('/',(req,res)=>{
     if(req.session.loggedIn){
         
