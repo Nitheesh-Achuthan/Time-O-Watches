@@ -90,7 +90,7 @@ function countryvalid() {
 }
 function addressvalid() {
     value8 = false;
-    if ($("#address").val().match(/^[A-Za-z][A-Za-z ]*$/)) {
+    if ($("#address").val().match(/^[a-zA-Z0-9\s,'-]*$/)) {
         value8 = true;
         document.getElementById("paddress").style.display = "none";
     }

@@ -22,12 +22,15 @@
       <link rel="stylesheet" href="../assets/css/nice-select.css">
       <link rel="stylesheet" href="../assets/css/style.css">
       <link rel="stylesheet" href="../assets/css/watch.css">
+      <link rel="stylesheet" href="../assets/css/watchUser.css">
 
 
       <script src="https://unpkg.com/js-image-zoom@0.4.1/js-image-zoom.js" type="application/javascript"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
       <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
       <script src="js/checkOutValidation.js"></script>
+      <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
  
 </head>
 
@@ -48,41 +51,45 @@
                             <ul id="navigation">  
                                 <li><a href="/home">Home</a></li>
                                 <li><a href="shop.html">shop</a></li>
-                                <li><a href="about.html">about</a></li>
-                                <li class="hot"><a href="#">Latest</a>
+                                <!-- <li><a href="about.html">about</a></li> -->
+                                <!-- <li class="hot"><a href="#"></a>Category
                                     <ul class="submenu">
-                                        <li><a href="shop.html"> Product list</a></li>
-                                        <li><a href="product_details.html"> Product Details</a></li>
+                                        <li><a href="shop.html">Men</a></li>
+                                        <li><a href="product_details.html">Women</a></li>
+                                        <li><a href="product_details.html">Smart  Watches</a></li>
                                     </ul>
-                                </li>
-                                <li><a href="blog.html">Blog</a>
+                                </li> -->
+                                <li><a href="blog.html">Categorys</a>
                                     <ul class="submenu">
-                                        <li><a href="blog.html">Blog</a></li>
-                                        <li><a href="blog-details.html">Blog Details</a></li>
+                                        <li><a href="blog.html">Men</a></li>
+                                        <li><a href="blog-details.html">Women</a></li>
+                                        <li><a href="blog-details.html">Smart Watches</a></li>
                                     </ul>
                                 </li>
                                 <li><a href="#">Pages</a>
                                     <ul class="submenu">
                                         <li><a href="login.html">Login</a></li>
                                         <li><a href="/cart">Cart<span class="badge badge-success"></span></a></li>
-                                        <li><a href="elements.html">Element</a></li>
-                                        <li><a href="confirmation.html">Confirmation</a></li>
+                                        <li><a href="/my-account">My Account</a></li>
+                                        <li><a href="/my-orders">My Orders</a></li>
                                         <li><a href="checkout.html">Product Checkout</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="contact.html">Contact</a></li>
+                                <!-- <li><a href="contact.html">Contact</a></li> -->
                             </ul>
                         </nav>
                     </div>
                     <!-- Header Right -->
                     <div class="header-right">
                         <ul>
-                            <li>
+                            <!-- <li>
                                 <div class="nav-search search-switch">
                                     <span class="flaticon-search"></span>
                                 </div>
-                            </li>
-                            <li> <a href="/my-orders"><span class="flaticon-user"></span></a></li>
+                            </li> -->
+                            <li><a href="/logout"><span class="">Log Out</span></a></li>
+                            <!-- <li><a href=""><span class="flaticon-user"></span></a></li> -->
+                            <!-- <li><a href="/my-orders"><span class="flaticon-user"></span></a></li> -->
                             <li><a href="/cart"><span class="flaticon-shopping-cart">
                                 <sup class="cart-qnty" id="cart-count" style="color: rgb(116, 6, 97); font-size:medium"><%=cartCount%></sup></span></a></li>
                         </ul>

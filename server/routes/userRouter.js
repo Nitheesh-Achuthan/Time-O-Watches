@@ -6,6 +6,7 @@ const productDb = require('../model/productModel');
 const adminDb = require('../model/adminModel');
 const controller = require('../controller/controller');
 const productController = require('../controller/productController');
+const saveAddressController = require('../controller/saveAddressController');
 const cartController = require('../controller/cartController');
 const orderController = require('../controller/orderController');
 const cartServices = require('../services/cartService'); 
@@ -126,8 +127,8 @@ userRoute.use((req, res, next) => {
 
 
 userRoute.get('/logout',(req,res)=>{
-    req.session.loggedIn = null
-    req.session.user = null
+    req.session.loggedIn = false;
+    req.session.user = null;
     res.redirect('/') 
 })
 
@@ -140,17 +141,28 @@ userRoute.post('/change-product-quantity',cartController.changeProductQuantity);
 userRoute.post('/remove-product-cart',cartController.removeProCart)
 
 userRoute.get('/checkout',cartController.checkout);
-// async (req,res)=>{
 
-    // let cartCount = await cartServices.count(req.session.user._id) 
 
-    // res.render('user/checkout',{cartCount})
-// })
+userRoute.post('/saveaddress',saveAddressController.saveAddress)
 
-// userRoute.post('/order-data',orderController.create)
 userRoute.post('/place-order',orderController.placeOrder)
+
+userRoute.post('/verify-payment',orderController.razorPay)
+
 userRoute.get('/my-orders',orderController.myOrders)
+
 userRoute.put('/cancel-order-user/:id',orderController.cancelOrderUser)
+
+userRoute.get('/my-account',controller.myAccount)
+
+userRoute.post('/profile-edit',controller.profileEdit)
+
+userRoute.get('/change-pwd',controller.changePswd)
+
+userRoute.post('/newpassword',controller.newPassword)
+
+userRoute.get('/pswdChangeErr',controller.passwordChangeErr)
+
 
 
   

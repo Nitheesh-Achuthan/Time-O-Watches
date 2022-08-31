@@ -1,4 +1,6 @@
 const cartDb = require('../model/cartModel');
+const saveAddressDb = require('../model/saveAddressModel');
+const saveAddressServices = require('../services/saveAddressService'); 
 const cartServices = require('../services/cartService'); 
 
 exports.addCart = async (req,res)=>{
@@ -21,7 +23,6 @@ exports.cart = async (req,res)=>{
 exports.changeProductQuantity = async(req,res)=>{
    const changeProQty = await cartServices.changeQty(req.body);
     const total = await cartServices.totalAmount(req.body.user)  
-    console.log(changeProQty,'--------------------------------------------------'); 
     res.status(200).json({total,changeProQty});
 }
  exports.removeProCart = async (req,res)=>{
@@ -32,6 +33,7 @@ exports.checkout = async(req,res)=>{
     let user = req.session.user;
     let cartCount = await cartServices.count(req.session.user._id)
     let total = await cartServices.totalAmount(req.session.user._id)
-    res.render('user/checkout',{cartCount,user,total})
+    let savedAddress = await saveAddressServices.addressSaved(req.session.user._id)
+    res.render('user/checkout',{cartCount,user,total,savedAddress,savedAddress})
 }
         

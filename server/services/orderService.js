@@ -1,13 +1,8 @@
 const orderDb = require('../model/orderModel')
 const cartDb = require('../model/cartModel')
-const productDb = require('../model/productModel')
-const Razorpay = require('razorpay')
 const ObjectId = require('mongoose').Types.ObjectId;
 
-var instance = new Razorpay({
-    key_id: 'rzp_test_MoPjF88yCdpr2R',
-    key_secret: '9KEIrz0MsZbicVP13JQc5N3u'
-  });
+
 
 
 exports.placeOrder = async (order, product, totalPrice) => {
@@ -23,7 +18,6 @@ exports.placeOrder = async (order, product, totalPrice) => {
 
         }, 
             userId:ObjectId(order.userId),
-
             paymentMethod:order.paymentmethod,
             totalAmount:totalPrice,
 
@@ -31,19 +25,24 @@ exports.placeOrder = async (order, product, totalPrice) => {
             status:status,
             date:new Date()
     })
+
     const orders = await orderObj.save()
-    await cartDb.deleteOne({user:ObjectId(order.userId)})
-    // console.log(orders._id,'-=-=-=-===-=-=-=-=-=-=-=-=-========================--------------------');
+    if(status == 'Ordered'){
+        await cartDb.deleteOne({user:ObjectId(order.userId)})
+    }
     return orders._id;
 
 }
 
-exports.generateRazorpay =  async (orderId) =>{
-     
-}
+exports.orderStatus =  async (orderId,status) =>{
+     await orderDb.updateOne({_id:ObjectId(orderId)},
+        {
+            $set:{status}
+        })     
+}                            
 
 
-exports.orders = async () => {
+exports.orders = async () => {  
     // const orderDetails = await orderDb.find();
 
     // console.log(orderDetails,'orfer444444444444444444');
@@ -125,3 +124,4 @@ exports.myOrders = async(userId)=>{
     ])
    return orders;
 }
+

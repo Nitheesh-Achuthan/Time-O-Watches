@@ -73,6 +73,18 @@ function mobvalid() {
     }
 }
 
+function passwordvalid() {
+    value7 = false;
+    if($("#password").val().match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/)) {
+        value7 = true;
+        document.getElementById("pPswd").style.display = "none";
+     } else {
+        document.getElementById("pPswd").style.display = "block";
+        document.getElementById("pPswd").innerHTML = "Your Password must be Minimum six characters, at least one uppercase letter, one lowercase letter and one number";
+        value7 = false;
+     }
+}
+
 
 
 // function pswdvalid() {

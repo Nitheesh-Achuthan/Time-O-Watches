@@ -12,15 +12,15 @@ const Razorpay = require('razorpay')
 require('dotenv').config();
 
 const port = process.env.PORT
-
+     
 app.set("view engine","ejs"); 
-  
+                                                          
 mongoose.connect(process.env.MONGO_URL,(err)=>{
     if(err){ 
-     console.log("Could not connect to database");
+     console.log("Could not connect to database");  
     }else{
-        console.log('mongodb connected successfully');
-    }               
+        console.log('mongodb connected successfully');    
+    }                
 });                 
                  
 // override the method in form   
@@ -29,14 +29,14 @@ app.use(methodOverride('_method'));
 app.use(morgan('tiny'));     
  
 app.use(express.json());  
-    
-app.use(express.urlencoded({extended:true}));
+      
+app.use(express.urlencoded({extended:true}));      
 app.use(fileUpload());
  
 app.use(
     session({   
         secret: uuidv4(), 
-        resave: false,  
+        resave: false,         
         saveUninitialized: true,  
     }) 
 );
@@ -53,6 +53,6 @@ app.use('/images',express.static(path.join(__dirname,"/public/images")));
 app.use('/admin',require("./server/routes/adminRouter"));  
 app.use('/',require("./server/routes/userRouter")); 
              
-app.listen(port,()=>{     
+app.listen(port,()=>{          
     console.log(`http://localhost:${port}`);          
-});                             
+});                                                      

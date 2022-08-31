@@ -146,15 +146,19 @@ exports.totalAmount = async (userId)=>{
   ])
   return total[0]?.total;
 }
-
+   
 
 exports.getCartProductList = async(userId)=>{
  const cart = await cartDb.findOne({user:ObjectId(userId)})
- return cart.products;
+ let cartProduct = cart.products;
+ return cartProduct;
 }
-// === from ordercontroller ===//
+// === from ordercontroller ===//        
  exports.userCart = async(userId)=>{
-  let cart=  await cartDb.findOne({user:userId})
+  let cart=  await cartDb.findOne({user:userId})           
   return cart;
 }
  
+exports.deleteCart = async (userID)=>{
+    await cartDb.deleteOne({user:userID})
+}

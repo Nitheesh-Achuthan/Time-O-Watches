@@ -97,7 +97,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white " href="/admin/orderManagement">
+          <a class="nav-link text-white active bg-gradient-primary" href="/admin/orderManagement">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">format_textdirection_r_to_l</i>
             </div>
@@ -373,7 +373,7 @@
                 </div>
               </td>
 
-              <% if(orderDetails[i].status=='Canceled' || orderDetails[i].status=='Delivered' ) { %>
+              <% if(orderDetails[i].status=='Canceled' || orderDetails[i].status=='Delivered' || orderDetails[i].status=='Failed') { %>
                 <td>
                   <%= orderDetails[i].status %>
                 </td>

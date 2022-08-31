@@ -131,8 +131,10 @@
                                     </div>
 
                                     <div class="col-md-12 form-group p_star">
-                                        <input type="password" class="form-control" id="password" name="password" oninput="pswdvalid()"
+                                        <input type="password" class="form-control" id="password" name="password" oninput="passwordvalid()"
                                             placeholder="Password">
+                                            <p id="pPswd" style="color: red; padding-left:1rem;display: none;"></p>
+
                                             
                                     </div>
 
@@ -164,7 +166,7 @@
                                         </div> -->
 
 
-                                        <button type="submit" class="btn_3" onclick="fnamevalid();lnamevalid();emailvalid();mobvalid()">
+                                        <button type="submit" class="btn_3" onclick="fnamevalid();lnamevalid();emailvalid();mobvalid();passwordvalid()">
                                             Sign up
                                         </button>
                                         
@@ -326,7 +328,7 @@
     $('#signupForm').submit((e)=>{
         e.preventDefault();
         // console.log('haaai');
-        if(value1 && value2 && value3 && value4 && value5 && value6){
+        if(value1 && value2 && value3 && value4 && value5 && value6 && value7){
 
         $.ajax({
         url: '/signup',

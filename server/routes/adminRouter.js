@@ -5,7 +5,8 @@ const productDb = require('../model/productModel');
 const adminDb = require('../model/adminModel');
 const controller = require('../controller/controller');
 const productController = require('../controller/productController');
-const orderController = require('../controller/orderController')
+const orderController = require('../controller/orderController');
+const dashboardController = require('../controller/dashboardController');
 const categoryDb = require('../model/categoryModel');
 const services = require('../services/categoryService')
 
@@ -16,8 +17,6 @@ adminRoute.get('/', (req, res) => {
             .then(data => {
                 res.render('admin/tables', { users: data });
             })
-
-
     } else {
         res.render('admin/sign-in', { error: '' })
     };
@@ -27,6 +26,17 @@ adminRoute.get('/', (req, res) => {
 // adminRoute.get('/tables',(req,res)=>{
 //     res.redirect('/admin')
 // })
+
+
+// -------------- admin log out -------------//
+
+adminRoute.get('/logout',(req,res)=>{
+    req.session.isAdminLogin = false;
+    req.session.admin = null;
+    res.redirect('admin/sign-in')
+
+})
+
 
 // middleware///
 
@@ -123,6 +133,10 @@ adminRoute.get('/orderManagement',orderController.orders);
 adminRoute.put('/cancel-order/:id', orderController.cancelOrder);
 
 adminRoute.post('/statusUpdate',orderController.statusUpdate);
+
+// ======Dashboard Admin side  =====//
+
+adminRoute.get('/dashboard',dashboardController.dashboardDetails)
     
 
      

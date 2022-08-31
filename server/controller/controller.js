@@ -4,6 +4,7 @@ let categoryDb = require('../model/categoryModel');
 let productDb = require('../model/productModel');
 let services = require('../services/categoryService');
 let cartServices = require('../services/cartService'); 
+let userServices = require('../services/userServices')
 const bcrypt = require('bcrypt')
 
 
@@ -79,8 +80,8 @@ exports.find = async (req,res) => {
                 userDb.find() 
                 .then(data=>{
 
-                req.session.admin=req.body.email;
                 req.session.isAdminLogin=true;
+                req.session.admin=admin;
                 res.render('admin/tables',{users:data})
 
                 })  
@@ -104,11 +105,7 @@ exports.find = async (req,res) => {
     //         res.redirect('/admin/category')
     //     })
 
-    // };
-
-
-
-
+    // };                    
 
     
     exports.createcat = (req,res)=>{
@@ -138,4 +135,48 @@ exports.find = async (req,res) => {
             res.redirect('/admin/category')   
        
     }   
+
+    // ---------my account----------//
+
+    exports.myAccount = async (req,res)=>{
+        const user = await userServices.myProfile(req.session.user._id) 
+        let cartCount = await cartServices.count(req.session.user._id)
+        res.render('user/my-account',{user,cartCount})
+    }
          
+    exports.profileEdit = async (req,res)=>{
+        console.log(req.body,'-------------------------------------')
+        let cartCount = await cartServices.count(req.session.user._id)
+        await userServices.profileEdit(req.session.user._id,req.body)
+        res.redirect('/my-account')
+    }
+    exports.changePswd = async (req,res)=>{       
+        let cartCount = await cartServices.count(req.session.user._id)
+        res.render('user/profilePaswdChange',{cartCount,passworderror:""})
+    }
+    
+    exports.newPassword = async (req,res)=>{
+        // console.log(req.body,'newpsed++++++')
+        const user = await userServices.passwordChange(req.body,req.session.user._id)
+        if(user){
+            
+            if(req.body.newPswd==req.body.confirmPswd){
+                await userServices.updatePassword(req.body,req.session.user._id)
+                res.redirect('/')
+            }else{
+                req.session.passwordError = "Password doesn't match"
+                res.redirect('/pswdChangeErr')
+            }
+        }else{
+            req.session.passwordError = "Your Old Password Is wrong"
+            res.redirect('/pswdChangeErr')
+        }
+
+    }
+    exports.passwordChangeErr = async (req,res)=>{
+            const user = req.session.user;
+            const passworderror = req.session.passwordError;
+            req.session.passwordError = null;
+            res.render('user/profilePaswdChange', { user, error: "", passworderror });
+               
+    }
