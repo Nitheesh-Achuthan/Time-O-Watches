@@ -3,7 +3,35 @@ const cartDb = require('../model/cartModel')
 const ObjectId = require('mongoose').Types.ObjectId;
 
 
+// --- order placed from home page ---/
 
+exports.placeOrderFromHome = async (order,products,productPrice) => {
+    let status = order.paymentmethod === 'Cash On Delivery' ? 'Ordered' : 'Pending'
+    let orderObj = new orderDb ({
+        deliveryDetails: {
+            firstName: order.fname,
+            lastName: order.lname,
+            mobile: order.number,
+            email: order.email,
+            country: order.country,
+            address: order.address
+
+        }, 
+            userId:ObjectId(order.userId),
+            paymentMethod:order.paymentmethod,
+            totalAmount:productPrice,
+
+            products:products,
+            status:status,
+            date:new Date()
+    })
+
+    const orders = await orderObj.save()   
+    return orders._id;
+
+}
+
+// -- order placed from cart --//
 
 exports.placeOrder = async (order, product, totalPrice) => {
     let status = order.paymentmethod === 'Cash On Delivery' ? 'Ordered' : 'Pending'
@@ -122,6 +150,7 @@ exports.myOrders = async(userId)=>{
             }
         }
     ])
+    // console.log('+++++++++++++++++++++++++++++',orders,'--------------------');
    return orders;
 }
 

@@ -150,40 +150,38 @@
                       role="form"
                     >
                       <div class="input-group input-group-outline mb-3">
-                        <label class="form-label">Name</label>
-                        <input type="text" name="name" class="form-control" />
+                        <!-- <label class="form-label">Name</label> -->
+                        <input type="text" name="name" class="form-control" placeholder="Name"/>
                       </div>
                       <div class="input-group input-group-outline mb-3">
-                        <label class="form-label">Price</label>
-                        <input
-                          type="number"
-                          name="price"
-                          class="form-control"
-                        />
+                        <!-- <label class="form-label">Price</label> -->
+                        <input type="number" name="price" class="form-control" placeholder="Price"/>
                       </div>
                       <div class="input-group input-group-outline mb-3">
-                        <label class="form-label">Quantity</label>
-                        <input
-                          type="number"
-                          name="quantity"
-                          class="form-control"
-                        />
+                        <!-- <label class="form-label">Quantity</label> -->
+                        <input type="number" name="quantity"class="form-control" placeholder="Quantity"/>
                       </div>
                       <div class="input-group input-group-outline mb-3">
+                        <label for="category">Category:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                   
+                        <select name="category" style="border: none;" id="cate">
+                          <% for (i=0; i< cate.length; i++){ %>  
+                          <!-- <option selected="true" disabled="disabled" value="<%= cate[i].name %>"><%= cate[i].name %></option> -->
+                          <option value="<%= cate[i].name %>"><%= cate[i].name %></option>
+                          <% } %>
+                        </select>
+                      </div>
+
+                      <!-- <div class="input-group input-group-outline mb-3">
                         <label class="form-label">Category</label>
                         <input
                           type="text"
                           name="category"
                           class="form-control"
                         />
-                      </div>
+                      </div> -->
                       <div class="input-group input-group-outline mb-3">
-                        <label class="form-label">Description</label>
-                        <input
-                          type="text"
-                          name="description"
-                          class="form-control"
-                        />
+                        <!-- <label class="form-label">Description</label> -->
+                        <input type="text" name="description" class="form-control" placeholder="Description"/>
                       </div>
                       <!-- <div class="input-group input-group-outline mb-3">
                         <input type="file" name="image" class="form-control" />

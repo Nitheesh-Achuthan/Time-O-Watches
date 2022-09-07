@@ -1,0 +1,507 @@
+<%-include('../include/user-header')%>
+  <main>
+
+    <!-- <div class="cupon_area">
+              <div class="check_title">
+                <h2>
+                  Have a coupon?
+                  <a href="#">Click here to enter your code</a>
+                </h2>
+              </div>
+              <input type="text" placeholder="Enter coupon code" />
+              <a class="tp_btn" href="#">Apply Coupon</a>
+            </div> -->
+
+    <div class="billing_details">
+      <div class="row" style="padding: 5rem 0; padding-left: 15rem;">
+        <form class="row contact_form" id="buynow-form" action="" method="" novalidate="novalidate">
+          <div class="col-lg-5">
+
+            <h3>Billing Details</h3>
+
+            <div class="col-md-12 form-group p_star">
+              <input type="text" class="form-control" id="fname" placeholder="First Name" name="fname"
+                oninput="firstnamevalid()" />
+                <p id="pfname" style="color:red;padding-left:1rem;display: none;"></p>
+
+            </div>
+            <div class="col-md-12 form-group p_star">
+              <input type="text" class="form-control" id="lname" placeholder="Last Name" name="lname" 
+              oninput="lastnamevalid()"/>
+              <p id="plname" style="color:red;padding-left:1rem;display: none;"></p>
+
+            </div>
+            <div class="col-md-12 form-group p_star">
+              <input type="text" class="form-control" id="mobile" placeholder="Mobile" name="number"
+              oninput="mobvalid()" />
+              <p id="pmob" style="color: red; padding-left:1rem;display: none;"></p>
+
+            </div>
+            <div class="col-md-12 form-group p_star">
+              <input type="text" class="form-control" id="email" placeholder="Email" name="email" 
+              oninput="emailvalid()"/>
+              <p id="ename" style="color: red; padding-left:1rem;display: none;"></p>
+
+            </div>
+            <div class="col-md-12  form-group p_star">
+              <input type="text" class="form-control" id="country" placeholder="Country" name="country" 
+              oninput="countryvalid()"/>
+              <p id="pcountry" style="color: red; padding-left:1rem;display: none;"></p>
+              <input type="text" name="userId" id="" value="<%=user._id %>" hidden>
+
+
+
+              <!-- <select class="country_select">
+                        <option value="1">Country</option>
+                        <option value="2">Country</option>
+                        <option value="4">Country</option>
+                      </select> -->
+            </div>
+            <div class="col-md-12  form-group p_star">
+              <textarea class="form-control" name="address" id="address" rows="1" placeholder="Address" 
+              oninput="addressvalid()"></textarea>
+              <p id="paddress" style="color: red; padding-left:1rem;display: none;"></p>
+              <input type="text" name="proId" id="proId" value="<%=proId %>" hidden>
+              <input type="text" name="price" id="total" value="<%= total%>" hidden>
+
+
+            </div>
+            <div class="col-md-12 form-group p_star">
+              <button class="save-address" type="button"
+              onclick="firstnamevalid();lastnamevalid();mobvalid();emailvalid();countryvalid();addressvalid();
+              saveAddress(document.getElementById('fname').value,document.getElementById('lname').value,document.getElementById('mobile').value,document.getElementById('email').value,document.getElementById('country').value,document.getElementById('address').value)">Save Address</button>
+                      <!-- <input type="text" class="form-control" id="add1" name="add1" /> -->
+                      <!-- <span class="placeholder" data-placeholder="Address line 01"></span> -->
+                    </div>
+                    <!-- <div class="col-md-12 form-group p_star">
+                      <input type="text" class="form-control" id="add2" name="add2" />
+                      <span class="placeholder" data-placeholder="Address line 02"></span>
+                    </div>
+                    <div class="col-md-12 form-group p_star">
+                      <input type="text" class="form-control" id="city" name="city" />
+                      <span class="placeholder" data-placeholder="Town/City"></span>
+                    </div>
+                    <div class="col-md-12 form-group p_star">
+                      <input type="text" class="form-control" id="district" name="country" />
+                      <span class="placeholder" data-placeholder="District"></span> -->
+
+            <!-- <select class="country_select">
+                        <option value="1">District</option>
+                        <option value="2">District</option>
+                        <option value="4">District</option>
+                      </select> -->
+            <!-- </div>
+                    <div class="col-md-12 form-group">
+                      <input type="text" class="form-control" id="zip" name="zip" placeholder="Postcode/ZIP" />
+                    </div> -->
+            <!-- <div class="col-md-12 form-group">
+                      <div class="creat_account">
+                        <input type="checkbox" id="f-option2" name="selector" />
+                        <label for="f-option2">Create an account?</label>
+                      </div>
+                    </div> -->
+
+                    <p style="color: red;" id="psavedAddress"></p>
+                    
+            <div class="col-md-12 form-group">
+              <% if (savedAddress.length >0) {%>
+              <label for="savedAddress" style="font-weight: 700;">Saved Address</label>
+              <%  } %>
+              <% for (let i=0; i< savedAddress.length; i++) { %>
+                <div class="radio inline">
+                  <input type="radio" id="<%=savedAddress[i]._id %>" name="savedAddress" value="" 
+                  onclick="fillAddress('<%=savedAddress[i].firstName %>','<%=savedAddress[i].lastName %>','<%=savedAddress[i].mobile %>','<%=savedAddress[i].email %>','<%=savedAddress[i].country %>','<%=savedAddress[i].address %>')">
+                  <label for="" style="font-size: 16px;padding-left: 4px;">
+                    <%=savedAddress[i].firstName %></label><br>
+
+                    <label for="" style="font-size: 16px;padding-left: 20px;">
+                      <%=savedAddress[i].lastName %></label><br>
+
+                      <label for="" style="font-size: 16px;padding-left: 20px;">
+                        <%=savedAddress[i].mobile %></label><br>
+
+                        <label for="" style="font-size: 16px;padding-left: 20px;">
+                          <%=savedAddress[i].email %></label><br>
+
+                          <label for="" style="font-size: 16px; padding-left: 20px;">
+                            <%=savedAddress[i].country %></label><br>
+
+                            <label for="" style="font-size: 16px;padding-left: 20px;">
+                              <%=savedAddress[i].address %></label><br>
+                </div>
+
+            <%  } %>
+              <!-- <div class="creat_account">
+                <h3>Saved Addresses</h3>
+              </div> -->
+              <!-- <textarea class="form-control" name="message" id="message" rows="1" placeholder="Order Notes"></textarea> -->
+            </div>
+          </div>
+
+          <div class="col-lg-4" style="margin: 3.6rem 10rem;">
+            <div class="order_box">
+              <h2>Your Order</h2>
+              <ul class="list">
+                <li>
+                  <a href="#">Product
+                    <span>Watch</span>
+                  </a>
+                </li>
+                <!-- <li>
+                  <a href="#">Fresh Blackberry
+                    <span class="middle">x 02</span>
+                    <span class="last">$720.00</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">Fresh Tomatoes
+                    <span class="middle">x 02</span>
+                    <span class="last">$720.00</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">Fresh Brocoli
+                    <span class="middle">x 02</span>
+                    <span class="last">$720.00</span>
+                  </a>
+                </li>
+              </ul>
+              <ul class="list list_2">
+                <li>
+                  <a href="#">Subtotal
+                    <span>$2160.00</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">Shipping
+                    <span>Flat rate: $50.00</span>
+                  </a>
+                </li> -->
+                <li>
+                  <a href="#">Total
+                    <span>
+                      <%=total %>
+                    </span>
+                  </a>
+                </li>
+              </ul>
+
+              <!-- radio button  -->
+
+
+              <div class="payment_item">
+                <div class="radion_btn">
+                  <input type="radio" id="payment" name="paymentmethod" value='Cash On Delivery' />
+                  <label for="payment">Cash on delivery</label>
+                  <div class="check"></div>
+                </div>
+              </div>
+              <div class="payment_item active">
+                <div class="radion_btn">
+                  <input type="radio" id="payment2" name="paymentmethod" value="Online" />
+                  <label for="payment2">Online</label>
+                  <img src="img/product/single-product/card.jpg" alt="" />
+                  <div class="check"></div>
+                </div>
+              </div>
+
+              <!-- radio btn new -->
+
+              <!-- <input type="radio" id="cod" name="cod" value="cash on delivery">
+              <label for="cod">Cash on delivery</label><br>
+               <input type="radio" id="online" name="paypal" value="paypal">
+               <label for="online">Paypal</label><br> -->
+
+
+
+              <div class="creat_account">
+              </div>
+              <button style="width: 100%;cursor:pointer" class="btn_3" type="submit" 
+              onclick="firstnamevalid();lastnamevalid();mobvalid();emailvalid();countryvalid();addressvalid()">Proceed</button>
+            </div>
+        </form>
+      </div>
+    </div>
+    </div>
+    </div>
+    </section>
+    <!--================End Checkout Area =================-->
+  </main>
+  <footer>
+    <!-- Footer Start-->
+    <div class="footer-area footer-padding">
+      <div class="container">
+        <div class="row d-flex justify-content-between">
+          <div class="col-xl-3 col-lg-3 col-md-5 col-sm-6">
+            <div class="single-footer-caption mb-50">
+              <div class="single-footer-caption mb-30">
+                <!-- logo -->
+                <div class="footer-logo">
+                  <a href="index.html"><img src="assets/img/logo/logo2_footer.png" alt=""></a>
+                </div>
+                <div class="footer-tittle">
+                  <div class="footer-pera">
+                    <p>Asorem ipsum adipolor sdit amet, consectetur adipisicing elitcf sed do eiusmod tem.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-2 col-lg-3 col-md-3 col-sm-5">
+            <div class="single-footer-caption mb-50">
+              <div class="footer-tittle">
+                <h4>Quick Links</h4>
+                <ul>
+                  <li><a href="#">About</a></li>
+                  <li><a href="#"> Offers & Discounts</a></li>
+                  <li><a href="#"> Get Coupon</a></li>
+                  <li><a href="#"> Contact Us</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-lg-3 col-md-4 col-sm-7">
+            <div class="single-footer-caption mb-50">
+              <div class="footer-tittle">
+                <h4>New Products</h4>
+                <ul>
+                  <li><a href="#">Woman Cloth</a></li>
+                  <li><a href="#">Fashion Accessories</a></li>
+                  <li><a href="#"> Man Accessories</a></li>
+                  <li><a href="#"> Rubber made Toys</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-lg-3 col-md-5 col-sm-7">
+            <div class="single-footer-caption mb-50">
+              <div class="footer-tittle">
+                <h4>Support</h4>
+                <ul>
+                  <li><a href="#">Frequently Asked Questions</a></li>
+                  <li><a href="#">Terms & Conditions</a></li>
+                  <li><a href="#">Privacy Policy</a></li>
+                  <li><a href="#">Report a Payment Issue</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Footer bottom -->
+        <div class="row align-items-center">
+          <div class="col-xl-7 col-lg-8 col-md-7">
+            <div class="footer-copy-right">
+              <p>
+                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                Copyright &copy;
+                <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made
+                with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com"
+                  target="_blank">Colorlib</a>
+                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+              </p>
+            </div>
+          </div>
+          <div class="col-xl-5 col-lg-4 col-md-5">
+            <div class="footer-copy-right f-right">
+              <!-- social -->
+              <div class="footer-social">
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.facebook.com/sai4ull"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-behance"></i></a>
+                <a href="#"><i class="fas fa-globe"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Footer End-->
+  </footer>
+  <!--? Search model Begin -->
+  <div class="search-model-box">
+    <div class="h-100 d-flex align-items-center justify-content-center">
+      <div class="search-close-btn">+</div>
+      <form class="search-model-form">
+        <input type="text" id="search-input" placeholder="Searching key.....">
+      </form>
+    </div>
+  </div>
+  <!-- Search model end -->
+
+
+  <script>
+
+    // ------ for already existing address ---------//
+    
+    function fillAddress(firstname,lastname,mobile,email,country,address) {
+      $('#fname').val(firstname);
+      $('#lname').val(lastname);
+      $('#mobile').val(mobile);
+      $('#email').val(email);
+      $('#country').val(country);
+      $('#address').val(address);
+    }
+
+  // --------for saving adddress----------//
+  
+  function saveAddress(firstname,lastname,mobile,email,country,address) {
+    if(value1 && value2 && value3 && value4 && value5 && value6 && value7 && value8){
+        $.ajax({
+          url:'/saveaddress',
+          method:'post',
+          data:{
+            firstname,
+            lastname,
+            mobile,
+            email,
+            country,
+            address
+          },
+          success:(response)=>{
+            if(response.error) {
+              document.getElementById("psavedAddress").style.display = "block";
+              document.getElementById("psavedAddress").innerText = `${response.error}`;
+            } else {
+
+
+              const Toast = Swal.mixin({
+    toast: true,
+    position: 'center',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
+
+  Toast.fire({
+    icon: 'success',
+    title: 'Address Saved !!!'
+  })
+
+            } 
+
+          }
+        })
+  }
+}
+
+    $("#buynow-form").submit((e) => {
+      e.preventDefault()
+      if(value1 && value2 && value3 && value4 && value5 && value6 && value7 && value8){
+      $.ajax({
+        url: '/place-order-fromhome',
+        method: 'post',
+        data: $('#buynow-form').serialize(),
+        success: (response) => {
+          if(response.codSuccess){
+          Swal.fire({
+            position: 'centre',
+            icon: 'success',
+            title: 'You have ordered successfully!!',
+            showConfirmButton: false,
+            // timer: 1500
+          })
+          setTimeout(function () {
+                  location.href='/home'
+                }, 1500);
+              }else {
+                 razorpayPaymentbuynow(response)
+              }
+
+        }
+      })}
+    })
+
+    function razorpayPaymentbuynow(order){
+      // console.log('hkjghfjtk',order);
+      var options = {
+    "key": "rzp_test_MoPjF88yCdpr2R", // Enter the Key ID generated from the Dashboard
+    "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "name": "Time'O",
+    "description": "Test Transaction",
+    "image": "https://example.com/your_logo",
+    "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    "handler": function (response){
+        verifyPayment(response,order)    
+    },
+    "prefill": {
+        "name": "Time'O Watches",
+        "email": "time.o.watches@gmail.com",
+        "contact": "9999999999"
+    },
+    "notes": {
+        "address": "Time'O Corporate Office"
+    },
+    "theme": {
+        "color": "#3399cc"
+    }
+};
+var rzp1 = new Razorpay(options);
+rzp1.open();
+}
+
+   function verifyPayment(payment,order){
+    $.ajax({
+      url:'/verify-payment-buynow',
+      data:{
+        payment,
+        order
+      },
+      method:'post',
+      success:(response)=>{
+        if(response.status){
+          location.href = '/home'
+        }else {
+          alert('Payment Failed')
+        }
+   
+      }
+    })
+   }
+
+  </script>
+
+
+
+  <!-- JS here -->
+
+  <script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>
+  <!-- Jquery, Popper, Bootstrap -->
+  <script src="./assets/js/vendor/jquery-1.12.4.min.js"></script>
+  <script src="./assets/js/popper.min.js"></script>
+  <script src="./assets/js/bootstrap.min.js"></script>
+  <!-- Jquery Mobile Menu -->
+  <script src="./assets/js/jquery.slicknav.min.js"></script>
+
+  <!-- Jquery Slick , Owl-Carousel Plugins -->
+  <script src="./assets/js/owl.carousel.min.js"></script>
+  <script src="./assets/js/slick.min.js"></script>
+
+  <!-- One Page, Animated-HeadLin -->
+  <script src="./assets/js/wow.min.js"></script>
+  <script src="./assets/js/animated.headline.js"></script>
+  <script src="./assets/js/jquery.magnific-popup.js"></script>
+
+  <!-- Scroll up, nice-select, sticky -->
+  <script src="./assets/js/jquery.scrollUp.min.js"></script>
+  <script src="./assets/js/jquery.nice-select.min.js"></script>
+  <script src="./assets/js/jquery.sticky.js"></script>
+
+  <!-- contact js -->
+  <script src="./assets/js/contact.js"></script>
+  <script src="./assets/js/jquery.form.js"></script>
+  <script src="./assets/js/jquery.validate.min.js"></script>
+  <script src="./assets/js/mail-script.js"></script>
+  <script src="./assets/js/jquery.ajaxchimp.min.js"></script>
+
+  <!-- Jquery Plugins, main Jquery -->
+  <script src="./assets/js/plugins.js"></script>
+  <script src="./assets/js/main.js"></script>
+
+  </body>
+
+  </html>

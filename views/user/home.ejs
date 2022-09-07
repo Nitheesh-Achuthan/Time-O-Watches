@@ -11,7 +11,7 @@
                             <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
                                 <div class="hero__caption">
                                     <h1 data-animation="fadeInLeft" data-delay=".4s" data-duration="2000ms">Select Your New Perfect Style</h1>
-                                    <p data-animation="fadeInLeft" data-delay=".7s" data-duration="2000ms">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat is aute irure.</p>
+                                    <p data-animation="fadeInLeft" data-delay=".7s" data-duration="2000ms">With TIME'O Watches</p>
                                     <!-- Hero-btn -->
                                     <div class="hero__btn" data-animation="fadeInLeft" data-delay=".8s" data-duration="2000ms">
                                         <a href="industries.html" class="btn hero-btn">Shop Now</a>
@@ -172,9 +172,13 @@
                         <div class="single-popular-items mb-50 text-center">
                             <div class="popular-img">
                                 <!-- <% console.log(watches[i].image,'here is the watches') %> -->
-                                <img src="<%= watches[i].image %>" alt="">
+                                <a href="product-details/<%=watches[i]._id%>"><img src="<%= watches[i].image %>" alt=""></a>
                                 <div class="img-cap">
-                                    <span>Add to cart</span>
+                                    <!-- <span style="width:100%;height:3rem;display: inline;">Add to cart</span> -->
+                                    <!-- <span style="background-color: black; color:white; width:100%;height:3rem;display: inline;">buy now</span> -->
+                                    <button class="add-cart-btn" type="submit" onclick="addCart('<%=watches[i]._id%>')"> Add To Cart </button>
+                                    
+                                    <a href="/buy-now?id=<%=watches[i]._id%>"><button class="buy-now-btn">Buy Now</button></a>
                                 </div>
                                 <div class="favorit-items">
                                     <span class="flaticon-heart"></span>
@@ -483,6 +487,40 @@
         </div>
     </div>
     <!-- Search model end -->
+
+
+
+    <!-- -------------add cart------------- -->
+  
+    <script>
+          function addCart(proId) {
+            $.ajax({
+                url: `/add-to-cart/${proId}`,
+                method: 'post',
+                success: (res) => {
+
+
+                    if (res.status) {
+                        let count = $('#cart-count').html()
+                        count = parseInt(count) + 1
+                        $('#cart-count').html(count)
+                    }
+
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Your product is added to cart',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+
+                }
+            })
+       }
+
+    </script>
+    
+
 
     <!-- JS here -->
 

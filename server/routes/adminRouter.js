@@ -7,8 +7,9 @@ const controller = require('../controller/controller');
 const productController = require('../controller/productController');
 const orderController = require('../controller/orderController');
 const dashboardController = require('../controller/dashboardController');
+const offerController = require('../controller/offerController');
 const categoryDb = require('../model/categoryModel');
-const services = require('../services/categoryService')
+const services = require('../services/categoryService');
 
 adminRoute.get('/', (req, res) => {  
     if (req.session.isAdminLogin) {
@@ -23,9 +24,9 @@ adminRoute.get('/', (req, res) => {
 
 });
 
-// adminRoute.get('/tables',(req,res)=>{
-//     res.redirect('/admin')
-// })
+adminRoute.get('/tables',(req,res)=>{
+    res.redirect('/admin')
+})
 
 
 // -------------- admin log out -------------//
@@ -33,7 +34,7 @@ adminRoute.get('/', (req, res) => {
 adminRoute.get('/logout',(req,res)=>{
     req.session.isAdminLogin = false;
     req.session.admin = null;
-    res.redirect('admin/sign-in')
+    res.redirect('/admin')
 
 })
 
@@ -94,11 +95,8 @@ adminRoute.get('/product',(req,res)=>{
 
 })
 
-adminRoute.get('/addproduct',(req,res)=>{
-    res.render('admin/addProduct')
-     
-   
-})  
+// --- for adding product admin side---- //
+adminRoute.get('/addproduct',productController.addProduct)
 
 adminRoute.post('/product',productController.create);
 
@@ -136,7 +134,16 @@ adminRoute.post('/statusUpdate',orderController.statusUpdate);
 
 // ======Dashboard Admin side  =====//
 
-adminRoute.get('/dashboard',dashboardController.dashboardDetails)
+adminRoute.get('/dashboard',dashboardController.dashboardDetails);
+
+// ========= offers ========== //
+adminRoute.get('/offers',offerController.offers);
+
+adminRoute.get('/add-offer',offerController.addOffer);
+
+adminRoute.post('/offer-add',offerController.offerAdd);
+
+adminRoute.patch('/offer-status/:id',offerController.status);
     
 
      

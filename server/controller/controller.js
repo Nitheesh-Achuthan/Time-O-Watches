@@ -2,7 +2,7 @@ let userDb = require('../model/model');
 let adminDb = require('../model/adminModel');
 let categoryDb = require('../model/categoryModel');
 let productDb = require('../model/productModel');
-let services = require('../services/categoryService');
+let categoryServices = require('../services/categoryService');
 let cartServices = require('../services/cartService'); 
 let userServices = require('../services/userServices')
 const bcrypt = require('bcrypt')
@@ -109,7 +109,7 @@ exports.find = async (req,res) => {
 
     
     exports.createcat = (req,res)=>{
-        const cate = services.addCate(req.body.name)
+        const cate = categoryServices.addCate(req.body.name)
             res.redirect('/admin/category')
     };
 
@@ -123,14 +123,14 @@ exports.find = async (req,res) => {
 
     exports.update = (req,res)=>{
         // console.log(req.params.id,'jjjjjjjjjjjjjjjjjjjjjjjjjjj',req.body.name);
-     const catUpdate = services.updateCate(req.params.id,req.body.name);
+     const catUpdate = categoryServices.updateCate(req.params.id,req.body.name);
     //  res.render('admin/category-manage',{cate:catUpdate})
     res.redirect('/admin/category')
     
     }
  
     exports.delete = (req,res)=>{ 
-        const id = services.deleteCate(req.params.id);
+        const id = categoryServices.deleteCate(req.params.id);
         
             res.redirect('/admin/category')   
        

@@ -134,17 +134,24 @@ userRoute.get('/logout',(req,res)=>{
 
 userRoute.get('/cart',cartController.cart);
 
-userRoute.get('/add-to-cart/:id',cartController.addCart);
+userRoute.post('/add-to-cart/:id',cartController.addCart);
 
 userRoute.post('/change-product-quantity',cartController.changeProductQuantity);
 
 userRoute.post('/remove-product-cart',cartController.removeProCart)
 
-userRoute.get('/checkout',cartController.checkout);
+userRoute.get('/buy-now',orderController.buyNowFromHome);
 
+userRoute.get('/checkout',cartController.checkout);
 
 userRoute.post('/saveaddress',saveAddressController.saveAddress)
 
+// place order from home //
+userRoute.post('/place-order-fromhome',orderController.placeOrderHome)
+
+userRoute.post('/verify-payment-buynow',orderController.paymentOnline)
+
+// place order from cart //
 userRoute.post('/place-order',orderController.placeOrder)
 
 userRoute.post('/verify-payment',orderController.razorPay)

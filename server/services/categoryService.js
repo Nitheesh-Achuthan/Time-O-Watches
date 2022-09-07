@@ -19,3 +19,8 @@ exports.deleteCate = async (id)=>{
     // console.log(dlt,'Deletinggg');
     // return;
 } 
+// --- for finding categorys for product add page--//
+exports.categorys = async ()=>{
+    const cate = await categoryDb.find()
+    return cate;
+}

@@ -93,3 +93,21 @@ body{
     color: red;
     cursor: pointer;
 }
+.add-cart-btn {
+    background-color:black;
+    color:white;
+    width: 40%;
+    height: 35px;
+    border: none;
+    cursor: pointer;
+
+}
+
+.buy-now-btn {
+    background-color: red;
+    color:black;
+    width: 40%;
+    height: 35px;
+    border: none;
+    cursor: pointer;
+}

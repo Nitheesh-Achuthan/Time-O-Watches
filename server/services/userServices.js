@@ -13,7 +13,7 @@ exports.profileEdit = async (userId,userDetails)=>{
     console.log(userDetails,'00000000usrerererer');
     await userDb.updateOne({_id:userId},{
         $set:{
-            firstName:userDetails.fname,
+            firstName:userDetails.fname, 
             lastName:userDetails.lname,
             email:userDetails.email,
             mobile:userDetails.mobile

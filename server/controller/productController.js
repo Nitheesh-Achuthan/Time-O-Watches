@@ -1,6 +1,9 @@
 let productDb = require('../model/productModel');
 let productServices = require('../services/productService');
 let cartServices = require('../services/cartService'); 
+let categoryServices = require('../services/categoryService');
+
+
 
 
 
@@ -39,7 +42,12 @@ exports.create = (req,res)=>{
     })  
       
     })
-} 
+}
+
+exports.addProduct = async(req,res)=>{
+    const cate = await categoryServices.categorys()
+    res.render('admin/addProduct',{cate})
+}
 
 exports.editProduct = async (req,res)=>{
 

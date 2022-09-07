@@ -34,6 +34,6 @@ exports.checkout = async(req,res)=>{
     let cartCount = await cartServices.count(req.session.user._id)
     let total = await cartServices.totalAmount(req.session.user._id)
     let savedAddress = await saveAddressServices.addressSaved(req.session.user._id)
-    res.render('user/checkout',{cartCount,user,total,savedAddress,savedAddress})
+    res.render('user/checkout',{cartCount,user,total,savedAddress})
 }
         

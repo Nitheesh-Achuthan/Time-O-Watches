@@ -11,16 +11,36 @@ exports.editProducts = async (id)=>{
     return edit;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
 exports.updateProduct = async (proId,proDetails)=>{
-    const update = await productDb.updateOne({_id:proId},{
-        $set:{
+    let image = proDetails.image;
+    if(image) {
+        let uploadPath = `./public/images/${date}.jpeg`
+        var imgPath = `images/${date}.jpeg`
+        let date = Date.now();
+        image.mv(uploadPath,(err)=>{})
+           
+    }
+    const product = {
             name:proDetails.name,
             price:proDetails.price,
             quantity:proDetails.quantity,
             category:proDetails.category,
-            description:proDetails.description 
-
-        }})
+            description:proDetails.description,
+            image:imgPath
+    }
+    const update = await productDb.updateOne({_id:proId},{$set:  product})
         return update;
 }
 
@@ -29,3 +49,22 @@ exports.deleteProduct = async (id)=>{
     // console.log(dlt,'Deletinggg');
     // return;
 }
+
+exports.product = async (proId)=>{
+    const product = await productDb.findById(proId)
+    const productPrice = product.price;
+    return productPrice;      
+}
+
+// ---------offers admin side-------- //
+
+exports.productOffer = async ()=>{
+    const products = await productDb.find()
+    // console.log(products,'______________________')
+    return products;
+}
+
+
+// exports.offerProduct = async(req,res)=>{
+//     const
+// }
