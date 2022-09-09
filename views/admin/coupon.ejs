@@ -37,6 +37,12 @@
   <link id="pagestyle" href="adminAssets/css/material-dashboard.css?v=3.0.4" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
   <link rel="stylesheet" href="adminAssets/css/admin.css">
+
+  <!-- scripts -->
+
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  
+
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">
@@ -72,7 +78,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white active bg-gradient-primary" href="/admin/product">
+          <a class="nav-link text-white" href="/admin/product">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">watch</i>
             </div>
@@ -95,6 +101,7 @@
             <span class="nav-link-text ms-1">Order Management</span>
           </a>
         </li>
+
         <li class="nav-item">
           <a class="nav-link text-white " href="/admin/offers">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -105,7 +112,7 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link text-white " href="/admin/coupons">
+          <a class="nav-link text-white  active bg-gradient-primary" href="/admin/coupons">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">star_border</i>
             </div>
@@ -121,6 +128,7 @@
             <span class="nav-link-text ms-1">Coupon History</span>
           </a>
         </li>
+
         <li class="nav-item mt-3">
           <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Account pages</h6>
         </li>
@@ -155,8 +163,7 @@
 
     <div class="sidenav-footer position-absolute w-100 bottom-0 ">
       <div class="mx-3">
-        <a class="btn bg-gradient-primary mt-4 w-100"
-          href="/admin/logout" type="button">Log Out</a>
+        <a class="btn bg-gradient-primary mt-4 w-100" href="/admin/logout" type="button">Log Out</a>
       </div>
     </div>
   </aside>
@@ -288,7 +295,7 @@
     <div class="container-fluid py-4">
 
 
-      <a class="btn bg-gradient-primary mt-4 w-15" href="/admin/addproduct" type="button">Add Product</a>
+      <a class="btn bg-gradient-primary mt-4 w-15" href="/admin/add-coupon" type="button">Add Coupons</a>
 
 
       <div class="row">
@@ -296,314 +303,78 @@
           <div class="card my-4">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
               <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                <h6 class="text-white text-capitalize ps-3">Product Management</h6>
+                <h6 class="text-white text-capitalize ps-3">Coupons</h6>
               </div>
             </div>
             <div class="card-body px-0 pb-2">
               <div class="table-responsive p-0">
-                <table class="table align-items-center mb-0">
+                <table class="table align-items-center mb-0" style="text-align: center;">
                   <thead>
                     <tr>
-                      <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Name</th>
-                      <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Price</th>
-                      <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Quantity</th>
-                      <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Category</th>
-                      <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Images</th>
+                      <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Coupon Code</th>
+                      <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Percent</th>
+                      <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Min Purchase</th>
+                      <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">From</th>
+                      <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">To</th>
+                      <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Status</th>
                       <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Action</th>
                       <th class="text-secondary opacity-7"></th>
                     </tr>
                   </thead>
-                  <tbody>   
-                    
-                    <% for(i=0;i< watches.length;i++) { %>
-                      <tr>
-                        <!-- <th scope="row">1</th> -->
-                        <td><%= watches[i].name %></td>
-                        <td><%= watches[i].price %></td>
-                        <td><%= watches[i].quantity %></td>
-                        <td><%= watches[i].category %></td>
-                        <td><img style="width: 50px; height: 50px" src="../<%=watches[i].image %>" alt=""></td>
-
-                        
-                        
-                          <!-- <td>
-                            <a href="/admin/update?id=<%=watches[i]._id %>" class="btn border-shadow update">
-                              <i class="fa-solid fa-pencil"></i>
-                                </a>
-                                <div>   
-                                <form action="/admin/delete/<%= watches[i]._id %>?_method=DELETE" method="post">
-                                <a href="" onclick="return confirm('Are you want to delete <%=watches[i].name %> ?')">
-                                <button class="btn border-shadow update" type="submit">
-                                <i class="fa-solid fa-trash-can"></i>
-                                </button> 
-                                </a>   
-                              </form>
-                            </div>                   
-                          </td> -->
-                          
-                        
-                        <td>
-                        <a href="/admin/edit-product/<%= watches[i]._id %>" class="btn btn-primary">Edit</a>
-                        <a href="/admin/delete-product/<%= watches[i]._id %>" onclick="return confirm('Are you want to delete <%= watches[i].name%>')" class="btn btn-danger">Delete</a>
-                      </td>
-                      
-
-                    </tr>
-                    <% } %>
-                    <tr>
-                      
-                    </tbody>
-                  </table>
-                </div> 
-              </div>
-            </div>
-          </div>
-        </div>
-                                              
-
-
-
-
-      <!-- <div class="row">
-        <div class="col-12">
-          <div class="card my-4">
-            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-              <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                <h6 class="text-white text-capitalize ps-3">Product Management</h6>
-              </div>
-            </div>
-            <div class="card-body px-0 pb-2">
-              <div class="table-responsive p-0">
-                <table class="table align-items-center justify-content-center mb-0">
-                  <thead>
-                    <tr>
-                      <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Name</th>
-                      <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7 ps-2">Price</th>
-                      <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7 ps-2">Quantity</th>
-                      <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7 ps-2">Category</th>
-                      <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7 ps-2">Image</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Action</th>
-                      <th></th>
-                    </tr>
-                  </thead>
                   <tbody>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2">
-                          <div>
-                            <img src="adminAssets/img/small-logos/logo-asana.svg"
-                              class="avatar avatar-sm rounded-circle me-2" alt="spotify">
-                          </div>
-                          <div class="my-auto">
-                            <h6 class="mb-0 text-sm">Asana</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-sm font-weight-bold mb-0">$2,500</p>
-                      </td>
-                      <td>
-                        <span class="text-xs font-weight-bold">working</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <div class="d-flex align-items-center justify-content-center">
-                          <span class="me-2 text-xs font-weight-bold">60%</span>
-                          <div>
-                            <div class="progress">
-                              <div class="progress-bar bg-gradient-info" role="progressbar" aria-valuenow="60"
-                                aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="align-middle">
-                        <button class="btn btn-link text-secondary mb-0">
-                          <i class="fa fa-ellipsis-v text-xs"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2">
-                          <div>
-                            <img src="adminAssets/img/small-logos/github.svg"
-                              class="avatar avatar-sm rounded-circle me-2" alt="invision">
-                          </div>
-                          <div class="my-auto">
-                            <h6 class="mb-0 text-sm">Github</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-sm font-weight-bold mb-0">$5,000</p>
-                      </td>
-                      <td>
-                        <span class="text-xs font-weight-bold">done</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <div class="d-flex align-items-center justify-content-center">
-                          <span class="me-2 text-xs font-weight-bold">100%</span>
-                          <div>
-                            <div class="progress">
-                              <div class="progress-bar bg-gradient-success" role="progressbar" aria-valuenow="100"
-                                aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="align-middle">
-                        <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false">
-                          <i class="fa fa-ellipsis-v text-xs"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2">
-                          <div>
-                            <img src="adminAssets/img/small-logos/logo-atlassian.svg"
-                              class="avatar avatar-sm rounded-circle me-2" alt="jira">
-                          </div>
-                          <div class="my-auto">
-                            <h6 class="mb-0 text-sm">Atlassian</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-sm font-weight-bold mb-0">$3,400</p>
-                      </td>
-                      <td>
-                        <span class="text-xs font-weight-bold">canceled</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <div class="d-flex align-items-center justify-content-center">
-                          <span class="me-2 text-xs font-weight-bold">30%</span>
-                          <div>
-                            <div class="progress">
-                              <div class="progress-bar bg-gradient-danger" role="progressbar" aria-valuenow="30"
-                                aria-valuemin="0" aria-valuemax="30" style="width: 30%;"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="align-middle">
-                        <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false">
-                          <i class="fa fa-ellipsis-v text-xs"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2">
-                          <div>
-                            <img src="adminAssets/img/small-logos/bootstrap.svg"
-                              class="avatar avatar-sm rounded-circle me-2" alt="webdev">
-                          </div>
-                          <div class="my-auto">
-                            <h6 class="mb-0 text-sm">Bootstrap</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-sm font-weight-bold mb-0">$14,000</p>
-                      </td>
-                      <td>
-                        <span class="text-xs font-weight-bold">working</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <div class="d-flex align-items-center justify-content-center">
-                          <span class="me-2 text-xs font-weight-bold">80%</span>
-                          <div>
-                            <div class="progress">
-                              <div class="progress-bar bg-gradient-info" role="progressbar" aria-valuenow="80"
-                                aria-valuemin="0" aria-valuemax="80" style="width: 80%;"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="align-middle">
-                        <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false">
-                          <i class="fa fa-ellipsis-v text-xs"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2">
-                          <div>
-                            <img src="adminAssets/img/small-logos/logo-slack.svg"
-                              class="avatar avatar-sm rounded-circle me-2" alt="slack">
-                          </div>
-                          <div class="my-auto">
-                            <h6 class="mb-0 text-sm">Slack</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-sm font-weight-bold mb-0">$1,000</p>
-                      </td>
-                      <td>
-                        <span class="text-xs font-weight-bold">canceled</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <div class="d-flex align-items-center justify-content-center">
-                          <span class="me-2 text-xs font-weight-bold">0%</span>
-                          <div>
-                            <div class="progress">
-                              <div class="progress-bar bg-gradient-success" role="progressbar" aria-valuenow="0"
-                                aria-valuemin="0" aria-valuemax="0" style="width: 0%;"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="align-middle">
-                        <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false">
-                          <i class="fa fa-ellipsis-v text-xs"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2">
-                          <div>
-                            <img src="adminAssets/img/small-logos/devto.svg"
-                              class="avatar avatar-sm rounded-circle me-2" alt="xd">
-                          </div>
-                          <div class="my-auto">
-                            <h6 class="mb-0 text-sm">Devto</h6>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-sm font-weight-bold mb-0">$2,300</p>
-                      </td>
-                      <td>
-                        <span class="text-xs font-weight-bold">done</span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <div class="d-flex align-items-center justify-content-center">
-                          <span class="me-2 text-xs font-weight-bold">100%</span>
-                          <div>
-                            <div class="progress">
-                              <div class="progress-bar bg-gradient-success" role="progressbar" aria-valuenow="100"
-                                aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="align-middle">
-                        <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false">
-                          <i class="fa fa-ellipsis-v text-xs"></i>
-                        </button>
-                      </td>
-                    </tr>
+
+                    <% for(i=0;i< coupons.length;i++) { %>
+
+                      <tr>
+                        <td>
+                          <%=coupons[i].code %>
+                        </td>
+                        <td>
+                          <%=coupons[i].percentage %>
+                        </td>
+                        <td>
+                          <%=coupons[i].min %>
+                        </td>
+                        <td>
+                          <%=coupons[i].fromDate.toDateString()%>
+                        </td>
+                        <td>
+                          <%=coupons[i].toDate.toDateString()%>
+                        </td>
+                        <% if (coupons[i].status) { %>
+                          <form action="/admin/coupon-status/<%= coupons[i]._id %>?_method=PATCH" method="post">
+                            <td><button class="btn btn-outline-success" type="submit">Enabled</button></td>
+                          </form>
+                          <% } else { %>
+                            <form action="/admin/coupon-status/<%= coupons[i]._id %>?_method=PATCH" method="post">
+                              <td><button class="btn btn-outline-danger" type="submit">Disabled</button></td>
+                            </form>
+                            <% } %>
+
+                              <td>
+                                <a href="/admin/update-coupon/<%= coupons[i]._id %>" class="btn btn-primary">Edit</a>
+                                <button onclick="deleteCoupon('<%= coupons[i]._id %>')" class="btn btn-danger">Delete</button>
+                              </td>
+
+
+                      </tr>
+                      <% } %>
+
+                        <tr>
+
                   </tbody>
                 </table>
               </div>
             </div>
           </div>
         </div>
-      </div> -->
+      </div>
+
+
+
+
+
+      
       <footer class="footer py-4  ">
         <div class="container-fluid">
           <div class="row align-items-center justify-content-lg-between">
@@ -613,9 +384,9 @@
                 <script>
                   document.write(new Date().getFullYear())
                 </script>,
-                TIME'O WATCHES <i class="fa fa-heart"></i> 
+                TIME'O WATCHES <i class="fa fa-heart"></i>
                 <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank"></a>
-                
+
               </div>
             </div>
             <div class="col-lg-6">
@@ -630,8 +401,7 @@
                   <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank"></a>
                 </li>
                 <li class="nav-item">
-                  <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted"
-                    target="_blank"></a>
+                  <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted" target="_blank"></a>
                 </li>
               </ul>
             </div>
@@ -724,6 +494,39 @@
       </div>
     </div>
   </div>
+
+  <script>
+    function deleteCoupon(id) {
+      console.log(id,'fronttttttttttttttttttttttt');
+
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          type = 'delete',
+            location.href = `/admin/coupon-delete/${id}?_method=DELETE`
+          Swal.fire(
+            'Deleted!',
+            'Your file has been deleted.',
+            'success'
+          )
+        }
+      })
+    }
+
+  </script>
+
+
+
+
+
+
   <!--   Core JS Files   -->
   <script src="adminAssets/js/core/popper.min.js"></script>
   <script src="adminAssets/js/core/bootstrap.min.js"></script>

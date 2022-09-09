@@ -2,9 +2,10 @@ let userDb = require('../model/model');
 let adminDb = require('../model/adminModel');
 let categoryDb = require('../model/categoryModel');
 let productDb = require('../model/productModel');
+let offerDb = require('../model/offerModel');
 let categoryServices = require('../services/categoryService');
 let cartServices = require('../services/cartService'); 
-let userServices = require('../services/userServices')
+let userServices = require('../services/userServices');
 const bcrypt = require('bcrypt')
 
 

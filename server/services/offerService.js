@@ -21,6 +21,19 @@ exports.proOffer = async()=>{
             }
         }
     ])
-    console.log(product,'++++++++++++++++++++++++')
     return product;
 }
+
+exports.deleteOffer = async(offerId)=>{
+     await offerDb.findByIdAndDelete(offerId);
+}
+
+exports.prodOffer = async(offerId)=>{
+  const offer = await  offerDb.findById(offerId);
+  return offer;
+}
+
+exports.offerUpdate = async (offerId,offerObj)=>{
+
+    await offerDb.findByIdAndUpdate(offerId,{$set:offerObj});
+};

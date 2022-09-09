@@ -11,6 +11,12 @@ exports.editProducts = async (id)=>{
     return edit;
 }
 
+// -- for product offers --//
+exports.products = async()=>{
+    const product = productDb.find()
+    return product;
+}
+
 
 
 

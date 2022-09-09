@@ -23,9 +23,9 @@
     <link
       rel="apple-touch-icon"
       sizes="76x76"
-      href="adminAssets/img/apple-icon.png"
+      href="../adminAssets/img/apple-icon.png"
     />
-    <link rel="icon" type="image/png" href="adminAssets/img/favicon.png" />
+    <link rel="icon" type="image/png" href="../adminAssets/img/favicon.png" />
     <title>Material Dashboard 2 by Creative Tim</title>
     <!--     Fonts and icons     -->
     <link
@@ -34,8 +34,8 @@
       href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700"
     />
     <!-- Nucleo Icons -->
-    <link href="adminAssets/css/nucleo-icons.css" rel="stylesheet" />
-    <link href="adminAssets/css/nucleo-svg.css" rel="stylesheet" />
+    <link href="../adminAssets/css/nucleo-icons.css" rel="stylesheet" />
+    <link href="../adminAssets/css/nucleo-svg.css" rel="stylesheet" />
     <!-- Font Awesome Icons -->
     <script
       src="https://kit.fontawesome.com/42d5adcbca.js"
@@ -49,7 +49,7 @@
     <!-- CSS Files -->
     <link
       id="pagestyle"
-      href="adminAssets/css/material-dashboard.css?v=3.0.4"
+      href="../adminAssets/css/material-dashboard.css?v=3.0.4"
       rel="stylesheet"
     />
 
@@ -88,47 +88,41 @@
                 class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column ms-auto me-auto ms-lg-auto me-lg-5">
                 <div class="card card-plain">
                   <div class="card-header">
-                    <h4 class="font-weight-bolder">Add New Offer</h4>
+                    <h4 class="font-weight-bolder">Edit Offer</h4>
                     <p class="mb-0">Details of the offer</p>
                   </div>
 
                   <div class="card-body">
-                    <form action="/admin/offer-add" method="post" role="form">
+                    <form action="/admin/offer-update/<%=offer._id%>?_method=PUT" method="post" role="form">
 
                       <div class="input-group input-group-outline mb-3">
                         <select value="" name="product" id="products"
                         style="width: 23rem; height: 2.7rem;border-radius: 5px; border-width: 0.1px;">
-                        <% for (prod of products) { %>
-                          <option value="<%=prod._id %>" ><%=prod.name%></option>
+                        <% for (const pro of product) { %>
+                          <% if (pro._id.toString() == offer.proId.toString()) { %>
+                          
+                            <option value="<%=offer.proId %>" selected disabled><%=pro.name%></option>
+                         <% } else { %>
+                          <option value="<%=pro._id %>"><%=pro.name%></option>
+
                         <% } %>
+                        <% } %> 
                       </select>
                       </div>
                       
 
-                      <!-- <div class="input-group input-group-outline mb-3">
-
-                        <input list="products" name="product" id="product" placeholder="Products" style="width: 23rem; height: 2.7rem;
-                        border-radius: 5px; border-width: 0.1px;">
-
-                        <datalist name="product" id="products">
-                        <% for(i=0;i< products.length;i++) { %>
-                          <option value="<%= products[i].name%>"></option>
-                          <input type="text" name="productId" id="proId" value="<%=products[i]._id %>" hidden>
-
-                          <% } %>
-                        </datalist>
-                      </div> -->
+                      
                       <div class="input-group input-group-outline mb-3">
                         <!-- <label class="form-label">Name</label> -->
-                        <input type="number" name="percent" class="form-control" placeholder="Percentage"/>
+                        <input type="number" name="percent" class="form-control" value="<%=offer.percentage %>" placeholder="Percentage"/>
                       </div>
-                      <div class="input-group input-group-outline mb-3">
+                      <div class="input-group input-group-outline mb-3" >
                         <!-- <label class="form-label">Price</label> -->
-                      <input type="date" name="fromDate" class="form-control" placeholder="Start Date"/>
+                      <input type="date" name="fromDate" class="form-control" value="<%=offer.fromDate.toISOString().split('T')[0] %>" placeholder="Start Date"/>
                       </div>
                       <div class="input-group input-group-outline mb-3">
                         <!-- <label class="form-label">Quantity</label> -->
-                        <input type="date" name="toDate"class="form-control" placeholder="End Date"/>
+                        <input type="date" name="toDate"class="form-control" value="<%=offer.toDate.toISOString().split('T')[0] %>" placeholder="End Date"/>
                       </div>
                       
 
@@ -161,10 +155,10 @@
     </main>
 
     <!--   Core JS Files   -->
-    <script src="adminAssets/js/core/popper.min.js"></script>
-    <script src="adminAssets/js/core/bootstrap.min.js"></script>
-    <script src="adminAssets/js/plugins/perfect-scrollbar.min.js"></script>
-    <script src="adminAssets/js/plugins/smooth-scrollbar.min.js"></script>
+    <script src="../adminAssets/js/core/popper.min.js"></script>
+    <script src="../adminAssets/js/core/bootstrap.min.js"></script>
+    <script src="../adminAssets/js/plugins/perfect-scrollbar.min.js"></script>
+    <script src="../adminAssets/js/plugins/smooth-scrollbar.min.js"></script>
     <script>
       var win = navigator.platform.indexOf("Win") > -1;
       if (win && document.querySelector("#sidenav-scrollbar")) {
@@ -177,6 +171,6 @@
     <!-- Github buttons -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-    <script src="adminAssets/js/material-dashboard.min.js?v=3.0.4"></script>
+    <script src="../adminAssets/js/material-dashboard.min.js?v=3.0.4"></script>
   </body>
 </html>

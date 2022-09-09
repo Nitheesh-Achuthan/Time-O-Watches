@@ -103,3 +103,30 @@ function addressvalid() {
 
 }
 
+// ----------------------------------------
+
+function couponInput() {
+    document.getElementById("pcoupon").style.display = "none";
+}
+
+function couponCheck(total,coupon) {
+   $.ajax({
+        url:`/applycoupon/${coupon}/${total}`,
+        method:'POST',
+        success:(response)=>{
+            if (response.error) {
+                document.getElementById("pcoupon").style.display = "block";
+                document.getElementById("pcoupon").innerText = response.error;
+            } else if (response.couponPrice) {
+                $('#tot').val(response.couponPrice);
+                $("#apply_btn").hide();
+                $("#applied_btn").show();
+
+                document.getElementById("totalShow").innerText =`${response.couponPrice}`;
+                // document.getElementById("discountPrice").innerText =`Discount : $ ${response.discountPrice}`;
+            } else {
+                document.getElementById("pcoupon").style.display = "none";
+            }
+        }
+   })
+}

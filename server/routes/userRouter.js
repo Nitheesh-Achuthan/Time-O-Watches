@@ -9,6 +9,9 @@ const productController = require('../controller/productController');
 const saveAddressController = require('../controller/saveAddressController');
 const cartController = require('../controller/cartController');
 const orderController = require('../controller/orderController');
+const offerController = require('../controller/offerController');
+const couponController = require('../controller/couponController');
+
 const cartServices = require('../services/cartService'); 
 const ObjectId = require('mongoose').Types.ObjectId;
 
@@ -171,9 +174,14 @@ userRoute.post('/newpassword',controller.newPassword)
 userRoute.get('/pswdChangeErr',controller.passwordChangeErr)
 
 
+// -----offers-----//
+userRoute.get('/offers',offerController.offerHome)
+
 
   
- 
+// --------- coupon -------------------//
+
+userRoute.post("/applycoupon/:coupon/:total", couponController.applyCoupon)
    
 
 module.exports=userRoute;    

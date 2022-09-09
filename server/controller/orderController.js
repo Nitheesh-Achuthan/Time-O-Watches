@@ -1,5 +1,7 @@
 const cartServices = require('../services/cartService')
 const orderDb = require('../model/orderModel')
+let productDb = require('../model/productModel');
+
 const orderServices = require('../services/orderService')
 const productServices = require('../services/productService')
 const saveAddressServices = require('../services/saveAddressService')
@@ -33,7 +35,7 @@ exports.placeOrderHome = async (req,res)=>{
     // const productPrice = product.price;
     let products = [{item:ObjectId(proId),quantity:1}]
     // console.log(req.body,product,'*****************************************');
-    const orderId = await orderServices.placeOrderFromHome(req.body,products,productPrice);
+    const orderId = await orderServices.placeOrderFromHome(req.body,products,productPrice,proId);
 
     if (req.body['paymentmethod'] === 'Cash On Delivery') {
 
@@ -148,6 +150,7 @@ exports.razorPay = async (req, res) => {
         if (hmac == req.body.payment.razorpay_signature) {
             await orderServices.orderStatus(req.body.order.receipt, "Ordered")
             console.log("userId",req.session.user._id)
+            
             await cartServices.deleteCart(req.session.user._id)
 
             res.json({ status: true })
@@ -184,6 +187,8 @@ exports.cancelOrder = async (req, res) => {
     const order = await orderDb.findOne({ _id: ObjectId(id) })
     const proId = order.products[0]._id
     await orderDb.updateOne({ _id: id }, { $set: { "status": "Canceled" } })
+    await productDb.updateOne({_id:proId},{$inc: { quantity: 1} })  
+
     res.redirect('/admin/orderManagement')
 
 }
@@ -202,6 +207,8 @@ exports.cancelOrderUser = async (req, res) => {
     const order = await orderDb.findOne({ _id: ObjectId(id) })
     const proId = order.products[0]._id
     await orderDb.updateOne({ _id: id }, { $set: { "status": "Canceled" } })
+    await productDb.updateOne({_id:proId},{$inc: { quantity: 1} })  
+
     res.redirect('/my-orders')
 
 } 

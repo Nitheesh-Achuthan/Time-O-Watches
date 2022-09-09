@@ -88,39 +88,26 @@
                 class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column ms-auto me-auto ms-lg-auto me-lg-5">
                 <div class="card card-plain">
                   <div class="card-header">
-                    <h4 class="font-weight-bolder">Add New Offer</h4>
-                    <p class="mb-0">Details of the offer</p>
+                    <h4 class="font-weight-bolder">Add New Coupon</h4>
+                    <p class="mb-0">Details of the coupons</p>
                   </div>
 
                   <div class="card-body">
-                    <form action="/admin/offer-add" method="post" role="form">
+                    <form action="/admin/coupon-add" method="post" role="form">
 
                       <div class="input-group input-group-outline mb-3">
-                        <select value="" name="product" id="products"
-                        style="width: 23rem; height: 2.7rem;border-radius: 5px; border-width: 0.1px;">
-                        <% for (prod of products) { %>
-                          <option value="<%=prod._id %>" ><%=prod.name%></option>
-                        <% } %>
-                      </select>
+                        <!-- <label class="form-label">Name</label> -->
+                        <input type="string" name="couponcode" class="form-control" placeholder="Coupon Code"/>
                       </div>
                       
-
-                      <!-- <div class="input-group input-group-outline mb-3">
-
-                        <input list="products" name="product" id="product" placeholder="Products" style="width: 23rem; height: 2.7rem;
-                        border-radius: 5px; border-width: 0.1px;">
-
-                        <datalist name="product" id="products">
-                        <% for(i=0;i< products.length;i++) { %>
-                          <option value="<%= products[i].name%>"></option>
-                          <input type="text" name="productId" id="proId" value="<%=products[i]._id %>" hidden>
-
-                          <% } %>
-                        </datalist>
-                      </div> -->
                       <div class="input-group input-group-outline mb-3">
                         <!-- <label class="form-label">Name</label> -->
                         <input type="number" name="percent" class="form-control" placeholder="Percentage"/>
+                      </div>
+                     
+                      <div class="input-group input-group-outline mb-3">
+                        <!-- <label class="form-label">Name</label> -->
+                        <input type="number" name="minprice" class="form-control" placeholder="Minimum Price"/>
                       </div>
                       <div class="input-group input-group-outline mb-3">
                         <!-- <label class="form-label">Price</label> -->

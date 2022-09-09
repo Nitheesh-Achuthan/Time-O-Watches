@@ -8,6 +8,7 @@ const productController = require('../controller/productController');
 const orderController = require('../controller/orderController');
 const dashboardController = require('../controller/dashboardController');
 const offerController = require('../controller/offerController');
+const couponController = require('../controller/couponController');
 const categoryDb = require('../model/categoryModel');
 const services = require('../services/categoryService');
 
@@ -144,6 +145,37 @@ adminRoute.get('/add-offer',offerController.addOffer);
 adminRoute.post('/offer-add',offerController.offerAdd);
 
 adminRoute.patch('/offer-status/:id',offerController.status);
+
+adminRoute.delete('/offer-delete/:id',offerController.offerDelete);
+
+adminRoute.get('/update-offer/:id',offerController.editOffer);
+
+adminRoute.put('/offer-update/:id',offerController.updateOffer);
+
+// ============ Coupons ================//
+
+adminRoute.get('/coupons',couponController.coupons);
+
+adminRoute.get('/add-coupon',couponController.addCoupon);
+
+adminRoute.post('/coupon-add',couponController.couponAdd);
+
+adminRoute.patch('/coupon-status/:id',couponController.status);
+
+adminRoute.delete('/coupon-delete/:id',couponController.couponDelete);
+
+adminRoute.get('/update-coupon/:id',couponController.editCoupon);
+
+adminRoute.put('/coupon-update/:id',couponController.updateCoupon);
+
+adminRoute.get('/coupon-history',couponController.couponHistory);
+
+
+
+
+
+
+
     
 
      

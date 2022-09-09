@@ -63,6 +63,8 @@
               <p id="paddress" style="color: red; padding-left:1rem;display: none;"></p>
               <input type="text" name="proId" id="proId" value="<%=proId %>" hidden>
               <input type="text" name="price" id="total" value="<%= total%>" hidden>
+              <input type="text" name="total" id="tot" value="<%=total%>" hidden>
+
 
 
             </div>
@@ -179,7 +181,7 @@
                 </li> -->
                 <li>
                   <a href="#">Total
-                    <span>
+                    <span id="totalShow">
                       <%=total %>
                     </span>
                   </a>
@@ -219,6 +221,25 @@
               <button style="width: 100%;cursor:pointer" class="btn_3" type="submit" 
               onclick="firstnamevalid();lastnamevalid();mobvalid();emailvalid();countryvalid();addressvalid()">Proceed</button>
             </div>
+
+            <div class="cupon_area">
+              <div class="check_title">
+                <h2>
+                  Have a coupon?
+                </h2>
+
+                <p class="help-block" style="color: red;" id="pcoupon"></p>
+
+
+
+              </div>
+              <input type="text" name="coupon" id="fcoupon" oninput="couponInput()" placeholder="Enter coupon code" style="margin-left: 1px;"/>
+              <button type="button" id="apply_btn" class="tp_btn" 
+              onclick="couponCheck(document.getElementById('tot').value,document.getElementById('fcoupon').value)" 
+              style="float: right; background-color:rgb(162, 150, 150) ">Apply Coupon</button>
+            </div>
+
+
         </form>
       </div>
     </div>

@@ -37,6 +37,12 @@
   <link id="pagestyle" href="adminAssets/css/material-dashboard.css?v=3.0.4" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
   <link rel="stylesheet" href="adminAssets/css/admin.css">
+
+  <!-- scripts -->
+
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  
+
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">
@@ -66,7 +72,7 @@
         <li class="nav-item">
           <a class="nav-link text-white " href="/admin/tables">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">table_view</i>
+              <i class="material-icons opacity-10">group</i>
             </div>
             <span class="nav-link-text ms-1">User Management</span>
           </a>
@@ -74,7 +80,7 @@
         <li class="nav-item">
           <a class="nav-link text-white" href="/admin/product">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">receipt_long</i>
+              <i class="material-icons opacity-10">watch</i>
             </div>
             <span class="nav-link-text ms-1">Product Management</span>
           </a>
@@ -90,18 +96,36 @@
         <li class="nav-item">
           <a class="nav-link text-white " href="/admin/orderManagement">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">format_textdirection_r_to_l</i>
+              <i class="material-icons opacity-10">local_shipping</i>
             </div>
             <span class="nav-link-text ms-1">Order Management</span>
           </a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link text-white active bg-gradient-primary" href="/admin/offers">
+          <a class="nav-link text-white  active bg-gradient-primary " href="/admin/offers">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">notifications</i>
+              <i class="material-icons opacity-10">shopping_basket</i>
             </div>
             <span class="nav-link-text ms-1">Offers</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link text-white " href="/admin/coupons">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">star_border</i>
+            </div>
+            <span class="nav-link-text ms-1">Coupons</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link text-white " href="/admin/coupon-history">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">sort</i>
+            </div>
+            <span class="nav-link-text ms-1">Coupon History</span>
           </a>
         </li>
 
@@ -139,8 +163,7 @@
 
     <div class="sidenav-footer position-absolute w-100 bottom-0 ">
       <div class="mx-3">
-        <a class="btn bg-gradient-primary mt-4 w-100"
-          href="/admin/logout" type="button">Log Out</a>
+        <a class="btn bg-gradient-primary mt-4 w-100" href="/admin/logout" type="button">Log Out</a>
       </div>
     </div>
   </aside>
@@ -297,45 +320,52 @@
                       <th class="text-secondary opacity-7"></th>
                     </tr>
                   </thead>
-                  <tbody>   
-                    <% console.log(offers[0],'-----offerrrrr') %>
-                    
+                  <tbody>
+
                     <% for(i=0;i< offers.length;i++) { %>
-                      
-                      <tr>                       
-                        <td><%=offers[i].proDetail[0].name %></td>
-                        <td><%=offers[i].fromDate.toDateString()%></td>
-                        <td><%=offers[i].toDate.toDateString()%></td>
-                        <td><%=offers[i].percentage%></td>
+
+                      <tr>
+                        <td>
+                          <%=offers[i].proDetail[0].name %>
+                        </td>
+                        <td>
+                          <%=offers[i].fromDate.toDateString()%>
+                        </td>
+                        <td>
+                          <%=offers[i].toDate.toDateString()%>
+                        </td>
+                        <td>
+                          <%=offers[i].percentage%>
+                        </td>
                         <!-- <td><%=offers[i].status%></td>  -->
                         <% if (offers[i].status) { %>
                           <form action="/admin/offer-status/<%= offers[i]._id %>?_method=PATCH" method="post">
-                              <td><button class="btn btn-outline-success" type="submit">Enabled</button></td>
+                            <td><button class="btn btn-outline-success" type="submit">Enabled</button></td>
                           </form>
                           <% } else { %>
-                              <form action="/admin/offer-status/<%= offers[i]._id %>?_method=PATCH" method="post">
-                                  <td><button class="btn btn-outline-danger" type="submit">Disabled</button></td>
-                              </form>
-                              <% } %>
-                        
-                        <td>
-                        <a href="" class="btn btn-primary">Edit</a>
-                        <a href="" onclick="return confirm('Are you want to delete ')" class="btn btn-danger">Delete</a>
-                      </td>
-                      
+                            <form action="/admin/offer-status/<%= offers[i]._id %>?_method=PATCH" method="post">
+                              <td><button class="btn btn-outline-danger" type="submit">Disabled</button></td>
+                            </form>
+                            <% } %>
 
-                    </tr>
-                    <%}%>
-                    <tr>
-                      
-                    </tbody>
-                  </table>
-                </div> 
+                              <td>
+                                <a href="/admin/update-offer/<%=offers[i]._id %>" class="btn btn-primary">Edit</a>
+                                <button onclick="deleteOffer('<%=offers[i]._id %>')" class="btn btn-danger">Delete</button>
+                              </td>
+
+
+                      </tr>
+                      <%}%>
+                        <tr>
+
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
         </div>
-                                              
+      </div>
+
 
 
 
@@ -589,9 +619,9 @@
                 <script>
                   document.write(new Date().getFullYear())
                 </script>,
-                TIME'O WATCHES <i class="fa fa-heart"></i> 
+                TIME'O WATCHES <i class="fa fa-heart"></i>
                 <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank"></a>
-                
+
               </div>
             </div>
             <div class="col-lg-6">
@@ -606,8 +636,7 @@
                   <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank"></a>
                 </li>
                 <li class="nav-item">
-                  <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted"
-                    target="_blank"></a>
+                  <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted" target="_blank"></a>
                 </li>
               </ul>
             </div>
@@ -700,6 +729,39 @@
       </div>
     </div>
   </div>
+
+  <script>
+    function deleteOffer(id) {
+      console.log(id,'fronttttttttttttttttttttttt');
+
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          type = 'delete',
+            location.href = `/admin/offer-delete/${id}?_method=DELETE`
+          Swal.fire(
+            'Deleted!',
+            'Your file has been deleted.',
+            'success'
+          )
+        }
+      })
+    }
+
+  </script>
+
+
+
+
+
+
   <!--   Core JS Files   -->
   <script src="adminAssets/js/core/popper.min.js"></script>
   <script src="adminAssets/js/core/bootstrap.min.js"></script>
