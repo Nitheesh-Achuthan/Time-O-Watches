@@ -98,23 +98,19 @@ exports.paymentOnline = async (req, res) => {
 // ---order placed from cart---//
 
 exports.placeOrder = async (req, res) => {
-    // console.log(req.body.total,'*****************************************');
+    console.log(req.body.total,'*****************************************');
     const product = await cartServices.getCartProductList(req.body.userId)
-    const totalPrice = await cartServices.totalAmount(req.body.userId)
+    const totalPrice = parseInt(req.body.total);
+   
     const orderId = await orderServices.placeOrder(req.body, product, totalPrice)
-    // console.log(orderId,'-=-=-=-===-=-=-=-=-=-=-=-=-========================--------------------'); 
 
     if (req.body['paymentmethod'] === 'Cash On Delivery') {
 
         res.json({ codSuccess: true })
     } else if (req.body['paymentmethod'] == 'Online') {
-        // let order = await orderServices.generateRazorpay(orders,totalPrice)
-        // console.log("New Order----------",order);
+        
         await orderServices.orderStatus(orderId, 'Failed')
-        // await orderDb.updateOne({_id:orderId},
-        //    { $set: {
-        //         status:'Failed'
-        //     }})
+        
 
 
 

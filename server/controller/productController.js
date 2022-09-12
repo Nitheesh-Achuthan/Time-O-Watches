@@ -2,6 +2,10 @@ let productDb = require('../model/productModel');
 let productServices = require('../services/productService');
 let cartServices = require('../services/cartService'); 
 let categoryServices = require('../services/categoryService');
+const offerServices = require('../services/offerService');
+const ObjectId = require('mongoose').Types.ObjectId;
+let offerDb = require('../model/offerModel');
+
 
 
 
@@ -68,6 +72,21 @@ exports.delete = (req,res)=>{
     res.redirect('/admin/product')
 
 }
+
+exports.proDetails = async (req,res)=>{
+    const proId = req.params.id;
+    let cartCount = await cartServices.count(req.session.user._id); 
+    let proDetails = await productServices.productDetails(proId);
+    let offerPro = await offerServices.offerProduct(proId);
+
+    if(offerPro){
+        let offer = await offerServices.productDetailsOffer(proId);
+        res.render('user/product-detailsOffer',{watches:proDetails,cartCount,offer});
+    }else{
+        res.render('user/product-details',{watches:proDetails,cartCount,offer:''});
+    }
+}
+
 
 // exports.updatepage = async(req,res)=>{
 //     console.log('aaaaaaaaaaaaaaa');

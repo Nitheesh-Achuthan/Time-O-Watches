@@ -2,6 +2,8 @@ let userDb = require('../model/model');
 let adminDb = require('../model/adminModel');
 let categoryDb = require('../model/categoryModel');
 let productDb = require('../model/productModel');
+const ObjectId = require('mongoose').Types.ObjectId;
+
 
 
 exports.editProducts = async (id)=>{
@@ -9,6 +11,12 @@ exports.editProducts = async (id)=>{
     const edit = await productDb.findOne({_id:id}); 
     // console.log(edit);
     return edit;
+}
+
+// ----- getting product details -----//
+exports.productDetails = async(proId)=>{
+       const prodDetails = await productDb.findById(ObjectId(proId));
+       return prodDetails;
 }
 
 // -- for product offers --//

@@ -179,7 +179,7 @@
                 <li>
                   <a href="#">Total
                     <span id="totalShow">
-                      <%=total %>
+                      <%=parseInt(total)%>
                     </span>
                   </a>
                 </li>
@@ -190,13 +190,13 @@
 
               <div class="payment_item">
                 <div class="radion_btn">
-                  <input type="radio" id="payment" name="paymentmethod" value='Cash On Delivery' />
+                  <input type="radio" id="payment" name="paymentmethod" value='Cash On Delivery' checked />
                   <label for="payment">Cash on delivery</label>
                   <div class="check"></div>
                 </div>
               </div>
               <div class="payment_item active">
-                <div class="radion_btn">
+                <div class="radion_btn"> 
                   <input type="radio" id="payment2" name="paymentmethod" value="Online" />
                   <label for="payment2">Online</label>
                   <img src="img/product/single-product/card.jpg" alt="" />

@@ -74,7 +74,6 @@ exports.updateCoupon = async(req,res)=>{
 
 exports.couponHistory = async(req,res)=>{
     const history = await couponServices.couponHistory();
-    console.log(history,'^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^')
     res.render('admin/coupon-history',{history})
 }
 
@@ -82,6 +81,7 @@ exports.couponHistory = async(req,res)=>{
 // ----------- user side ------//
 
 exports.applyCoupon = async (req,res)=>{
+    
     const code = req.params.coupon;
     const total = parseInt(req.params.total);
     const user = req.session.user._id;
@@ -99,14 +99,15 @@ exports.applyCoupon = async (req,res)=>{
         }
          else if(couponOffer.min < total) {
             discountPrice = (total * couponOffer.percentage) / 100;
-            const couponPrice = total-discountPrice;
+            const couponPrice = parseInt(total-discountPrice);
             const usedCouponObj = {
                 user:user,
                 coupon:code,
                 date: new Date(),
                 discount: discountPrice
             }
-            const couponUse = await couponServices.coupon(usedCouponObj)
+
+            await couponServices.coupon(usedCouponObj)
             res.json({ couponPrice, discountPrice })
          } else {
             res.json({ error: `Minimum Rs. ${couponOffer.min} spend` })

@@ -4,6 +4,7 @@ let categoryDb = require('../model/categoryModel');
 let productDb = require('../model/productModel');
 let offerDb = require('../model/offerModel');
 let categoryServices = require('../services/categoryService');
+let offerServices = require('../services/offerService');
 let cartServices = require('../services/cartService'); 
 let userServices = require('../services/userServices');
 const bcrypt = require('bcrypt')
@@ -44,11 +45,12 @@ exports.Create = (req, res) => {
             })
     }
 }
-
+// ---- home page user ------//
 exports.logg =async (req,res)=>{
-    let cartCount = await cartServices.count(req.session.user._id) 
-    const product = await productDb.find()
-    res.render('user/home',{ watches:product,cartCount})
+    let cartCount = await cartServices.count(req.session.user._id); 
+    const product = await productDb.find();
+    const offer = await offerServices.offers();
+    res.render('user/home',{ watches:product,cartCount,offer})
 }
 
 exports.Find = async (req, res) => {    

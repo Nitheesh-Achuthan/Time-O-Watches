@@ -90,8 +90,7 @@ exports.offerAdd = async (req,res)=>{
 // ---------------------offer user side-----------------------//
 
 exports.offerHome = async(req,res)=>{
-
-    // const offer = await offerDb.find()
+   
     const offer = await offerDb.aggregate([
         {
             $match: {
@@ -119,17 +118,19 @@ exports.offerHome = async(req,res)=>{
             }
         }
     ])
-    const offerProIds = []
+    // const offerProIds = []
 
-    for ( const pro of offer ) {
-        offerProIds.push(pro.id)
-    }
-    console.log("offerProIds",offerProIds);
-    console.log(offer[0].offerPrice,'++++++++++++++++++++++++++________________+++')
+    // for ( const pro of offer ) {
+    //     offerProIds.push(pro.id)
+    // }
+    // console.log(offer,'++++++++++++++++++++++++++________________+++')
     // console.log(offer[0].proDetail[0].name,'++++++++++++++++++++++++++________________+++');
+    console.log(req.session,"sesiiiiioooooooonnnn&&&&&&&&&&&&&&&&&&&&&&&&&&&&&%%%%%%%%%%")
     let cartCount = await cartServices.count(req.session.user._id) 
     const product = await productDb.find()
-    res.render('user/offers',{ watches:product,cartCount,offer,offerProIds})
+    // console.log("offerProIds",offer,'-----------------',product,'--------------');
+    res.render('user/offers',{ watches:product,cartCount,offer})
+    return offer;
 }
 
 

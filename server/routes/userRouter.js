@@ -101,13 +101,7 @@ userRoute.use(async (req,res,next) => {
 userRoute.get('/home',controller.logg);
 
 
-userRoute.get('/product-details/:id', async (req,res)=>{
-
-    let cartCount = await cartServices.count(req.session.user._id) 
-
-    const proDetails = await productDb.findById(ObjectId(req.params.id))
- res.render('user/product-details',{watches:proDetails,cartCount})
-})
+userRoute.get('/product-details/:id',productController.proDetails)
 
 
 

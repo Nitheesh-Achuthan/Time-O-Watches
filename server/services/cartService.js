@@ -1,4 +1,5 @@
 let cartDb = require('../model/cartModel');
+let offerDb = require('../model/offerModel');
 const ObjectId = require('mongoose').Types.ObjectId;
 
 exports.addToCart = async (proId,userId)=>{
@@ -61,9 +62,72 @@ exports.cartView = async (userId)=>{
                 item:1,quantity:1,product: { $arrayElemAt: ['$product',0]}  
             }
         }
-    ])  
-
+    ])
     return cartItems;
+}
+
+    exports.offerProPrice = async(userId)=>{
+        const offerPrice = await cartDb.aggregate([
+        {
+            $match:{user:ObjectId(userId)}
+        },
+        {
+            $unwind:"$products"
+        },
+        {
+            $project:{
+                item:'$products.item',
+                quantity:'$products.quantity'
+            }
+        },
+        {
+            $lookup:{
+                from:'offerdbs',
+                localField:'item',
+                foreignField:'proId',
+                as:'offerProduct'                
+            }
+        },
+        {
+            $unwind:'$offerProduct'
+        },
+        {
+            $project:{
+                percentage:'$offerProduct.percentage',
+                proId:'$item',
+                status:'$offerProduct.status',
+                quantity:1
+            }
+        },
+        {
+            $match:{status:true}
+        },
+        {
+            $lookup:{
+                from:'productDb',
+                localField:'proId',
+                foreignField:'_id',
+                as:'products'
+            }
+        },
+        {
+            $unwind:'$products'
+        },
+        {
+            $project:{
+                percentage: 1,
+                status: 1,
+                proId: 1,
+                quantity: 1,
+                offerPrice:{$divide: [{$multiply : ['$quantity','$products.price','$percentage']},100]},
+                productPrice:{$multiply:['$quantity','$products.price']}
+            }
+        }
+        
+    ])
+    console.log(offerPrice,'ooooooooooooooooooooooooooooooooooo---------------------');   
+
+    return offerPrice;
 }      
 
 exports.count = async(userId)=>{

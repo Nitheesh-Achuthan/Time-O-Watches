@@ -110,10 +110,13 @@ function couponInput() {
 }
 
 function couponCheck(total,coupon) {
+   
    $.ajax({
+
         url:`/applycoupon/${coupon}/${total}`,
         method:'POST',
         success:(response)=>{
+            alert(JSON.stringify(response))
             if (response.error) {
                 document.getElementById("pcoupon").style.display = "block";
                 document.getElementById("pcoupon").innerText = response.error;
