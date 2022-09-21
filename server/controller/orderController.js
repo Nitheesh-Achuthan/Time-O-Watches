@@ -1,5 +1,7 @@
-const cartServices = require('../services/cartService')
-const orderDb = require('../model/orderModel')
+const cartServices = require('../services/cartService');
+const offerServices = require('../services/offerService');
+
+const orderDb = require('../model/orderModel');
 let productDb = require('../model/productModel');
 
 const orderServices = require('../services/orderService')
@@ -12,30 +14,44 @@ const crypto = require('crypto');
 const ObjectId = require('mongoose').Types.ObjectId;
 
 var instance = new Razorpay({
-    key_id: process.env.key_secret,
+    key_id: process.env.key_id,
     key_secret: process.env.key_secret
 });
 
 exports.buyNowFromHome = async (req,res)=>{
     proId = req.query.id;
     user = req.session.user;
-    const savedAddress = await saveAddressServices.addressSaved(user._id)
+    const savedAddress = await saveAddressServices.addressSaved(user._id);
+    let offerPro = await offerServices.offerProduct(proId);
+    let offer = await offerServices.productDetailsOffer(proId); 
+    offer = parseInt(offer[0]?.offerPrice); 
+    //   let proDetails = await productServices.productDetails(proId);
+
+
     const cartCount = await cartServices.count(user._id)
     const product = await productServices.product(proId)
     // console.log(user,product,savedAddress,cartCount,proId,'reqbody----------------------')
+        // res.render('user/checkoutFromHome',{cartCount,user,savedAddress,total:offer,proId,proDetails})
+    if(offer >0){
+        res.render('user/checkoutFromHome',{cartCount,user,savedAddress,total:offer,proId})
+    } else {
+        res.render('user/checkoutFromHome',{cartCount,user,savedAddress,total:product,proId})
+    }
 
-    res.render('user/checkoutFromHome',{cartCount,user,savedAddress,total:product,proId})
 }
 
 exports.placeOrderHome = async (req,res)=>{
 
-    console.log(req.body,'*********************************-------------------------------------********');
+    // console.log(req.body,'*********************************-------------------------------------********');
     const proId = req.body.proId
-    const productPrice = req.body.price
+    // const productPrice = req.body.price
+    const productPrice = req.body.total
     // const productPrice = product.price;
-    let products = [{item:ObjectId(proId),quantity:1}]
+    let product = [{item:ObjectId(proId),quantity:1}]
     // console.log(req.body,product,'*****************************************');
-    const orderId = await orderServices.placeOrderFromHome(req.body,products,productPrice,proId);
+    const orderId = await orderServices.placeOrderFromHome(req.body,product,productPrice,proId);
+    const proQty = await orderServices.productQty(product)
+
 
     if (req.body['paymentmethod'] === 'Cash On Delivery') {
 
@@ -76,7 +92,7 @@ exports.placeOrderHome = async (req,res)=>{
 
 exports.paymentOnline = async (req, res) => {
     try {
-        let hmac = crypto.createHmac('sha256', '9KEIrz0MsZbicVP13JQc5N3u');
+        let hmac = crypto.createHmac('sha256', 'AE2ZJl3M0PGUSD5YkihGECVZ');
         hmac.update(req.body.payment.razorpay_order_id+'|'+ req.body.payment.razorpay_payment_id);
         hmac = hmac.digest('hex')
         if (hmac == req.body.payment.razorpay_signature) {
@@ -98,36 +114,37 @@ exports.paymentOnline = async (req, res) => {
 // ---order placed from cart---//
 
 exports.placeOrder = async (req, res) => {
-    console.log(req.body.total,'*****************************************');
+    
     const product = await cartServices.getCartProductList(req.body.userId)
+    console.log(req.body,product,'*********************************-------------------------------------********');
     const totalPrice = parseInt(req.body.total);
    
-    const orderId = await orderServices.placeOrder(req.body, product, totalPrice)
+    const orderId = await orderServices.placeOrder(req.body, product, totalPrice);
+    const proQty = await orderServices.productQty(product)
 
     if (req.body['paymentmethod'] === 'Cash On Delivery') {
 
         res.json({ codSuccess: true })
     } else if (req.body['paymentmethod'] == 'Online') {
         
-        await orderServices.orderStatus(orderId, 'Failed')
+        await orderServices.orderStatus(orderId, 'Failed')       
+
         
-
-
-
         var options = {
             "amount": totalPrice * 100,
             "currency": "INR",
             "receipt": '' + orderId,
             // "partial_payment": false,
             // "notes": {
-            //   "key1": "value3",
-            //   "key2": "value2"
-            // }
-        }
-        instance.orders.create(options, function (err, order) {
+                //   "key1": "value3",
+                //   "key2": "value2"
+                // }
+            }
+            console.log(typeof(options.amount),options,'ooops');
+
+            instance.orders.create(options, function (err, order) {
             if (err) {
-                console.log(err);
-                res.send(err.message);
+                res.send(err);
             } else {
 
                 res.json(order);
@@ -140,11 +157,11 @@ exports.placeOrder = async (req, res) => {
 
 exports.razorPay = async (req, res) => {
     try {
-        let hmac = crypto.createHmac('sha256', '9KEIrz0MsZbicVP13JQc5N3u');
+        let hmac = crypto.createHmac('sha256', 'AE2ZJl3M0PGUSD5YkihGECVZ');
         hmac.update(req.body.payment.razorpay_order_id+'|'+ req.body.payment.razorpay_payment_id);
         hmac = hmac.digest('hex')
         if (hmac == req.body.payment.razorpay_signature) {
-            await orderServices.orderStatus(req.body.order.receipt, "Ordered")
+            await orderServices.orderStatus(req.body.order.receipt, 'Ordered')
             console.log("userId",req.session.user._id)
             
             await cartServices.deleteCart(req.session.user._id)
@@ -178,13 +195,13 @@ exports.orders = async (req, res) => {
 //     res.redirect('/admin/admin-orders')
 // }
 
+// ---admin side----//
 exports.cancelOrder = async (req, res) => {
     const id = req.params?.id;
     const order = await orderDb.findOne({ _id: ObjectId(id) })
-    const proId = order.products[0]._id
-    await orderDb.updateOne({ _id: id }, { $set: { "status": "Canceled" } })
-    await productDb.updateOne({_id:proId},{$inc: { quantity: 1} })  
-
+    const proItems = order.products
+    const proQty = await orderServices.cancelProQuantity(proItems)
+    await orderDb.updateOne({ _id: id }, { $set: { "status": "Canceled" } })   
     res.redirect('/admin/orderManagement')
 
 }
@@ -201,10 +218,16 @@ exports.myOrders = async (req, res) => {
 exports.cancelOrderUser = async (req, res) => {
     const id = req.params?.id;
     const order = await orderDb.findOne({ _id: ObjectId(id) })
-    const proId = order.products[0]._id
+    const proItems = order.products  
+    const proQty = await orderServices.cancelProQuantity(proItems)   
     await orderDb.updateOne({ _id: id }, { $set: { "status": "Canceled" } })
-    await productDb.updateOne({_id:proId},{$inc: { quantity: 1} })  
 
     res.redirect('/my-orders')
 
-} 
+};
+
+
+// ------------ ord details admin side------//
+exports.ordDetails = async(req,res) =>{
+    res.render('admin/orderProds')
+}

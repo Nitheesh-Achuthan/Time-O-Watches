@@ -41,7 +41,7 @@ exports.dashboardDetails = async (req,res)=>{
     }
     
     for (let order of allOrders){
-        order.status === 'Canceled' ? canceledCount++ : order.status === 'Ordered' ? orderedCount++ : order.status === 'Delivered' ? deliveredCount++ : order.status === 'Shiped' ? shipedCount++ : ""
+        order.status === 'Canceled' ? canceledCount++ : order.status === 'Ordered' ? orderedCount++ : order.status === 'Delivered' ? deliveredCount++ : order.status === 'Shipped' ? shipedCount++ : ""
     }
     
     
@@ -57,6 +57,6 @@ const revenue = await dashboardServices.revenueTotal()
         totalRevenue += total.totalAmount   
         console.log(totalRevenue,'======');
     }
-    // console.log(totalRevenue,'======++++++++++++');
+    console.log(totalRevenue,'======++++++++++++');
  res.render('admin/dashboard',{users,products,blockedCount,activeCount,orderedCount,shipedCount,deliveredCount,canceledCount,onlineCount,codCount,orders,totalRevenue})
 }               

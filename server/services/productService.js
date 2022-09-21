@@ -25,24 +25,12 @@ exports.products = async()=>{
     return product;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 exports.updateProduct = async (proId,proDetails)=>{
     let image = proDetails.image;
     if(image) {
+        let date = Date.now();
         let uploadPath = `./public/images/${date}.jpeg`
         var imgPath = `images/${date}.jpeg`
-        let date = Date.now();
         image.mv(uploadPath,(err)=>{})
            
     }

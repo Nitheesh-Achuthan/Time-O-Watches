@@ -2,11 +2,15 @@ let userDb = require('../model/model');
 let adminDb = require('../model/adminModel');
 let categoryDb = require('../model/categoryModel');
 let productDb = require('../model/productModel');
+let bannerDb = require('../model/bannerModel')
+
 let offerDb = require('../model/offerModel');
 let categoryServices = require('../services/categoryService');
 let offerServices = require('../services/offerService');
 let cartServices = require('../services/cartService'); 
 let userServices = require('../services/userServices');
+const wishlistServices = require('../services/wishlistService');
+
 const bcrypt = require('bcrypt')
 
 
@@ -50,7 +54,11 @@ exports.logg =async (req,res)=>{
     let cartCount = await cartServices.count(req.session.user._id); 
     const product = await productDb.find();
     const offer = await offerServices.offers();
-    res.render('user/home',{ watches:product,cartCount,offer})
+    const banner = await bannerDb.find();
+    console.log(banner,'---banner==') 
+
+    // const wishlist = await wishlistServices.favourites(req.session.user._id);//////// need to do fav wishlist color change function
+    res.render('user/home',{ watches:product,cartCount,offer,banner})
 }
 
 exports.Find = async (req, res) => {    
@@ -64,9 +72,9 @@ exports.Find = async (req, res) => {
         }else{            
             res.redirect('/home')
         }
-       
+            
 
-    } else {
+    } else { 
         res.render('user/login', { error: "Invalid Username or Password" })
     }
 }  

@@ -109,6 +109,5 @@ exports.productDetailsOffer = async(proId)=>{
             }
         }
     ])
-    console.log(product,'***************************************');
     return product;
 }

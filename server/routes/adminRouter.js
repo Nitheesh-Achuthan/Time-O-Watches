@@ -9,6 +9,7 @@ const orderController = require('../controller/orderController');
 const dashboardController = require('../controller/dashboardController');
 const offerController = require('../controller/offerController');
 const couponController = require('../controller/couponController');
+const bannerController = require('../controller/bannerController');
 const categoryDb = require('../model/categoryModel');
 const services = require('../services/categoryService');
 
@@ -56,6 +57,18 @@ adminRoute.use((req, res, next) => {
 
 
 adminRoute.post('/tables', controller.find);
+
+
+// ----middleware for checking admin---//
+
+adminRoute.use((req, res, next) => {
+    if (!req.session.isAdminLogin) {
+        res.redirect("/admin");
+    } else next();
+});
+
+
+
 
 adminRoute.patch("/:id", async (req, res) => {
 
@@ -169,6 +182,20 @@ adminRoute.get('/update-coupon/:id',couponController.editCoupon);
 adminRoute.put('/coupon-update/:id',couponController.updateCoupon);
 
 adminRoute.get('/coupon-history',couponController.couponHistory);
+
+// ----------------------------------------- pro details order-------------//
+
+adminRoute.get('/product-orders',orderController.ordDetails);
+
+// -------------- banner management-------- //
+
+adminRoute.get('/banner-management',bannerController.showBanner);
+
+adminRoute.get('/editbanner/:id',bannerController.editBanner);
+
+adminRoute.post('/update-banner/:id',bannerController.updateBanner)
+
+
 
 
 

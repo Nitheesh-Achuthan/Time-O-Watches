@@ -179,10 +179,11 @@
                     <span>Flat rate: $50.00</span>
                   </a>
                 </li> -->
+                
                 <li>
                   <a href="#">Total
                     <span id="totalShow">
-                      <%=total %>
+                      <%= total%>
                     </span>
                   </a>
                 </li>
@@ -193,7 +194,7 @@
 
               <div class="payment_item">
                 <div class="radion_btn">
-                  <input type="radio" id="payment" name="paymentmethod" value='Cash On Delivery' />
+                  <input type="radio" id="payment" name="paymentmethod" value='Cash On Delivery' checked  />
                   <label for="payment">Cash on delivery</label>
                   <div class="check"></div>
                 </div>
@@ -439,7 +440,7 @@
     function razorpayPaymentbuynow(order){
       // console.log('hkjghfjtk',order);
       var options = {
-    "key": "rzp_test_MoPjF88yCdpr2R", // Enter the Key ID generated from the Dashboard
+    "key": "rzp_test_BoMoTPGRO7eBOr", // Enter the Key ID generated from the Dashboard
     "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
     "currency": "INR",
     "name": "Time'O",

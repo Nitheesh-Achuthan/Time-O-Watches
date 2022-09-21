@@ -23,7 +23,7 @@ exports.addToCart = async (proId,userId)=>{
       {
         $push: {products: proObj }
       }
-      )}
+      )} 
     }else{ 
         let cartObj = new cartDb({
             user:userId,
@@ -125,7 +125,6 @@ exports.cartView = async (userId)=>{
         }
         
     ])
-    console.log(offerPrice,'ooooooooooooooooooooooooooooooooooo---------------------');   
 
     return offerPrice;
 }      

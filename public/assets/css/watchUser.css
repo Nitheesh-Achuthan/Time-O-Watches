@@ -111,3 +111,12 @@ body{
     border: none;
     cursor: pointer;
 }
+
+.out-of-stock {
+    background-color: rgb(208, 112, 15);
+    color:white;
+    width: 90%;
+    height: 35px;
+    border: none;
+    cursor: pointer;    
+}

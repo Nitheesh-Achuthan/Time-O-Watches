@@ -1,8 +1,7 @@
 let categoryDb = require('../model/categoryModel');
 
 exports.addCate = (name)=>{
-    // console.log('Im serviceeeeeeee',name);
-
+    
     const cat = new categoryDb({
        name:name
     })

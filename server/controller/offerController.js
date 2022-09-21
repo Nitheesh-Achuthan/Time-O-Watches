@@ -21,7 +21,7 @@ exports.offers = async (req,res)=>{
 }
 
 exports.addOffer = async (req,res)=>{
-    const product = await productServices.productOffer()
+    const product = await productServices.productOffer();
     res.render('admin/addOffer',{products:product})
 }
 

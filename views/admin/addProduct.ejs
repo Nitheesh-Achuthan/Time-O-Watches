@@ -14,59 +14,39 @@
 -->
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="76x76"
-      href="adminAssets/img/apple-icon.png"
-    />
-    <link rel="icon" type="image/png" href="adminAssets/img/favicon.png" />
-    <title>Material Dashboard 2 by Creative Tim</title>
-    <!--     Fonts and icons     -->
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700"
-    />
-    <!-- Nucleo Icons -->
-    <link href="adminAssets/css/nucleo-icons.css" rel="stylesheet" />
-    <link href="adminAssets/css/nucleo-svg.css" rel="stylesheet" />
-    <!-- Font Awesome Icons -->
-    <script
-      src="https://kit.fontawesome.com/42d5adcbca.js"
-      crossorigin="anonymous"
-    ></script>
-    <!-- Material Icons -->
-    <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons+Round"
-      rel="stylesheet"
-    />
-    <!-- CSS Files -->
-    <link
-      id="pagestyle"
-      href="adminAssets/css/material-dashboard.css?v=3.0.4"
-      rel="stylesheet"
-    />
 
-    <!-- Cropper -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.11/cropper.css"
-    />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.11/cropper.js"></script>
-  </head>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <link rel="apple-touch-icon" sizes="76x76" href="adminAssets/img/apple-icon.png" />
+  <link rel="icon" type="image/png" href="adminAssets/img/favicon.png" />
+  <title>Material Dashboard 2 by Creative Tim</title>
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css"
+    href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+  <!-- Nucleo Icons -->
+  <link href="adminAssets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="adminAssets/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+  <!-- CSS Files -->
+  <link id="pagestyle" href="adminAssets/css/material-dashboard.css?v=3.0.4" rel="stylesheet" />
 
-  <body class="">
-    <div class="container position-sticky z-index-sticky top-0">
-      <div class="row">
-        <div class="col-12">
-          <!-- Navbar -->
-          <!-- <nav class="navbar navbar-expand-lg blur border-radius-lg top-0 z-index-3 shadow position-absolute mt-4 py-2 start-0 end-0 mx-4">
+  <!-- Cropper -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.11/cropper.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.11/cropper.js"></script>
+  <script src="js/checkOutValidation.js"></script>
+
+</head>
+
+<body class="">
+  <div class="container position-sticky z-index-sticky top-0">
+    <div class="row">
+      <div class="col-12">
+        <!-- Navbar -->
+        <!-- <nav class="navbar navbar-expand-lg blur border-radius-lg top-0 z-index-3 shadow position-absolute mt-4 py-2 start-0 end-0 mx-4">
           <div class="container-fluid ps-2 pe-0">
             <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 " href="../pages/dashboard.html">
               Material Dashboard 2
@@ -113,65 +93,60 @@
             </div>
           </div>
         </nav> -->
-          <!-- End Navbar -->
-        </div>
+        <!-- End Navbar -->
       </div>
     </div>
-    <main class="main-content mt-0">
-      <section>
-        <div class="page-header min-vh-100">
-          <div class="container">
-            <div class="row">
+  </div>
+  <main class="main-content mt-0">
+    <section>
+      <div class="page-header min-vh-100">
+        <div class="container">
+          <div class="row">
+            <div
+              class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 start-0 text-center justify-content-center flex-column">
               <div
-                class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 start-0 text-center justify-content-center flex-column"
-              >
-                <div
-                  class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center"
-                  style="
+                class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center"
+                style="
                     background-image: url('');
                     background-repeat: no-repeat;
-                  "
-                ></div>
-              </div>
-              <div
-                class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column ms-auto me-auto ms-lg-auto me-lg-5"
-              >
-                <div class="card card-plain">
-                  <div class="card-header">
-                    <h4 class="font-weight-bolder">Add Product</h4>
-                    <p class="mb-0">Details of the Products</p>
-                  </div>
+                  "></div>
+            </div>
+            <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column ms-auto me-auto ms-lg-auto me-lg-5">
+              <div class="card card-plain">
+                <div class="card-header">
+                  <h4 class="font-weight-bolder">Add Product</h4>
+                  <p class="mb-0">Details of the Products</p>
+                </div>
 
-                  <div class="card-body">
-                    <form
-                      action="/admin/product"
-                      method="post"
-                      enctype="multipart/form-data"
-                      role="form"
-                    >
-                      <div class="input-group input-group-outline mb-3">
-                        <!-- <label class="form-label">Name</label> -->
-                        <input type="text" name="name" class="form-control" placeholder="Name"/>
-                      </div>
-                      <div class="input-group input-group-outline mb-3">
-                        <!-- <label class="form-label">Price</label> -->
-                        <input type="number" name="price" class="form-control" placeholder="Price"/>
-                      </div>
-                      <div class="input-group input-group-outline mb-3">
-                        <!-- <label class="form-label">Quantity</label> -->
-                        <input type="number" name="quantity"class="form-control" placeholder="Quantity"/>
-                      </div>
-                      <div class="input-group input-group-outline mb-3">
-                        <label for="category">Category:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                   
-                        <select name="category" style="border: none;" id="cate">
-                          <% for (i=0; i< cate.length; i++){ %>  
+                <div class="card-body">
+                  <form action="/admin/product" method="post" enctype="multipart/form-data" role="form">
+                    <div class="input-group input-group-outline mb-3">
+                      <!-- <label class="form-label">Name</label> -->
+                      <input type="text" name="name" id="lname" class="form-control" placeholder="Name" oninput="lastnamevalid()"/>
+                      <p id="plname" style="color:red;padding-left:1rem;display: none;"></p>
+
+                    </div>
+                    <div class="input-group input-group-outline mb-3">
+                      <!-- <label class="form-label">Price</label> -->
+                      <input type="number" name="price" class="form-control" placeholder="Price" />
+                    </div>
+                    <div class="input-group input-group-outline mb-3">
+                      <!-- <label class="form-label">Quantity</label> -->
+                      <input type="number" name="quantity" class="form-control" placeholder="Quantity" />
+                    </div>
+                    <div class="input-group input-group-outline mb-3">
+                      <label for="category">Category:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <select name="category" style="border: none;" id="cate">
+                        <% for (i=0; i< cate.length; i++){ %>
                           <!-- <option selected="true" disabled="disabled" value="<%= cate[i].name %>"><%= cate[i].name %></option> -->
-                          <option value="<%= cate[i].name %>"><%= cate[i].name %></option>
+                          <option value="<%= cate[i].name %>">
+                            <%= cate[i].name %>
+                          </option>
                           <% } %>
-                        </select>
-                      </div>
+                      </select>
+                    </div>
 
-                      <!-- <div class="input-group input-group-outline mb-3">
+                    <!-- <div class="input-group input-group-outline mb-3">
                         <label class="form-label">Category</label>
                         <input
                           type="text"
@@ -179,188 +154,160 @@
                           class="form-control"
                         />
                       </div> -->
-                      <div class="input-group input-group-outline mb-3">
-                        <!-- <label class="form-label">Description</label> -->
-                        <input type="text" name="description" class="form-control" placeholder="Description"/>
-                      </div>
-                      <!-- <div class="input-group input-group-outline mb-3">
+                    <div class="input-group input-group-outline mb-3">
+                      <!-- <label class="form-label">Description</label> -->
+                      <input type="text" name="description" class="form-control" placeholder="Description" />
+                    </div>
+                    <!-- <div class="input-group input-group-outline mb-3">
                         <input type="file" name="image" class="form-control" />
                       </div> -->
 
-                      <!-- cropping -->
+                    <!-- cropping -->
 
-                      <div
-                        class="mb-3 col-lg-3 mt-4"
-                        style="
+                    <div class="mb-3 col-lg-3 mt-4" style="
                           display: flex;
                           justify-content: space-between;
                           width: 100%;
-                        "
-                      >
-                        <img
-                          src=""
-                          id="imgView1"
-                          alt=""
-                          style="height: 100px"
-                        />
-                        <input
-                          type="file"
-                          id="id_image1"
-                          name="image"
-                          accept="image/*"
-                          onchange="viewImage1(event)"
-                          style="width: 100%"
-                        /><br />
-                        <div class="vald-info" id="info"></div>
-                        <h5
-                          class="error_form text-danger"
-                          id="image1_error_message"
-                        ></h5>
-                        <div style="display: flex">
-                          <div
-                            id="image-box1"
-                            class="image-container"
-                            style="height: 300px; width: 20%"
-                          ></div>
-                          <button
-                            type="button"
-                            class="btn btn-outline-info"
-                            id="crop-btn1"
-                            style="
+                        ">
+                      <img src="" id="imgView1" alt="" style="height: 100px" />
+                      <input type="file" id="id_image1" name="image" accept="image/*" onchange="viewImage1(event)"
+                        style="width: 100%" /><br />
+                      <div class="vald-info" id="info"></div>
+                      <h5 class="error_form text-danger" id="image1_error_message"></h5>
+                      <div style="display: flex">
+                        <div id="image-box1" class="image-container" style="height: 300px; width: 20%"></div>
+                        <button type="button" class="btn btn-outline-info" id="crop-btn1" style="
                               margin-top: 10px;
                               display: none;
                               width: 50%;
                               margin: 20rem 0rem 0rem 0rem;
-                            "
-                          >
-                            Crop
-                          </button>
-                        </div>
+                            ">
+                          Crop
+                        </button>
                       </div>
+                    </div>
 
-                      <!-- <label for="">Image</label>
+                    <!-- <label for="">Image</label>
                     <input type="file" name="image" class="form-control"> -->
 
-                      <!-- <div class="form-check form-check-info text-start ps-0">
+                    <!-- <div class="form-check form-check-info text-start ps-0">
                       <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
                       <label class="form-check-label" for="flexCheckDefault">
                         I agree the <a href="javascript:;" class="text-dark font-weight-bolder">Terms and Conditions</a>
                       </label>
                     </div> -->
-                      <div class="text-center">
-                        <button
-                          type="submit"
-                          class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0"
-                        >
-                          Continue
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-                  <!-- <div class="card-footer text-center pt-0 px-lg-2 px-1">
+                    <div class="text-center">
+                      <button type="submit" class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">
+                        Continue
+                      </button>
+                    </div>
+                  </form>
+                </div>
+                <!-- <div class="card-footer text-center pt-0 px-lg-2 px-1">
                   <p class="mb-2 text-sm mx-auto">
                     Already have an account?
                     <a href="../pages/sign-in.html" class="text-primary text-gradient font-weight-bold">Sign in</a>
                   </p>
                 </div> -->
-                </div>
               </div>
             </div>
           </div>
         </div>
-      </section>
-    </main>
+      </div>
+    </section>
+  </main>
 
-    <!-- Crop Script -->
-    <script>
-      const imagebox1 = document.getElementById("image-box1");
-      const crop_btn1 = document.getElementById("crop-btn1");
-      const input1 = document.getElementById("id_image1");
-      function viewImage1(event) {
-        var fileInput1 = document.getElementById("id_image1");
-        var filePath1 = fileInput1.value;
-        var allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
-        if (!allowedExtensions.exec(filePath1)) {
-          fileInput1.value = "";
-          swal("There is a problem!", "Please choose image file.");
-          return false;
-        } else {
-          document.getElementById("imgView1").src = URL.createObjectURL(
-            event.target.files[0]
-          );
-        }
+  <!-- Crop Script -->
+  <script>
+    const imagebox1 = document.getElementById("image-box1");
+    const crop_btn1 = document.getElementById("crop-btn1");
+    const input1 = document.getElementById("id_image1");
+    function viewImage1(event) {
+      var fileInput1 = document.getElementById("id_image1");
+      var filePath1 = fileInput1.value;
+      var allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+      if (!allowedExtensions.exec(filePath1)) {
+        fileInput1.value = "";
+        swal("There is a problem!", "Please choose image file.");
+        return false;
+      } else {
+        document.getElementById("imgView1").src = URL.createObjectURL(
+          event.target.files[0]
+        );
       }
-      // When user uploads the image this event will get triggered
-      input1.addEventListener("change", () => {
-        // Getting image file object from the input variable
-        const img_data1 = input1.files[0];
-        // createObjectURL() static method creates a DOMString containing a URL representing the object given in the parameter.
-        // The new object URL represents the specified File object or Blob object.
-        const url1 = URL.createObjectURL(img_data1);
-        // Creating a image tag inside imagebox which will hold the cropping view image(uploaded file) to it using the url created before.
-        imagebox1.innerHTML = `<img src="${url1}" id="image1" style="width:100%;">`;
-        // Storing that cropping view image in a variable
-        const image1 = document.getElementById("image1");
-        // Displaying the image box
-        document.getElementById("image-box1").style.display = "block";
-        // Displaying the Crop buttton
-        document.getElementById("crop-btn1").style.display = "block";
-        // Hiding the Post button
-        const cropper1 = new Cropper(image1, {
-          autoCropArea: 1,
-          viewMode: 1,
-          scalable: false,
-          zoomable: false,
-          movable: false,
-          minCropBoxWidth: 50,
-          minCropBoxHeight: 50,
-        });
-        // When crop button is clicked this event will get triggered
-        crop_btn1.addEventListener("click", () => {
-          // This method coverts the selected cropped image on the cropper canvas into a blob object
-          cropper1.getCroppedCanvas().toBlob((blob) => {
-            // Gets the original image data
-            let fileInputElement1 = document.getElementById("id_image1");
-            // Make a new cropped image file using that blob object, image_data.name will make the new file name same as original image
-            let file1 = new File([blob], img_data1.name, {
-              type: "image/*",
-              lastModified: new Date().getTime(),
-            });
-            // Create a new container
-            let container1 = new DataTransfer();
-            // Add the cropped image file to the container
-            container1.items.add(file1);
-            // Replace the original image file with the new cropped image file
-            fileInputElement1.files = container1.files;
-            document.getElementById("imgView1").src = URL.createObjectURL(
-              fileInputElement1.files[0]
-            );
-            // Hide the cropper box
-            document.getElementById("image-box1").style.display = "none";
-            // Hide the crop button
-            document.getElementById("crop-btn1").style.display = "none";
+    }
+    // When user uploads the image this event will get triggered
+    input1.addEventListener("change", () => {
+      // Getting image file object from the input variable
+      const img_data1 = input1.files[0];
+      // createObjectURL() static method creates a DOMString containing a URL representing the object given in the parameter.
+      // The new object URL represents the specified File object or Blob object.
+      const url1 = URL.createObjectURL(img_data1);
+      // Creating a image tag inside imagebox which will hold the cropping view image(uploaded file) to it using the url created before.
+      imagebox1.innerHTML = `<img src="${url1}" id="image1" style="width:100%;">`;
+      // Storing that cropping view image in a variable
+      const image1 = document.getElementById("image1");
+      // Displaying the image box
+      document.getElementById("image-box1").style.display = "block";
+      // Displaying the Crop buttton
+      document.getElementById("crop-btn1").style.display = "block";
+      // Hiding the Post button
+      const cropper1 = new Cropper(image1, {
+        autoCropArea: 1,
+        viewMode: 1,
+        scalable: false,
+        zoomable: false,
+        movable: false,
+        minCropBoxWidth: 50,
+        minCropBoxHeight: 50,
+      });
+      // When crop button is clicked this event will get triggered
+      crop_btn1.addEventListener("click", () => {
+        // This method coverts the selected cropped image on the cropper canvas into a blob object
+        cropper1.getCroppedCanvas().toBlob((blob) => {
+          // Gets the original image data
+          let fileInputElement1 = document.getElementById("id_image1");
+          // Make a new cropped image file using that blob object, image_data.name will make the new file name same as original image
+          let file1 = new File([blob], img_data1.name, {
+            type: "image/*",
+            lastModified: new Date().getTime(),
           });
+          // Create a new container
+          let container1 = new DataTransfer();
+          // Add the cropped image file to the container
+          container1.items.add(file1);
+          // Replace the original image file with the new cropped image file
+          fileInputElement1.files = container1.files;
+          document.getElementById("imgView1").src = URL.createObjectURL(
+            fileInputElement1.files[0]
+          );
+          // Hide the cropper box
+          document.getElementById("image-box1").style.display = "none";
+          // Hide the crop button
+          document.getElementById("crop-btn1").style.display = "none";
         });
       });
-    </script>
+    });
+  </script>
 
-    <!--   Core JS Files   -->
-    <script src="adminAssets/js/core/popper.min.js"></script>
-    <script src="adminAssets/js/core/bootstrap.min.js"></script>
-    <script src="adminAssets/js/plugins/perfect-scrollbar.min.js"></script>
-    <script src="adminAssets/js/plugins/smooth-scrollbar.min.js"></script>
-    <script>
-      var win = navigator.platform.indexOf("Win") > -1;
-      if (win && document.querySelector("#sidenav-scrollbar")) {
-        var options = {
-          damping: "0.5",
-        };
-        Scrollbar.init(document.querySelector("#sidenav-scrollbar"), options);
-      }
-    </script>
-    <!-- Github buttons -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
-    <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-    <script src="adminAssets/js/material-dashboard.min.js?v=3.0.4"></script>
-  </body>
+  <!--   Core JS Files   -->
+  <script src="adminAssets/js/core/popper.min.js"></script>
+  <script src="adminAssets/js/core/bootstrap.min.js"></script>
+  <script src="adminAssets/js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="adminAssets/js/plugins/smooth-scrollbar.min.js"></script>
+  <script>
+    var win = navigator.platform.indexOf("Win") > -1;
+    if (win && document.querySelector("#sidenav-scrollbar")) {
+      var options = {
+        damping: "0.5",
+      };
+      Scrollbar.init(document.querySelector("#sidenav-scrollbar"), options);
+    }
+  </script>
+  <!-- Github buttons -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="adminAssets/js/material-dashboard.min.js?v=3.0.4"></script>
+</body>
+
 </html>

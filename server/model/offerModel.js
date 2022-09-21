@@ -7,7 +7,7 @@ const offerSchema = new mongoose.Schema({
     },
     proId:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:'productDb'
+        ref:'productDb',
     },
     fromDate:{
         type:Date,

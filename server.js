@@ -16,19 +16,19 @@ const port = process.env.PORT
 app.set("view engine","ejs"); 
                                                           
 mongoose.connect(process.env.MONGO_URL,(err)=>{
-    if(err){ 
+    if(err){  
      console.log("Could not connect to database");  
     }else{
         console.log('mongodb connected successfully');    
     }                
-});                 
+});                  
                  
 // override the method in form   
 app.use(methodOverride('_method'));  
                     
 app.use(morgan('tiny'));     
  
-app.use(express.json());  
+app.use(express.json());    
       
 app.use(express.urlencoded({extended:true}));      
 app.use(fileUpload());

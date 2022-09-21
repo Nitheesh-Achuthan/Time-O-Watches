@@ -205,7 +205,7 @@
               </div>
 
               <!-- radio btn new -->
-
+              
              
 
               <div class="creat_account">
@@ -411,6 +411,7 @@
         method: 'post',
         data: $('#checkout-form').serialize(),
         success: (response) => {
+          console.log(response,'-------------------------------------------------------')
           if(response.codSuccess){
           Swal.fire({
             position: 'centre',
@@ -423,24 +424,25 @@
                   location.href='/home'
                 }, 1500);
               }else {
-                 razorpayPayment(response)
+                console.log(response,'=========res')
+                razorpayPayment(response)
               }
-
-        }
-      })}
-    })
-
-    function razorpayPayment(order){
-      // console.log('hkjghfjtk',order);
-      var options = {
-    "key": "rzp_test_MoPjF88yCdpr2R", // Enter the Key ID generated from the Dashboard
-    "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-    "currency": "INR",
-    "name": "Time'O",
-    "description": "Test Transaction",
-    "image": "https://example.com/your_logo",
-    "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-    "handler": function (response){
+              
+            }
+          })}
+        })
+        
+        function razorpayPayment(order){
+          console.log(order,'=========resorder')
+          var options = {
+            "key": "rzp_test_BoMoTPGRO7eBOr", // Enter the Key ID generated from the Dashboard
+            "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+            "currency": "INR",
+            "name": "Time'O",
+            "description": "Test Transaction",
+            "image": "https://example.com/your_logo",
+            "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+            "handler": function (response){
         verifyPayment(response,order)    
     },
     "prefill": {

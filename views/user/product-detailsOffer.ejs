@@ -3,7 +3,6 @@
 
     <main>
 
-        <% console.log(offer,'&&&&&&&&&&offrrrrff') %>
         
         <div class="product_image_area">
             <div class="container">
@@ -44,10 +43,13 @@
                                     </div> -->
                                     <span style="font-size: 1.5rem;">Rs.<%= parseInt(offer[0]?.offerPrice)%></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <span><del style="color: rgb(152, 147, 147);">Rs.<%= watches.price %></del></span>
-                                    <!-- <p><h4>Rs.<%= watches.price %></h4></p> -->
                                 </div>
+                                    <% if(watches.quantity < 1) { %>
+                                        <h4 style="color: red;padding-top: 2rem;">Out of Stock</h4>
+                                        <% }  %>
+                                    <!-- <p><h4>Rs.<%= watches.price %></h4></p> -->
 
-                                <div class="add_to_cart">
+                                <div class="add_to_cart" style="margin-top: 18px;">
                                     <button type="submit" onclick="addCart('<%= watches._id %>')" class="btn_3">add to cart</button>
                                 </div>
                             </div>

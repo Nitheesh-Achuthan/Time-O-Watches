@@ -28,7 +28,7 @@ exports.cart = async (req,res)=>{
 
     let totalOfferPrice = parseInt(totalValue - totalOffer);    
 
-    res.render('user/cart',{products,cartCount,user,totalValue,totalOfferPrice});
+    res.render('user/cart',{products,cartCount,user,totalValue,totalOfferPrice,totalOffer});
 }
 
 exports.changeProductQuantity = async(req,res)=>{
@@ -61,6 +61,6 @@ exports.checkout = async(req,res)=>{
     let total = totalValue - totalOffer; 
 
     let savedAddress = await saveAddressServices.addressSaved(req.session.user._id)
-    res.render('user/checkout',{cartCount,user,total,savedAddress})
+    res.render('user/checkout',{cartCount,user,total,savedAddress,totalOffer,totalValue})
 }
         

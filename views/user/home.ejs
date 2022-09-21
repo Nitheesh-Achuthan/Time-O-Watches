@@ -10,18 +10,20 @@
                         <div class="row justify-content-between align-items-center">
                             <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
                                 <div class="hero__caption">
-                                    <h1 data-animation="fadeInLeft" data-delay=".4s" data-duration="2000ms">Select Your New Perfect Style</h1>
-                                    <p data-animation="fadeInLeft" data-delay=".7s" data-duration="2000ms">With TIME'O Watches</p>
+                                    <h1 data-animation="fadeInLeft" data-delay=".4s" data-duration="2000ms"><%=banner[0].name%></h1>
+                                    <p data-animation="fadeInLeft" data-delay=".7s" data-duration="2000ms"><%=banner[0].description%></p>
                                     <!-- Hero-btn -->
                                     <div class="hero__btn" data-animation="fadeInLeft" data-delay=".8s" data-duration="2000ms">
-                                        <a href="industries.html" class="btn hero-btn">Shop Now</a>
+                                        <a href="/buy-now?id=<%=banner[0].proId%>" class="btn hero-btn">Shop Now</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-lg-3 col-md-4 col-sm-4 d-none d-sm-block">
+                                <a href="product-details/<%=banner[0].proId%>">
                                 <div class="hero__img" data-animation="bounceIn" data-delay=".4s">
-                                    <img src="assets/img/hero/watch.png" alt="" class=" heartbeat">
+                                    <img src="<%=banner[0].image%>" alt="" class=" heartbeat">
                                 </div>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -33,16 +35,17 @@
                             <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8">
                                 <div class="hero__caption">
                                     <h1 data-animation="fadeInLeft" data-delay=".4s" data-duration="2000ms">Select Your New Perfect Style</h1>
-                                    <p data-animation="fadeInLeft" data-delay=".7s" data-duration="2000ms">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat is aute irure.</p>
+                                    <p data-animation="fadeInLeft" data-delay=".7s" data-duration="2000ms">With TIME'O Watches.</p>
                                     <!-- Hero-btn -->
                                     <div class="hero__btn" data-animation="fadeInLeft" data-delay=".8s" data-duration="2000ms">
-                                        <a href="industries.html" class="btn hero-btn">Shop Now</a>
+                                        <a href="" class="btn hero-btn">Shop Now</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-lg-3 col-md-4 col-sm-4 d-none d-sm-block">
                                 <div class="hero__img" data-animation="bounceIn" data-delay=".4s">
                                     <img src="assets/img/hero/watch.png" alt="" class=" heartbeat">
+                                    <!-- <img src="assets/img/hero/watch.png" alt="" class=" heartbeat"> -->
                                 </div>
                             </div>
                         </div>
@@ -72,10 +75,14 @@
                 <div class="row">
 
                     
-
                     <% for(i=0; i< watches.length; i++) { %>
+
                         <% const prodOffer = offer?.find( x => x.id.toString() === watches[i]._id.toString()) %>
-                        <% if (prodOffer) { %>
+
+                        <% if (prodOffer) { %>                   
+
+
+
                             <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
                                 <div class="single-popular-items mb-50 text-center">
                                     <div class="popular-img">
@@ -83,21 +90,30 @@
                                         <div class="img-cap">
                                             <!-- <span style="width:100%;height:3rem;display: inline;">Add to cart</span> -->
                                             <!-- <span style="background-color: black; color:white; width:100%;height:3rem;display: inline;">buy now</span> -->
+                                            <% if(watches[i].quantity < 1) { %>
+                                                <a href=""><button class="out-of-stock">OUT OF STOCK</button></a>
+                                                <% } else { %>
+
                                             <button class="add-cart-btn" type="submit" onclick="addCart('<%=watches[i]._id%>')"> Add To Cart </button>
                                             
                                             <a href="/buy-now?id=<%=watches[i]._id%>"><button class="buy-now-btn">Buy Now</button></a>
+                                            <% }  %>
                                         </div>
-                                        <div class="favorit-items">
-                                            <span class="flaticon-heart"></span>
-                                        </div>
-                                    </div>
-                                    <div class="popular-caption">
-                                        
-                                        <h3><a href="product-details/<%=watches[i]._id%>"><%= watches[i].name %></a></h3>
-                                        <span style="font-size: 1.5rem;">Rs.<%=parseInt( prodOffer?.offerPrice ) %></span>
-                                        <span><del style="color: rgb(152, 147, 147);">Rs.<%= watches[i].price %></del></span>
 
+                                        <div class="favorit-items">
+                                            <span onclick="addWishlist('<%=watches[i]._id %>')" class="flaticon-heart"></span>
+                                            
+                                        </div>
                                     </div>
+
+                                    <div class="popular-caption">
+                                        <h3><a href="product-details/<%=watches[i]._id%>" ><%= watches[i].name %></a></h3>
+                                        <span style="font-size: 1.5rem;" >Rs.<%=parseInt( prodOffer?.offerPrice ) %></span>
+                                        <span><del style="color: rgb(152, 147, 147);" >Rs.<%= watches[i].price %></del></span>                                       
+                                        <!-- <h3 style="color: red;">Currently not available</h3> -->
+                                        
+                                    </div>
+                                
                                 </div>
                             </div>                           
                     
@@ -111,14 +127,20 @@
                                     <div class="img-cap">
                                         <!-- <span style="width:100%;height:3rem;display: inline;">Add to cart</span> -->
                                         <!-- <span style="background-color: black; color:white; width:100%;height:3rem;display: inline;">buy now</span> -->
+                                        <% if(watches[i].quantity < 1) { %>
+                                            <a href=""><button class="out-of-stock">OUT OF STOCK</button></a>
+                                            <% } else { %>
                                         <button class="add-cart-btn" type="submit" onclick="addCart('<%=watches[i]._id%>')"> Add To Cart </button>
                                         
                                         <a href="/buy-now?id=<%=watches[i]._id%>"><button class="buy-now-btn">Buy Now</button></a>
+                                        <% }  %>
                                     </div>
+
                                     <div class="favorit-items">
-                                        <span class="flaticon-heart"></span>
+                                        <span onclick="addWishlist('<%=watches[i]._id %>')" class="flaticon-heart" style="color: red;"></span>
                                     </div>
                                 </div>
+
                                 <div class="popular-caption">
                                     
                                     <h3><a href="product-details/<%=watches[i]._id%>"><%= watches[i].name %></a></h3>
@@ -170,7 +192,7 @@
                         </div>
                     </div>
                     <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
-                        <div class="single-popular-items mb-50 text-center">
+                        <div class="single-popular-items mb-50 text-center"> 
                             <div class="popular-img">
                                 <img src="assets/img/gallery/popular4.png" alt="">
                                 <div class="img-cap">
@@ -432,6 +454,18 @@
     <!-- -------------add cart------------- -->
   
     <script>
+        // -------wishlist--------- //
+        function addWishlist(proId) {
+            alert('wis')
+            $.ajax({
+                url:`/add-to-wishlist/${proId}`,
+                method:'post',
+                success:(res)=>{}
+            })
+            console.log('wish');
+        }
+
+        // ----- cart ----- //
           function addCart(proId) {
             $.ajax({
                 url: `/add-to-cart/${proId}`,

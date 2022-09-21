@@ -45,10 +45,14 @@
                                     
                                     <p><h4>Rs.<%= watches.price %></h4></p>
                                 </div>
-
-                                <div class="add_to_cart">
+                                <% if(watches.quantity < 1) { %>
+                                <h4 style="color: red;padding-top: 2rem;">Out of Stock</h4>
+                                <% }  %>
+                                <div class="add_to_cart" style="margin-top: 18px;">
                                     <button type="submit" onclick="addCart('<%= watches._id %>')" class="btn_3">add to cart</button>
+                                    
                                 </div>
+                                
                             </div>
                         </div>
                     </div>

@@ -29,10 +29,10 @@ exports.placeOrderFromHome = async (order,products,productPrice,proId) => {
     })
 
     const orders = await orderObj.save() 
-    await productDb.updateOne({_id:proId},{$inc: { quantity: -1} })  
+    //  await productDb.updateOne({_id:proId},{$inc: { quantity: -1} }) 
     return orders._id;
 
-}
+};
 
 // -- order placed from cart --//
 
@@ -58,12 +58,23 @@ exports.placeOrder = async (order, product, totalPrice) => {
     })
 
     const orders = await orderObj.save()
-    // await productDb.updateOne({_id:proId},{$inc: { quantity: -1} })  
+
+    // for (const pro of product) {
+    // await productDb.updateOne({_id:ObjectId(pro.item)},{$inc: { quantity: -pro.quantity} }) 
+    // } 
+
     if(status == 'Ordered'){
         await cartDb.deleteOne({user:ObjectId(order.userId)})
     }
     return orders._id;
 
+};
+
+// ------ product quantity decreased when order placed----//
+exports.productQty = async(product)=>{
+    for (const pro of product) {
+        await productDb.updateOne({_id:ObjectId(pro.item)},{$inc: { quantity: -pro.quantity} }) 
+        } 
 }
 
 exports.orderStatus =  async (orderId,status) =>{
@@ -158,3 +169,10 @@ exports.myOrders = async(userId)=>{
    return orders;
 }
 
+// ----- quantity increased when order canceled from both admin and user side----//
+
+exports.cancelProQuantity = async(proItems)=>{
+    for (const pro of proItems) {
+        await productDb.updateOne({_id:ObjectId(pro.item)},{$inc: { quantity: +pro.quantity} }) 
+        } 
+    }
