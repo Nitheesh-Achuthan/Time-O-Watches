@@ -323,12 +323,12 @@
                   <thead>
                     <tr>
                       <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Name</th>
-                      <!-- <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Product</th> -->
+                      <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Product</th>
                       <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Mob</th>
-                      <!-- <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Qty</th> -->
+                      <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Qty</th>
                       <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Address</th>
                       <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Date</th>
-                      <!-- <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Total</th> -->
+                      <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Total</th>
                       <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Payment</th>
                       <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Status</th>
                       <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Action</th>
@@ -336,7 +336,6 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <% console.log(orderDetails,'--------------------------')%>
 
                     <% for(i=0;i< orderDetails.length;i++) { %>
                       <tr>
@@ -344,7 +343,16 @@
                         <td>
                           <h6 class="mb-0 text-sm">
                             <%= orderDetails[i].deliveryDetails.firstName+" "+ orderDetails[i].deliveryDetails.lastName %></h6>
-                      </td>                     
+                      </td>
+
+                      <td>
+                        <div class=" d-flex px-2 py-1">
+                              <div class="d-flex flex-column justify-content-center">
+                                <img style="width: 50px; height: 50px" src="../<%=orderDetails[i].product.image %>"
+                                  alt="">
+                              </div>
+              </div>
+              </td>
 
 
               <td>
@@ -353,7 +361,15 @@
                 </p>
               </td>
 
-             
+              <td>
+                <div class="d-flex px-2 py-1">
+                  <div class="d-flex flex-column justify-content-center">
+                    <h6 class="mb-0 text-sm">
+                      <%= orderDetails[i].quantity%>
+                    </h6>
+                  </div>
+                </div>
+              </td>
 
               <td>
                 <div class="d-flex px-2 py-1">
@@ -371,7 +387,15 @@
                 </span>
               </td>
 
-              
+              <td>
+                <div class="d-flex px-2 py-1">
+                  <div class="d-flex flex-column justify-content-center">
+                    <h6 class="mb-0 text-sm">
+                      <%= orderDetails[i].totalAmount %>
+                    </h6>
+                  </div>
+                </div>
+              </td>
 
               <td>
                 <div class="d-flex px-2 py-1">
@@ -412,7 +436,7 @@
                   </td>
 
 
-                  <!-- <td>
+                  <td>
                     <div class="d-flex px-2 py-1">
                       <div class="d-flex flex-column justify-content-center">
 
@@ -426,13 +450,6 @@
                             <button class="btn btn-primary"
                               onclick="orderCancel('<%= orderDetails[i]._id %>')">Cancel</button>
                             <% } %>
-                      </div>
-                    </div>
-                  </td> -->
-                  <td>
-                    <div class="d-flex px-2 py-1">
-                      <div class="d-flex flex-column justify-content-center">
-                        <a href="/admin/orderproducts/<%=orderDetails[i]._id %>" class="btn btn-primary">Products</a>
                       </div>
                     </div>
                   </td>
@@ -621,25 +638,25 @@
     }
 
 
-    // function orderCancel(id) {
-    //   Swal.fire({
-    //     title: 'Are you want to Cancel ?',
-    //     icon: 'error',
-    //     showCancelButton: true,
-    //     confirmButtonColor: '#3085d6',
-    //     cancelButtonColor: '#d33',
-    //     confirmButtonText: 'Order Cancel'
-    //   }).then((result) => {
-    //     if (result.isConfirmed) {
-    //       location.href = `/admin/cancel-order/${id}?_method=PUT`
-    //       Swal.fire(
-    //         'Order Canceled!',
-    //         'Your order has been canceled.',
-    //         'success'
-    //       )
-    //     }
-    //   })
-    // }
+    function orderCancel(id) {
+      Swal.fire({
+        title: 'Are you want to Cancel ?',
+        icon: 'error',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Order Cancel'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          location.href = `/admin/cancel-order/${id}?_method=PUT`
+          Swal.fire(
+            'Order Canceled!',
+            'Your order has been canceled.',
+            'success'
+          )
+        }
+      })
+    }
   </script>
 
 

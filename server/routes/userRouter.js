@@ -26,10 +26,11 @@ var authToken = process.env.authToken
 const client = require('twilio')(accountSID,authToken)
 
 
-// userRoute.get('/',controller.landing)
+userRoute.get('/',controller.landing)
 
 
 userRoute.get('/',(req,res)=>{
+    
     if(req.session.loggedIn){
         
         res.redirect('/home')
@@ -223,6 +224,9 @@ userRoute.get('/change-pwd',controller.changePswd)
 userRoute.post('/newpassword',controller.newPassword)
 
 userRoute.get('/pswdChangeErr',controller.passwordChangeErr)
+
+//  ------- order Success ------//
+userRoute.get('/order-success',orderController.success)
 
 // -------- wishlist--------//
 userRoute.post('/add-to-wishlist/:id',wishlistController.addToList);

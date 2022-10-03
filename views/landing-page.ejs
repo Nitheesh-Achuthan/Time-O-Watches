@@ -1,5 +1,82 @@
 
-<%-include('../include/user-header')%>
+<!doctype html>
+<html lang="zxx">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Watch shop | eCommers</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="shortcut icon" type="image/x-icon" href="../assets/img/favicon.ico">
+
+  <!-- CSS here -->
+      <link rel="stylesheet" href="../assets/css/bootstrap.min.css">  
+      <link rel="stylesheet" href="../assets/css/owl.carousel.min.css">
+      <link rel="stylesheet" href="../assets/css/flaticon.css">
+      <link rel="stylesheet" href="../assets/css/slicknav.css">
+      <link rel="stylesheet" href="../assets/css/animate.min.css">
+      <link rel="stylesheet" href="../assets/css/magnific-popup.css">
+      <link rel="stylesheet" href="../assets/css/fontawesome-all.min.css">
+      <link rel="stylesheet" href="../assets/css/themify-icons.css">
+      <link rel="stylesheet" href="../assets/css/slick.css">
+      <link rel="stylesheet" href="../assets/css/nice-select.css">
+      <link rel="stylesheet" href="../assets/css/style.css">
+      <link rel="stylesheet" href="../assets/css/watch.css">
+      <link rel="stylesheet" href="../assets/css/watchUser.css">
+      <link rel="stylesheet" href="assets/css/watchOrder.css"
+
+  <!-- ---------------------- -->
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+      <script src="https://unpkg.com/js-image-zoom@0.4.1/js-image-zoom.js" type="application/javascript"></script>
+      <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      <script src="js/checkOutValidation.js"></script>
+      <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+ 
+</head>
+
+<body>
+  <header>
+    <!-- Header Start -->
+    <div class="header-area">
+        <div class="main-header header-sticky">
+            <div class="container-fluid">
+                <div class="menu-wrapper">
+                    <!-- Logo -->
+                    <div class="logo">
+                        <a href="index.html"><img style="padding-left:3rem ;" src="../assets/img/logo/logo.svg" alt=""></a>
+                    </div>
+                    <!-- Main-menu -->
+                    <div class="main-menu d-none d-lg-block">
+                        
+                    </div>
+                    <!-- Header Right -->
+                    <div class="header-right">
+                        <ul>
+                            <!-- <li>
+                                <div class="nav-search search-switch">
+                                    <span class="flaticon-search"></span>
+                                </div>
+                            </li> -->
+                            <li><a href="/logout"><span class="">Log In</span></a></li>
+                            <li><a href="/logout"><span class="">Sign Up</span></a></li>
+                            <!-- <li><a href=""><span class="flaticon-user"></span></a></li> -->
+                            <!-- <li><a href="/my-orders"><span class="flaticon-user"></span></a></li> -->
+                            <!-- <li><a href="/cart"><span class="flaticon-shopping-cart"> -->
+                        </ul>
+                    </div>
+                </div>
+                <!-- Mobile Menu -->
+                <div class="col-12">
+                    <div class="mobile_menu d-block d-lg-none"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
+  </header>
     <main>
         <!--? slider Area Start -->
         <div class="slider-area ">
@@ -91,13 +168,17 @@
                                             <!-- <span style="width:100%;height:3rem;display: inline;">Add to cart</span> -->
                                             <!-- <span style="background-color: black; color:white; width:100%;height:3rem;display: inline;">buy now</span> -->
                                             <% if(watches[i].quantity < 1) { %>
-                                                <a href=""><button class="out-of-stock">OUT OF STOCK</button></a>
-                                                <% } else { %>
+                                                <a href=""><button class="out-of-stock" disabled>OUT OF STOCK</button></a>
+                                                <% } else if(userlogIn){ %>
 
                                             <button class="add-cart-btn" type="submit" onclick="addCart('<%=watches[i]._id%>')"> Add To Cart </button>
                                             
                                             <a href="/buy-now?id=<%=watches[i]._id%>"><button class="buy-now-btn">Buy Now</button></a>
-                                            <% }  %>
+                                            <% } else { %>
+                                                <button class="add-cart-btn" type="submit" onclick="addCartButton()"> Add To Cart </button>
+                                            
+                                            <a onclick="addCartButton()"><button class="buy-now-btn">Buy Now</button></a>
+                                            <% } %>
                                         </div>
 
                                         <div class="favorit-items">
@@ -129,11 +210,15 @@
                                         <!-- <span style="background-color: black; color:white; width:100%;height:3rem;display: inline;">buy now</span> -->
                                         <% if(watches[i].quantity < 1) { %>
                                             <a href=""><button class="out-of-stock">OUT OF STOCK</button></a>
-                                            <% } else { %>
+                                            <% } else if(userlogIn) { %>
                                         <button class="add-cart-btn" type="submit" onclick="addCart('<%=watches[i]._id%>')"> Add To Cart </button>
                                         
                                         <a href="/buy-now?id=<%=watches[i]._id%>"><button class="buy-now-btn">Buy Now</button></a>
-                                        <% }  %>
+                                        <% } else {  %>
+                                            <button class="add-cart-btn" type="submit" onclick="addCartButton()"> Add To Cart </button>
+                                            <a onclick="addCartButton()"><button class="buy-now-btn">Buy Now</button></a>
+
+                                            <% } %>
                                     </div>
 
                                     <div class="favorit-items">
@@ -490,6 +575,11 @@
                 }
             })
        }
+
+    //    --- landing page ---- //
+    function addCartButton(){
+    Swal.fire('Please Login')
+}
 
     </script>
     

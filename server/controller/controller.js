@@ -15,10 +15,14 @@ const bcrypt = require('bcrypt')
 
 
 
-// exports.landing = async (req,res)=>{
-//     let product = await productDb.find()
-//     res.render('user/landing-page',{ watches:product})
-// }
+exports.landing = async (req,res)=>{
+    const product = await productDb.find();
+    const offer = await offerServices.offers();
+    const banner = await bannerDb.find();
+    req.session.loggedIn=false
+
+    res.render('landing-page',{ watches:product,offer,banner,userlogIn:req.session.loggedIn})
+}
 
 
 exports.Create = (req, res) => {
@@ -116,12 +120,30 @@ exports.find = async (req,res) => {
     //         res.redirect('/admin/category')
     //     })
 
-    // };                    
+    // };   
+    exports.showCategory = async (req,res)=>{
+            cateError = req.session.error;
+            console.log(cateError,'++++++++++++++++++++++++++++++++++++')
+            req.session.error = null;
+            res.render('admin/add-category',{cateError})        
+    }                 
 
     
-    exports.createcat = (req,res)=>{
-        const cate = categoryServices.addCate(req.body.name)
+    exports.createcat = async (req,res)=>{
+        try {
+            const cate = await categoryServices.addCate(req.body.name)
+        console.log(cate,'--------------------')
+        if(cate) {
+            req.session.error = 'This category is already exist!!!'
+            res.redirect('/admin/addcategory')
+        } else{
+            await categoryServices.categorySave(req.body.name)
+            
             res.redirect('/admin/category')
+        }
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     exports.updatepage = async(req,res)=>{

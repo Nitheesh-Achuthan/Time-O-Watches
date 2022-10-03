@@ -18,8 +18,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href="adminAssets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="adminAssets/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="../adminAssets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../adminAssets/img/favicon.png">
   <title>
     Material Dashboard 2 by Creative Tim
   </title>
@@ -27,23 +27,24 @@
   <link rel="stylesheet" type="text/css"
     href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
   <!-- Nucleo Icons -->
-  <link href="adminAssets/css/nucleo-icons.css" rel="stylesheet" />
-  <link href="adminAssets/css/nucleo-svg.css" rel="stylesheet" />
+  <link href="../adminAssets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="../adminAssets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- Font Awesome Icons -->
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
   <!-- Material Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <!-- CSS Files -->
-  <link id="pagestyle" href="adminAssets/css/material-dashboard.css?v=3.0.4" rel="stylesheet" />
+  <link id="pagestyle" href="../adminAssets/css/material-dashboard.css?v=3.0.4" rel="stylesheet" />
 
 
   <!-- Data tables -->
   <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
-  
+
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.8.0/html2pdf.bundle.min.js"></script>
 
 
 </head>
@@ -57,7 +58,7 @@
         aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/material-dashboard/pages/dashboard "
         target="_blank">
-        <img src="adminAssets/img/logo-ct.png" class="navbar-brand-img h-100" alt="main_logo">
+        <img src="../adminAssets/img/logo-ct.png" class="navbar-brand-img h-100" alt="main_logo">
         <span class="ms-1 font-weight-bold text-white">TIME'O WATCHES</span>
       </a>
     </div>
@@ -130,15 +131,26 @@
             <span class="nav-link-text ms-1">Coupon History</span>
           </a>
         </li>
+
+        <li class="nav-item">
+          <a class="nav-link text-white " href="/admin/banner-management">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">sort</i>
+            </div>
+            <span class="nav-link-text ms-1">Banner Management</span>
+          </a>
+        </li>
+
+
         <li class="nav-item mt-3">
           <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Account pages</h6>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white " href="/admin/product-orders">
+          <a class="nav-link text-white " href="../pages/profile.html">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">person</i>
             </div>
-            <span class="nav-link-text ms-1">Pro details</span>
+            <span class="nav-link-text ms-1">Profile</span>
           </a>
         </li>
         <!-- <li class="nav-item">
@@ -164,8 +176,7 @@
 
     <div class="sidenav-footer position-absolute w-100 bottom-0 ">
       <div class="mx-3">
-        <a class="btn bg-gradient-primary mt-4 w-100"
-          href="/admin/logout" type="button">Log Out</a>
+        <a class="btn bg-gradient-primary mt-4 w-100" href="/admin/logout" type="button">Log Out</a>
       </div>
     </div>
   </aside>
@@ -219,7 +230,7 @@
                   <a class="dropdown-item border-radius-md" href="javascript:;">
                     <div class="d-flex py-1">
                       <div class="my-auto">
-                        <img src="adminAssets/img/team-2.jpg" class="avatar avatar-sm  me-3 ">
+                        <img src="../adminAssets/img/team-2.jpg" class="avatar avatar-sm  me-3 ">
                       </div>
                       <div class="d-flex flex-column justify-content-center">
                         <h6 class="text-sm font-weight-normal mb-1">
@@ -237,7 +248,7 @@
                   <a class="dropdown-item border-radius-md" href="javascript:;">
                     <div class="d-flex py-1">
                       <div class="my-auto">
-                        <img src="adminAssets/img/small-logos/logo-spotify.svg"
+                        <img src="../adminAssets/img/small-logos/logo-spotify.svg"
                           class="avatar avatar-sm bg-gradient-dark  me-3 ">
                       </div>
                       <div class="d-flex flex-column justify-content-center">
@@ -295,12 +306,15 @@
     </nav>
     <!-- End Navbar -->
     <div class="container-fluid py-4">
+     <!-- <button onclick="pdfDownload()" class="btn bg-gradient-primary mt-4 w-15" type="">PDF</button> -->
+     <!-- <button onclick="removeProduct('')" class="btn btn-primary">Remove</button>                  -->
+
       <div class="row">
         <div class="col-12">
           <div class="card my-4">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
               <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                <h6 class="text-white text-capitalize ps-3">Order Management</h6>
+                <h6 class="text-white text-capitalize ps-3">Ordered Products</h6>
               </div>
             </div>
             <div class="card-body px-0 pb-2">
@@ -308,125 +322,90 @@
                 <table class="table align-items-center mb-0" id="myTable">
                   <thead>
                     <tr>
-                      <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Name of the user</th>
-                      <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Product details</th>
-                      <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Mob</th>
-                      <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Date</th>
-                      <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Status</th>
-                      <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Action</th>
+                      <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Name</th>
+                      <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Product</th>
+                      <!-- <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Mob</th> -->
+                      <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Qty</th>
+                      <!-- <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Address</th> -->
+                      <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Price</th>
+                      <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Total</th>
+                      <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Payment</th>
+                      <!-- <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Status</th> -->
+                      <!-- <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Action</th> -->
                       <th class="text-secondary opacity-7"></th>
                     </tr>
                   </thead>
                   <tbody>
 
-                    
+                    <% for(i=0;i< orderDetails.length;i++) { %>
                       <tr>
 
                         <td>
                           <h6 class="mb-0 text-sm">
-                            </h6>
+                            <%= orderDetails[i].product.name %></h6>
                       </td>
 
                       <td>
                         <div class=" d-flex px-2 py-1">
                               <div class="d-flex flex-column justify-content-center">
-                                <img style="width: 50px; height: 50px" src=""
+                                <img style="width: 50px; height: 50px" src="/<%=orderDetails[i].product.image %>"
                                   alt="">
                               </div>
               </div>
               </td>
 
 
-              <td>
-                <p class="text-xs font-weight-bold mb-0">
-                </p>
-              </td>
+             
 
               <td>
                 <div class="d-flex px-2 py-1">
                   <div class="d-flex flex-column justify-content-center">
                     <h6 class="mb-0 text-sm">
+                      <%= orderDetails[i].quantity%>
                     </h6>
                   </div>
                 </div>
               </td>
 
-              <!-- <td>
+              <td>
                 <div class="d-flex px-2 py-1">
                   <div class="d-flex flex-column justify-content-center">
                     <h6 class="mb-0 text-sm">
-                    </h6>
-                  </div>
-                </div>
-              </td> -->
-
-              <!-- <td class="align-middle text-center">
-                <span class="text-secondary text-xs font-weight-bold">
-                </span>
-              </td> -->
-
-              <!-- <td>
-                <div class="d-flex px-2 py-1">
-                  <div class="d-flex flex-column justify-content-center">
-                    <h6 class="mb-0 text-sm">
-                    </h6>
-                  </div>
-                </div>
-              </td> -->
-
-              <!-- <td>
-                <div class="d-flex px-2 py-1">
-                  <div class="d-flex flex-column justify-content-center">
-                    <h6 class="mb-0 text-sm">
+                      <%= orderDetails[i].product.price %>
                     </h6>
                   </div>
                 </div>
               </td>
 
-                <td>
-                </td>
-                  <td>
-                    <div class="d-flex px-2 py-1">
-                      <div class="d-flex flex-column justify-content-center">
-                        <select name="status" id="" onchange="deliveryStatus()"
-                          style="border: none;">
+              
 
-                          <option value="" selected disabled>
-                          </option>
+           
 
-                          <option value="Ordered">Ordered</option>
-                          <option value="Pending">Pending</option>
-                          <option value="Dispapatched">Dispatched</option>
-                          <option value="Shipped">Shipped</option>
-                          <option value="Delivered">Delivered</option>
-                          <option value="Canceled">Cancel</option>
-                        </select>
-                      </div>
-                    </div>
-                  </td> -->
+              <td>
+                <div class="d-flex px-2 py-1">
+                  <div class="d-flex flex-column justify-content-center">
+                    <h6 class="mb-0 text-sm">
+                      <%= orderDetails[i].totalAmount %>
+                    </h6>
+                  </div>
+                </div>
+              </td>
 
+              <td>
+                <div class="d-flex px-2 py-1">
+                  <div class="d-flex flex-column justify-content-center">
+                    <h6 class="mb-0 text-sm">
+                      <%= orderDetails[i].paymentMethod %>
+                    </h6>
+                  </div>
+                </div>
+              </td>
 
-                  <!-- <td>
-                    <div class="d-flex px-2 py-1">
-                      <div class="d-flex flex-column justify-content-center">
-
-                        
-                          <button type="button" disabled class="btn btn-primary"
-                            onclick="orderCancel()">Cancelled</button>
-
-
-                        
-
-                            <button class="btn btn-primary"
-                              onclick="orderCancel()">Cancel</button>
-                           
-                      </div>
-                    </div>
-                  </td> -->
+              
 
 
                   </tr>
-                
+                  <% } %>
 
                     </tbody>
                     </table>
@@ -448,9 +427,9 @@
               <script>
                 document.write(new Date().getFullYear())
               </script>,
-              TIME'O WATCHES <i class="fa fa-heart"></i> 
+              TIME'O WATCHES <i class="fa fa-heart"></i>
               <a class="font-weight-bold" target="_blank"></a>
-              
+
             </div>
           </div>
           <div class="col-lg-6">
@@ -465,8 +444,7 @@
                 <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank"></a>
               </li>
               <li class="nav-item">
-                <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted"
-                  target="_blank"></a>
+                <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted" target="_blank"></a>
               </li>
             </ul>
           </div>
@@ -560,8 +538,9 @@
     </div>
   </div>
 
-<!-- Data Tables -->
-  <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+  <!-- Data Tables -->
+  <!-- <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
@@ -578,62 +557,12 @@
         ]
       });
     });
-  </script>
-
-
-
-
-
-  <script>
-    function deliveryStatus(value, orderId) {
-      $.ajax({
-        url: '/admin/statusUpdate',
-        method: 'post',
-        data: {
-          status: value,
-          orderId: orderId
-        },
-        success: (response) => {
-          if (response) {
-            location.reload()
-          }
-        }
-      })
-    }
-
-
-    function orderCancel(id) {
-      Swal.fire({
-        title: 'Are you want to Cancel ?',
-        icon: 'error',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Order Cancel'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          location.href = `/admin/cancel-order/${id}?_method=PUT`
-          Swal.fire(
-            'Order Canceled!',
-            'Your order has been canceled.',
-            'success'
-          )
-        }
-      })
-    }
-  </script>
-
-
-  
-  
-
-
-
+  </script> -->
   <!--   Core JS Files   -->
-  <script src="adminAssets/js/core/popper.min.js"></script>
-  <script src="adminAssets/js/core/bootstrap.min.js"></script>
-  <script src="adminAssets/js/plugins/perfect-scrollbar.min.js"></script>
-  <script src="adminAssets/js/plugins/smooth-scrollbar.min.js"></script>
+  <script src="../adminAssets/js/core/popper.min.js"></script>
+  <script src="../adminAssets/js/core/bootstrap.min.js"></script>
+  <script src="../adminAssets/js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="../adminAssets/js/plugins/smooth-scrollbar.min.js"></script>
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
@@ -646,7 +575,7 @@
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="adminAssets/js/material-dashboard.min.js?v=3.0.4"></script>
+  <script src="../adminAssets/js/material-dashboard.min.js?v=3.0.4"></script>
 </body>
 
 </html>

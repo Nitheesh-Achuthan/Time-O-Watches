@@ -34,6 +34,10 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <!-- CSS Files -->
   <link id="pagestyle" href="adminAssets/css/material-dashboard.css?v=3.0.4" rel="stylesheet" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <!-- <script src="js/adminValidation.js"></script> -->
+
 </head>
 
 <body class="">
@@ -113,9 +117,13 @@
 
                 <div class="card-body">
                   <form action="/admin/category" method="post"  role="form">
-
+                    <div>
+                      <p id="pname" style="color:red;padding-left:1rem;"><%=cateError%></p>
+                    </div>
                     <div class="input-group input-group-outline mb-3">
-                      <input type="text" name="name"  class="form-control" placeholder="name">
+                      <input type="text" name="name" id="name" class="form-control" placeholder="name" oninput="namevalid()">
+                     
+
                     </div>
                     <!-- <div class="input-group input-group-outline mb-3">
                       <label class="form-label">Price</label>
@@ -171,6 +179,36 @@
     </section>
   </main>
   <!--   Core JS Files   -->
+
+
+  <script>
+    function namevalid() {
+  
+  if ($("#name").val().match(/^[A-Za-z][A-Za-z ]*$/)) {
+      document.getElementById("pname").style.display = "none";
+      console.log('ooooooooooooooooooooooooooooooooooooooooooooooo')      
+  }
+  
+  else {
+      document.getElementById("pname").style.display = "block";
+      document.getElementById("pname").innerText = "Enter a valid category Name";
+      return;
+  }
+  if ($("#name").val().length < 5) {
+
+      value2 = false;
+      document.getElementById("pname").style.display = "block";
+      document.getElementById("pname").innerText = "Minimum Length of this field is 3";
+
+  }
+  else {
+      value2 = true;
+  }
+}
+  </script>
+
+
+
   <script src="adminAssets/js/core/popper.min.js"></script>
   <script src="adminAssets/js/core/bootstrap.min.js"></script>
   <script src="adminAssets/js/plugins/perfect-scrollbar.min.js"></script>

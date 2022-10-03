@@ -120,3 +120,20 @@ body{
     border: none;
     cursor: pointer;    
 }
+
+ .img-gif {
+    width:60rem;
+    height:30rem;
+    margin-top: 2rem;
+    margin-left: 18rem;
+}
+
+.error {
+    margin:auto 0;    
+    padding-left: 25rem;
+    margin-top: 5rem;
+}
+
+.bodyy{
+    overflow: hidden;
+}

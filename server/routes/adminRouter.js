@@ -61,11 +61,11 @@ adminRoute.post('/tables', controller.find);
 
 // ----middleware for checking admin---//
 
-adminRoute.use((req, res, next) => {
-    if (!req.session.isAdminLogin) {
-        res.redirect("/admin");
-    } else next();
-});
+// adminRoute.use((req, res, next) => {
+//     if (!req.session.isAdminLogin) {
+//         res.redirect("/admin");
+//     } else next();
+// });
 
 
 
@@ -129,9 +129,8 @@ adminRoute.get('/category',(req,res)=>{
     })
 })
 
-adminRoute.get('/addcategory',(req,res)=>{
-    res.render('admin/add-category')
-})
+adminRoute.get('/addcategory',controller.showCategory);
+
 
 adminRoute.post('/category',controller.createcat);
 adminRoute.get('/update',controller.updatepage);
@@ -145,6 +144,8 @@ adminRoute.get('/orderManagement',orderController.orders);
 adminRoute.put('/cancel-order/:id', orderController.cancelOrder);
 
 adminRoute.post('/statusUpdate',orderController.statusUpdate);
+// ---------------------
+adminRoute.get('/orderproducts/:id',orderController.orderProducts)
 
 // ======Dashboard Admin side  =====//
 

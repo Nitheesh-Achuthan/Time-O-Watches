@@ -74,18 +74,23 @@ exports.delete = (req,res)=>{
 }
 
 exports.proDetails = async (req,res)=>{
-    const proId = req.params.id;
-    let cartCount = await cartServices.count(req.session.user._id); 
-    let proDetails = await productServices.productDetails(proId);
-    let offerPro = await offerServices.offerProduct(proId);
-
-    if(offerPro){
-        let offer = await offerServices.productDetailsOffer(proId);
-        res.render('user/product-detailsOffer',{watches:proDetails,cartCount,offer});
-    }else{
-        res.render('user/product-details',{watches:proDetails,cartCount,offer:''});
+    try {
+        const proId = req.params.id;
+        let cartCount = await cartServices.count(req.session.user._id); 
+        let proDetails = await productServices.productDetails(proId);
+        let offerPro = await offerServices.offerProduct(proId);
+    
+        if(offerPro){
+            let offer = await offerServices.productDetailsOffer(proId);
+            res.render('user/product-detailsOffer',{watches:proDetails,cartCount,offer});
+        }else{
+            res.render('user/product-details',{watches:proDetails,cartCount,offer:''});
+        }
+    } catch (error) {
+        console.log(error,'error 404-----------')
+        res.render('error')
     }
-}
+   }
 
 
 // exports.updatepage = async(req,res)=>{

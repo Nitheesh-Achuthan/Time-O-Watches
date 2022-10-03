@@ -1,13 +1,15 @@
 let categoryDb = require('../model/categoryModel');
 
-exports.addCate = (name)=>{
-    
-    const cat = new categoryDb({
-       name:name
-    })
-    cat.save()
-    
+exports.addCate = async (name)=>{
+    let catExist = await categoryDb.findOne({name:name});
+    return catExist
 };  
+
+exports.categorySave= async(name)=>{
+    const category = new categoryDb({name:name})
+    category.save()
+};
+            
 
 exports.updateCate = async (id,newName) => {
     const udt = await categoryDb.updateOne({_id:id},{$set:{name:newName} })

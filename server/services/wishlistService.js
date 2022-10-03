@@ -62,7 +62,7 @@ exports.wishlistRemove = async(proId,userId)=>{
         {
             $pull:{products:{item:ObjectId(proId)}}
         })
-};
+}; 
 // -----remaining-----
 
 // exports.favourites = async(userId)=>{

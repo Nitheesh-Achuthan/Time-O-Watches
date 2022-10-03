@@ -19,25 +19,28 @@ var instance = new Razorpay({
 });
 
 exports.buyNowFromHome = async (req,res)=>{
-    proId = req.query.id;
-    user = req.session.user;
-    const savedAddress = await saveAddressServices.addressSaved(user._id);
-    let offerPro = await offerServices.offerProduct(proId);
-    let offer = await offerServices.productDetailsOffer(proId); 
-    offer = parseInt(offer[0]?.offerPrice); 
-    //   let proDetails = await productServices.productDetails(proId);
-
-
-    const cartCount = await cartServices.count(user._id)
-    const product = await productServices.product(proId)
-    // console.log(user,product,savedAddress,cartCount,proId,'reqbody----------------------')
-        // res.render('user/checkoutFromHome',{cartCount,user,savedAddress,total:offer,proId,proDetails})
-    if(offer >0){
-        res.render('user/checkoutFromHome',{cartCount,user,savedAddress,total:offer,proId})
-    } else {
-        res.render('user/checkoutFromHome',{cartCount,user,savedAddress,total:product,proId})
+    try {
+        proId = req.query.id;
+        user = req.session.user;
+        const savedAddress = await saveAddressServices.addressSaved(user._id);
+        let offerPro = await offerServices.offerProduct(proId);
+        let offer = await offerServices.productDetailsOffer(proId); 
+        offer = parseInt(offer[0]?.offerPrice); 
+        //   let proDetails = await productServices.productDetails(proId);
+    
+    
+        const cartCount = await cartServices.count(user._id)
+        const product = await productServices.product(proId)
+        // console.log(user,product,savedAddress,cartCount,proId,'reqbody----------------------')
+            // res.render('user/checkoutFromHome',{cartCount,user,savedAddress,total:offer,proId,proDetails})
+        if(offer >0){
+            res.render('user/checkoutFromHome',{cartCount,user,savedAddress,total:offer,proId})
+        } else {
+            res.render('user/checkoutFromHome',{cartCount,user,savedAddress,total:product,proId})
+        }
+    } catch (error) {
+        res.render('error')
     }
-
 }
 
 exports.placeOrderHome = async (req,res)=>{
@@ -51,6 +54,9 @@ exports.placeOrderHome = async (req,res)=>{
     // console.log(req.body,product,'*****************************************');
     const orderId = await orderServices.placeOrderFromHome(req.body,product,productPrice,proId);
     const proQty = await orderServices.productQty(product)
+    req.session.products = [proId];
+    req.session.orderId = orderId;
+
 
 
     if (req.body['paymentmethod'] === 'Cash On Delivery') {
@@ -121,6 +127,14 @@ exports.placeOrder = async (req, res) => {
    
     const orderId = await orderServices.placeOrder(req.body, product, totalPrice);
     const proQty = await orderServices.productQty(product)
+    const productIds = [];
+    for (const proId of product) {
+        productIds.push(proId.item)
+    }
+    req.session.products = productIds;
+    // req.session.address = req.body;
+    req.session.orderId = orderId;
+    console.log('------',productIds,orderId,req.body,'---------propropro-------')
 
     if (req.body['paymentmethod'] === 'Cash On Delivery') {
 
@@ -181,6 +195,31 @@ exports.orders = async (req, res) => {
     const orderDetails = await orderServices.orders()
     // console.log(orderDetails,'orders3333333445566');
     res.render('admin/orderManagement', { orderDetails })
+    // res.render('admin/ordermgt', { orderDetails })
+    // res.render('admin/orderProds', { orderDetails })
+}
+
+// --------
+exports.orderProducts = async(req,res)=>{
+    console.log(req.params.id,'ppppppppppppppaaaaaaaaaaaaaaarrrrrrrrrrrrrra')
+    // const orderDetails = await orderServices.orders()
+    const orderDetails = await orderServices.orderedProduct(req.params.id)
+    res.render('admin/orderedProducts', { orderDetails })
+}
+
+ 
+
+// ------ Order Success ------///
+
+exports.success = async (req,res)=>{
+    const proId = req.session.products
+    // const address = req.session.address 
+    const orderId = req.session.orderId
+    const order = await orderDb.findOne({_id:orderId})
+    const { deliveryDetails } = order
+    const products = await productDb.find({_id: {$in:proId}})
+    console.log(order,products,deliveryDetails,'90909090909090')
+    res.render('user/order-success',{products,order,deliveryDetails})
 }
 
 // exports.cancelOrder = async(req,res)=>{

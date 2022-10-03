@@ -44,7 +44,7 @@ exports.placeOrder = async (order, product, totalPrice) => {
             lastName: order.lname,
             mobile: order.number,
             email: order.email,
-            country: order.country,
+            country: order.country, 
             address: order.address
 
         }, 
@@ -56,6 +56,12 @@ exports.placeOrder = async (order, product, totalPrice) => {
             status:status,
             date:new Date()
     })
+
+    console.log(orderObj.date,orderObj.deliveryDetails,'----------------------------date---------date---------date')
+    // req.session.address = orderObj;
+
+    
+
 
     const orders = await orderObj.save()
 
@@ -90,39 +96,42 @@ exports.orders = async () => {
 
     // console.log(orderDetails,'orfer444444444444444444');
 
-    const orderPro = await orderDb.aggregate([
-        {
-            $unwind: "$products"
-        }, 
-        {
-            $project: {
-                deliveryDetails: 1, userId: 1, paymentMethod: 1, date: 1,
-                totalAmount: 1, status: 1, 
-                item:'$products.item',
-                quantity:'$products.quantity'  
-            }
-        }, 
-        {
-            $lookup: {
-                from: 'productDb',
-                localField: 'item',
-                foreignField: '_id',
-                as: 'product'
+    // const orderPro = await orderDb.aggregate([
+    //     {
+    //         $unwind: "$products"
+    //     }, 
+    //     {
+    //         $project: {
+    //             deliveryDetails: 1, userId: 1, paymentMethod: 1, date: 1,
+    //             totalAmount: 1, status: 1, 
+    //             item:'$products.item',
+    //             quantity:'$products.quantity'  
+    //         }
+    //     }, 
+    //     {
+    //         $lookup: {
+    //             from: 'productDb',
+    //             localField: 'item',
+    //             foreignField: '_id',
+    //             as: 'product'
 
-            }
-        },
-        {
-            $project: {
-                deliveryDetails: 1, userId: 1, paymentMethod: 1, date: 1,
-                totalAmount: 1, status: 1,
+    //         }
+    //     },
+    //     {
+    //         $project: {
+    //             deliveryDetails: 1, userId: 1, paymentMethod: 1, date: 1,
+    //             totalAmount: 1, status: 1,
 
-                item: 1, quantity: 1, product: { $arrayElemAt: ['$product', 0] }
-            }
-        }
+    //             item: 1, quantity: 1, product: { $arrayElemAt: ['$product', 0] }
+    //         }
+    //     }
 
-    ])
-    return orderPro;
-}
+    // ])
+    // return orderPro;
+
+    const orders = await orderDb.find();
+    return orders;
+};
 
 exports.updateStatus = async (datas) => {
     let status = datas.status;
@@ -131,7 +140,48 @@ exports.updateStatus = async (datas) => {
         {
             $set: { status: status }
         })
-}
+};
+
+// ---- order manage admin side ----//
+
+exports.orderedProduct = async (orderId) =>{
+    const orderedProducts = await orderDb.aggregate([
+        {
+            $match:{_id: ObjectId(orderId)}
+        },
+        {
+            $unwind:'$products'
+        },
+        {
+            $project: {
+                deliveryDetails: 1, userId: 1, paymentMethod: 1, date: 1,
+                totalAmount: 1, status: 1, 
+                item:'$products.item',
+                quantity:'$products.quantity'
+            }
+        },
+        {
+            $lookup:{
+                from:'productDb',
+                localField:'item',
+                foreignField:'_id',
+                as:'product'
+            }
+        },
+        {
+            $project:{
+                deliveryDetails: 1, userId: 1, paymentMethod: 1, date: 1,
+                totalAmount: 1, status: 1, 
+                item:1,quantity:1,product: { $arrayElemAt:['$product',0]}
+            }
+        }
+    ])
+    console.log(orderedProducts,'-------orderedddddpro+++00')
+    return orderedProducts;
+};
+
+
+
 
 exports.myOrders = async(userId)=>{
     const orders = await orderDb.aggregate([

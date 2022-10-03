@@ -81,8 +81,8 @@ exports.couponHistory = async(req,res)=>{
 // ----------- user side ------//
 
 exports.applyCoupon = async (req,res)=>{
-    
-    const code = req.params.coupon;
+    try {
+        const code = req.params.coupon;
     const total = parseInt(req.params.total);
     const user = req.session.user._id;
     const couponOffer = await couponServices.couponDiscount(code,total)
@@ -115,5 +115,9 @@ exports.applyCoupon = async (req,res)=>{
         } else{
             res.json({ error: 'Coupon not found' })
         }
+    } catch (error) {
+        console.log(error,'err0r------')
+        res.render('error')
+    }   
                   
     }

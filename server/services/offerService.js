@@ -15,7 +15,7 @@ exports.proOffer = async()=>{
     const product = await offerDb.aggregate([
         {
             $lookup:{
-                from:'productDb',
+                from:'productDb',  
                 localField:'proId',
                 foreignField:'_id',
                 as:'proDetail'
