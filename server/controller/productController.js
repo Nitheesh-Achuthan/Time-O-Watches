@@ -59,8 +59,8 @@ exports.updateProducts = async(req,res)=>{
 
 }
 
-exports.delete = (req,res)=>{
-    const proId = productServices.deleteProduct(req.params.id);
+exports.deleteProduct = (req,res)=>{
+     productServices.deleteProduct(req.params.id);
 
     res.redirect('/admin/product')
 

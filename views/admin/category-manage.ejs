@@ -36,9 +36,12 @@
   <!-- CSS Files -->
   <link id="pagestyle" href="adminAssets/css/material-dashboard.css?v=3.0.4" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+  
+    <!-- scripts -->
 
-  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script src="sweetalert2.all.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="sweetalert2.all.min.js"></script> -->
 
 </head>
 
@@ -307,10 +310,7 @@
                       <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">No.</th>
                       <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7 ps-2">Name</th>
                       <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Action</th>
-                      <!-- <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Category</th>
-                      <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Images</th>
-                      <th class="text-uppercase text-secondary text-xx font-weight-bolder opacity-7">Action</th>
-                      <th class="text-secondary opacity-7"></th> -->
+                     
                     </tr>
                   </thead>
                   <tbody> 
@@ -325,22 +325,10 @@
                             <i class="fa-solid fa-pencil"></i>
                           </a>
                           <div>
-                            <!-- <form id="deleteForm" action="" method="post">
-                              <a href="" onclick="">
-                              <button class="btn border-shadow update" type="submit">
-                                <i class="fa-solid fa-trash-can"></i>
-                              </button> 
-                            </a>
-                            </form> -->  
-
-
-                            <form action="/admin/delete/<%= cate[i]._id %>?_method=DELETE" method="post">
-                              <a href="" onclick="return confirm('Are you want to delete <%=cate[i].name %> ?')">
-                              <button class="btn border-shadow update" type="submit">
-                                <i class="fa-solid fa-trash-can"></i>
-                              </button> 
-                            </a>
-                            </form>
+                            <button onclick="deleteCategory('<%= cate[i]._id %>')"
+                              class="btn border-shadow update">
+                              <i class="fa-solid fa-trash-can"></i>
+                          </button>
                           </div>  
                         </td>
 
@@ -479,6 +467,33 @@
       </div>
     </div>
   </div>
+
+
+  <!-- script -->
+
+  <script>
+   function deleteCategory(cateId) {
+        Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          type = 'delete',
+            location.href = `/admin/delete/${cateId}?_method=DELETE`
+          Swal.fire(
+            'Deleted!',
+            'Your file has been deleted.',
+            'success'
+          )
+        }
+      })
+   }
+  </script>
 
 
 

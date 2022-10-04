@@ -219,15 +219,14 @@ exports.find = async (req,res) => {
 
    } 
 
-   exports.update = (req,res)=>{
-    const catUpdate = categoryServices.updateCate(req.params.id,req.body.name);
-   //  res.render('admin/category-manage',{cate:catUpdate})
+   exports.updateCategory = (req,res)=>{
+    categoryServices.updateCate(req.params.id,req.body.name);
    res.redirect('/admin/category')
    
    }
 
-   exports.delete = (req,res)=>{ 
-       const id = categoryServices.deleteCate(req.params.id);
+   exports.deleteCategory = (req,res)=>{ 
+        categoryServices.deleteCate(req.params.id);
        
            res.redirect('/admin/category')   
       

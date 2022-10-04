@@ -99,8 +99,9 @@ adminRoute.post('/product',productController.create);
 adminRoute.get('/edit-product/:id',productController.editProduct);
 adminRoute.post('/edit-product/:id',productController.updateProducts);
 
-adminRoute.get('/delete-product/:id',productController.delete)
+adminRoute.delete('/delete-product/:id',productController.deleteProduct);
 
+// ---- category---//
 adminRoute.get('/category',(req,res)=>{
     categoryDb.find()
     .then(data=>{
@@ -110,14 +111,12 @@ adminRoute.get('/category',(req,res)=>{
         console.log(err);
     })
 })
-
-adminRoute.get('/addcategory',controller.showCategory);
-
-
 adminRoute.post('/category',controller.createcat);
 adminRoute.get('/update',controller.updatepage);
-adminRoute.put('/update/:id',controller.update);  
-adminRoute.delete('/delete/:id',controller.delete);
+adminRoute.put('/update/:id',controller.updateCategory);  
+adminRoute.delete('/delete/:id',controller.deleteCategory);
+// --- cate error---//
+adminRoute.get('/addcategory',controller.showCategory);
 
 //=== orders===//
 
