@@ -1,4 +1,3 @@
-const saveAddressDb = require('../model/saveAddressModel');
 const saveAddressServices = require('../services/saveAddressService'); 
 
 exports.saveAddress = async(req,res)=>{
@@ -12,4 +11,4 @@ exports.saveAddress = async(req,res)=>{
 
      res.json({status:true})
 }
-}
+};

@@ -2,7 +2,7 @@ let categoryDb = require('../model/categoryModel');
 
 exports.addCate = async (name)=>{
     let catExist = await categoryDb.findOne({name:name});
-    return catExist
+    return catExist;
 };  
 
 exports.categorySave= async(name)=>{
@@ -12,13 +12,11 @@ exports.categorySave= async(name)=>{
             
 
 exports.updateCate = async (id,newName) => {
-    const udt = await categoryDb.updateOne({_id:id},{$set:{name:newName} })
+     await categoryDb.updateOne({_id:id},{$set:{name:newName} })
 }
 
 exports.deleteCate = async (id)=>{
-    const dlt= await categoryDb.findByIdAndDelete(id)
-    // console.log(dlt,'Deletinggg');
-    // return;
+     await categoryDb.findByIdAndDelete(id)
 } 
 // --- for finding categorys for product add page--//
 exports.categorys = async ()=>{

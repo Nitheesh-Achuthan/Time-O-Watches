@@ -47,9 +47,10 @@
                     <div class="logo">
                         <a href="index.html"><img style="padding-left:3rem ;" src="../assets/img/logo/logo.svg" alt=""></a>
                     </div>
+                    <% if(userlogIn) { %>     
                     <!-- Main-menu -->
                     <div class="main-menu d-none d-lg-block">
-                        <nav>                                                
+                        <nav>   
                             <ul id="navigation">  
                                 <li><a href="/home">Home</a></li>
                                 <li><a href="shop.html">shop</a></li>
@@ -68,7 +69,7 @@
                                         <li><a href="blog-details.html">Smart Watches</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="#">Pages</a>
+                                <li><a href="#" class="name" ><%=user.firstName+' '+user.lastName%></a>
                                     <ul class="submenu">
                                         <!-- <li><a href="/offers">Offers</a></li> -->
                                         <li><a href="/cart">Cart<span class="badge badge-success"></span></a></li>
@@ -98,6 +99,22 @@
                         </ul>
                     </div>
                 </div>
+                <% } else { %>
+                    <div class="header-right">
+                        <ul>
+                            <!-- <li>
+                                <div class="nav-search search-switch">
+                                    <span class="flaticon-search"></span>
+                                </div>
+                            </li> -->
+                            <li><a href="/login"><span class="">Log In</span></a></li>
+                            <li><a href="/signup"><span class="">Sign Up</span></a></li>
+                            <!-- <li><a href=""><span class="flaticon-user"></span></a></li> -->
+                            <!-- <li><a href="/my-orders"><span class="flaticon-user"></span></a></li> -->
+                            <!-- <li><a href="/cart"><span class="flaticon-shopping-cart"> -->
+                        </ul>
+                    </div>
+               <% } %>
                 <!-- Mobile Menu -->
                 <div class="col-12">
                     <div class="mobile_menu d-block d-lg-none"></div>

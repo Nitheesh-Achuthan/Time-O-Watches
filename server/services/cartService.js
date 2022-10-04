@@ -1,5 +1,4 @@
 let cartDb = require('../model/cartModel');
-let offerDb = require('../model/offerModel');
 const ObjectId = require('mongoose').Types.ObjectId;
 
 exports.addToCart = async (proId,userId)=>{
@@ -11,7 +10,6 @@ exports.addToCart = async (proId,userId)=>{
     if(userCart){
        
      let proExist = userCart.products.findIndex(product=> product.item==proId)
-     console.log(proExist);
      if(proExist!=-1){
         await cartDb.updateOne({user:ObjectId(userId),'products.item':ObjectId(proId)},
         {

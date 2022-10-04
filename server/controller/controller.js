@@ -4,192 +4,126 @@ let categoryDb = require('../model/categoryModel');
 let productDb = require('../model/productModel');
 let bannerDb = require('../model/bannerModel')
 
-let offerDb = require('../model/offerModel');
 let categoryServices = require('../services/categoryService');
 let offerServices = require('../services/offerService');
 let cartServices = require('../services/cartService'); 
 let userServices = require('../services/userServices');
-const wishlistServices = require('../services/wishlistService');
 
 const bcrypt = require('bcrypt')
 
 
 
-exports.landing = async (req,res)=>{
-    const product = await productDb.find();
-    const offer = await offerServices.offers();
-    const banner = await bannerDb.find();
-    req.session.loggedIn=false
+// exports.landing = async (req,res)=>{
+//     const product = await productDb.find();
+//     const offer = await offerServices.offers();
+//     const banner = await bannerDb.find();
+//     req.session.loggedIn=false
 
-    res.render('landing-page',{ watches:product,offer,banner,userlogIn:req.session.loggedIn})
+//     res.render('landing-page',{ watches:product,offer,banner,userlogIn:req.session.loggedIn})
+// }
+// ---- user login-----//
+exports.userLogIn = (req,res)=>{
+    
+    if(req.session.loggedIn){
+        
+        res.redirect('/home')
+    }else
+    res.render('user/login',{error:''});
+};
+
+// ---- user sign up---//
+exports.userSignUp = (req,res)=>{
+    res.render('user/signup');   
+};
+
+exports.logInError = (req,res) =>{
+    const error = req.session.error;
+    req.session.error = null;
+    res.render('user/login',{error:error})
 }
 
 
-exports.Create = (req, res) => {
-
-    // console.log('8888888888888888888888888888', req.body);
+exports.Create = async (req, res) => {
 
     if (!req.body) {
-        // console.log('jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj');
-
         res.status(400).send({ message: "content cannot be empty" });
-
     } else {
-        const user = new userDb({
+        const userObj = {
             firstName: req.body.fname,
             lastName: req.body.lname,
             email: req.body.email,
             mobile:req.body.mobile,
             password: req.body.password             
-        });
-        console.log(user);
+        }
+        const user = await userServices.saveUser(userObj);      
         user.save()  
             .then(() => {
-                // res.redirect('/')
                 res.json({ user })
             })
             .catch(err => {
                 console.log(err.message);
             })
     }
-}
+};
 // ---- home page user ------//
 exports.logg =async (req,res)=>{
-    let cartCount = await cartServices.count(req.session.user._id); 
+
     const product = await productDb.find();
     const offer = await offerServices.offers();
     const banner = await bannerDb.find();
-    console.log(banner,'---banner==') 
 
-    // const wishlist = await wishlistServices.favourites(req.session.user._id);//////// need to do fav wishlist color change function
-    res.render('user/home',{ watches:product,cartCount,offer,banner})
+    if(req.session.loggedIn) {
+    const user = req.session.user
+    
+    let cartCount = await cartServices.count(req.session.user._id); 
+    // const wishlist = await wishlistServices.favourites(req.session.user._id);//////// wishlist color change function
+    res.render('user/home',{ watches:product,cartCount,offer,banner,user,userlogIn:req.session.loggedIn})
+    } else {
+    req.session.loggeIn = false;
+    res.render('user/home',{ watches:product,offer,banner,userlogIn:req.session.loggedIn})
+    }
 }
-
-exports.Find = async (req, res) => {    
-    const user = await userDb.findOne({ email: req.body.email, password: req.body.password });    
+// --- user login ----
+exports.Find = async (req, res) => { 
+    const email = req.body.email;
+    const password = req.body.password;
+    const user = await userServices.getUser(email,password);   
     if (user) {
           req.session.loggedIn=true
           req.session.user = user   
         
         if(user.isBlocked){
-            res.render('user/login',{error:"You are suspended for a while"})
+            req.session.error = "You are suspended for a while";
+            res.redirect('/loginError');
         }else{            
             res.redirect('/home')
-        }
-            
+        }            
 
     } else { 
-        res.render('user/login', { error: "Invalid Username or Password" })
+        req.session.error = "Invalid Username or Password";
+        res.redirect('/loginError');
     }
-}  
-
-
-//admin//
-
-exports.find = async (req,res) => {
-     const admin = await adminDb.findOne({ email: req.body.email, password: req.body.password });
-       console.log(admin);
-    
-            if (admin) {
-
-                userDb.find() 
-                .then(data=>{
-
-                req.session.isAdminLogin=true;
-                req.session.admin=admin;
-                res.render('admin/tables',{users:data})
-
-                })  
-                
-            }else{
-
-                res.render('admin/sign-in')
-            }
-        
-    }
-
-
-    // exports.createcat = (req,res)=>{
-    //     const cate = new categoryDb({
-    //         name:req.body.name
-    //     });
-
-    //     console.log(cate,'dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd');
-    //     cate.save()
-    //     .then(()=>{
-    //         res.redirect('/admin/category')
-    //     })
-
-    // };   
-    exports.showCategory = async (req,res)=>{
-            cateError = req.session.error;
-            console.log(cateError,'++++++++++++++++++++++++++++++++++++')
-            req.session.error = null;
-            res.render('admin/add-category',{cateError})        
-    }                 
-
-    
-    exports.createcat = async (req,res)=>{
-        try {
-            const cate = await categoryServices.addCate(req.body.name)
-        console.log(cate,'--------------------')
-        if(cate) {
-            req.session.error = 'This category is already exist!!!'
-            res.redirect('/admin/addcategory')
-        } else{
-            await categoryServices.categorySave(req.body.name)
-            
-            res.redirect('/admin/category')
-        }
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    exports.updatepage = async(req,res)=>{
-        // console.log('aaaaaaaaaaaaaaa');
-        const category = await categoryDb.findOne({_id:req.query.id});
-        console.log(category);
-        res.render('admin/update-category',{cate:category})
-
-    } 
-
-    exports.update = (req,res)=>{
-        // console.log(req.params.id,'jjjjjjjjjjjjjjjjjjjjjjjjjjj',req.body.name);
-     const catUpdate = categoryServices.updateCate(req.params.id,req.body.name);
-    //  res.render('admin/category-manage',{cate:catUpdate})
-    res.redirect('/admin/category')
-    
-    }
- 
-    exports.delete = (req,res)=>{ 
-        const id = categoryServices.deleteCate(req.params.id);
-        
-            res.redirect('/admin/category')   
-       
-    }   
+};  
 
     // ---------my account----------//
 
     exports.myAccount = async (req,res)=>{
         const user = await userServices.myProfile(req.session.user._id) 
         let cartCount = await cartServices.count(req.session.user._id)
-        res.render('user/my-account',{user,cartCount})
+        res.render('user/my-account',{user,cartCount,userlogIn:req.session.loggedIn})
     }
          
     exports.profileEdit = async (req,res)=>{
-        console.log(req.body,'-------------------------------------')
         let cartCount = await cartServices.count(req.session.user._id)
         await userServices.profileEdit(req.session.user._id,req.body)
         res.redirect('/my-account')
     }
     exports.changePswd = async (req,res)=>{       
         let cartCount = await cartServices.count(req.session.user._id)
-        res.render('user/profilePaswdChange',{cartCount,passworderror:""})
+        res.render('user/profilePaswdChange',{cartCount,passworderror:"",user:req.session.user,userlogIn:req.session.loggedIn})
     }
     
     exports.newPassword = async (req,res)=>{
-        // console.log(req.body,'newpsed++++++')
         const user = await userServices.passwordChange(req.body,req.session.user._id)
         if(user){
             
@@ -207,9 +141,101 @@ exports.find = async (req,res) => {
 
     }
     exports.passwordChangeErr = async (req,res)=>{
+           let cartCount = await cartServices.count(req.session.user._id)
             const user = req.session.user;
             const passworderror = req.session.passwordError;
             req.session.passwordError = null;
-            res.render('user/profilePaswdChange', { user, error: "", passworderror });
+            res.render('user/profilePaswdChange', { cartCount,user, error: "", passworderror,userlogIn:req.session.loggedIn });
                
+    };
+
+    // ---- user logout---//
+    exports.logOut = (req,res)=>{
+        req.session.loggedIn = false;
+        req.session.user = null;
+        res.redirect('/') 
+    };
+
+    //-------- Admin Side ------//
+
+exports.adminSignIn = async (req, res) => {  
+    if (req.session.isAdminLogin) {
+     await userDb.find()
+               .then(data => {
+                res.render('admin/tables', { users: data });
+            })
+    } else {
+        res.render('admin/sign-in', { error: '' })
     }
+};
+// -- admin home --//
+// exports.adminHome = (req,res)=>{
+//     res.redirect('/admin') 
+// };
+
+// -- admin login---//
+exports.find = async (req,res) => {
+    const admin = await adminDb.findOne({ email: req.body.email, password: req.body.password });   
+           if (admin) {
+               userDb.find() 
+               .then(data=>{
+               req.session.isAdminLogin=true;
+               req.session.admin=admin;
+               res.render('admin/tables',{users:data})
+               })                 
+           }else{
+               res.render('admin/sign-in')
+           }       
+   };
+
+
+    
+   exports.showCategory = async (req,res)=>{
+           cateError = req.session.error;
+           req.session.error = null;
+           res.render('admin/add-category',{cateError})        
+   };                 
+
+   
+   exports.createcat = async (req,res)=>{
+       try {
+           const cate = await categoryServices.addCate(req.body.name)
+       if(cate) {
+           req.session.error = 'This category is already exist!!!'
+           res.redirect('/admin/addcategory')
+       } else{
+           await categoryServices.categorySave(req.body.name)
+           
+           res.redirect('/admin/category')
+       }
+       } catch (error) {
+           console.log(error);
+       }
+   };
+
+   exports.updatepage = async(req,res)=>{
+       const category = await categoryDb.findOne({_id:req.query.id});
+       res.render('admin/update-category',{cate:category})
+
+   } 
+
+   exports.update = (req,res)=>{
+    const catUpdate = categoryServices.updateCate(req.params.id,req.body.name);
+   //  res.render('admin/category-manage',{cate:catUpdate})
+   res.redirect('/admin/category')
+   
+   }
+
+   exports.delete = (req,res)=>{ 
+       const id = categoryServices.deleteCate(req.params.id);
+       
+           res.redirect('/admin/category')   
+      
+   };   
+
+//    ---- admin logoUt ---//
+exports.adminLogout = (req,res)=>{
+    req.session.isAdminLogin = false;
+    req.session.admin = null;
+    res.redirect('/admin')
+}; 

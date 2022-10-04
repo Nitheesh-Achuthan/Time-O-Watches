@@ -1,15 +1,11 @@
-let userDb = require('../model/model');
-let adminDb = require('../model/adminModel');
-let categoryDb = require('../model/categoryModel');
+
 let productDb = require('../model/productModel');
 const ObjectId = require('mongoose').Types.ObjectId;
 
 
 
 exports.editProducts = async (id)=>{
-    // console.log(id,'productedittttttt');
     const edit = await productDb.findOne({_id:id}); 
-    // console.log(edit);
     return edit;
 }
 
@@ -47,9 +43,7 @@ exports.updateProduct = async (proId,proDetails)=>{
 }
 
 exports.deleteProduct = async (id)=>{ 
-    const dlt= await productDb.findByIdAndDelete(id)
-    // console.log(dlt,'Deletinggg');
-    // return;
+     await productDb.findByIdAndDelete(id)
 }
 
 exports.product = async (proId)=>{
@@ -62,11 +56,7 @@ exports.product = async (proId)=>{
 
 exports.productOffer = async ()=>{
     const products = await productDb.find()
-    // console.log(products,'______________________')
     return products;
 }
 
 
-// exports.offerProduct = async(req,res)=>{
-//     const
-// }

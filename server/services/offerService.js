@@ -7,7 +7,6 @@ exports.totalOffers = async()=>{
    return offers;
 }
 exports.offer = async(proDetails)=>{
-    console.log(proDetails)
    await proDetails.save()
 }
 

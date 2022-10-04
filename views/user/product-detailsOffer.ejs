@@ -13,14 +13,7 @@
                             <img src="../<%= watches.image %>" id="imaage" alt="#" class="img-fluid">
                         </div>
 
-                        <!-- <div class="single_product_img">
-                        <img src="../assets/img/gallery/gallery01.png" alt="#" class="img-fluid">
-                    </div>
-                    <div class="single_product_img">
-                        <img src="../assets/img/gallery/gallery1.png" alt="#" class="img-fluid">
-                    </div> -->
-
-                        <!-- </div> -->
+                      
                     </div>
                     <div class="col-lg-6">
                         <div class=" single_product_text text-center">
@@ -32,26 +25,26 @@
                             </p>
                             <div class="card_area">
                                 <div class="product_count_area">
-                                    <!-- <p>Quantity</p> -->
-                                    <!-- <div class="product_count d-inline-block">
-                                        <span class="product_count_item inumber-decrement"> <i
-                                                class="ti-minus"></i></span>
-                                        <input class="product_count_item input-number" type="text" value="1" min="0"
-                                            max="10">
-                                        <span class="product_count_item number-increment"> <i
-                                                class="ti-plus"></i></span>
-                                    </div> -->
+                                   
                                     <span style="font-size: 1.5rem;">Rs.<%= parseInt(offer[0]?.offerPrice)%></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <span><del style="color: rgb(152, 147, 147);">Rs.<%= watches.price %></del></span>
                                 </div>
                                     <% if(watches.quantity < 1) { %>
                                         <h4 style="color: red;padding-top: 2rem;">Out of Stock</h4>
-                                        <% }  %>
-                                    <!-- <p><h4>Rs.<%= watches.price %></h4></p> -->
+                                        <!-- <p><h4>Rs.<%= watches.price %></h4></p> -->
+                                        
+                                        <div class="add_to_cart" style="margin-top: 18px;">
+                                            <button type="submit" disabled onclick="addCart('<%= watches._id %>')" class="btn_3">add to cart</button>
+                                            <a href=""><button disabled type="button" class="btn_3">Buy Now</button></a>
 
-                                <div class="add_to_cart" style="margin-top: 18px;">
-                                    <button type="submit" onclick="addCart('<%= watches._id %>')" class="btn_3">add to cart</button>
-                                </div>
+                                        </div>
+                                        <% } else { %>
+                                            <div class="add_to_cart" style="margin-top: 18px;">
+                                                <button type="submit" onclick="addCart('<%= watches._id %>')" class="btn_3">add to cart</button>
+                                                <a href="/buy-now?id=<%=watches._id%>"><button type="button" class="btn_3">Buy Now</button></a>
+
+                                            </div>
+                                            <% } %>
                             </div>
                         </div>
                     </div>

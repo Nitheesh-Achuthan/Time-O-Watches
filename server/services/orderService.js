@@ -29,7 +29,6 @@ exports.placeOrderFromHome = async (order,products,productPrice,proId) => {
     })
 
     const orders = await orderObj.save() 
-    //  await productDb.updateOne({_id:proId},{$inc: { quantity: -1} }) 
     return orders._id;
 
 };
@@ -57,17 +56,7 @@ exports.placeOrder = async (order, product, totalPrice) => {
             date:new Date()
     })
 
-    console.log(orderObj.date,orderObj.deliveryDetails,'----------------------------date---------date---------date')
-    // req.session.address = orderObj;
-
-    
-
-
     const orders = await orderObj.save()
-
-    // for (const pro of product) {
-    // await productDb.updateOne({_id:ObjectId(pro.item)},{$inc: { quantity: -pro.quantity} }) 
-    // } 
 
     if(status == 'Ordered'){
         await cartDb.deleteOne({user:ObjectId(order.userId)})
@@ -81,54 +70,17 @@ exports.productQty = async(product)=>{
     for (const pro of product) {
         await productDb.updateOne({_id:ObjectId(pro.item)},{$inc: { quantity: -pro.quantity} }) 
         } 
-}
+};
 
 exports.orderStatus =  async (orderId,status) =>{
      await orderDb.updateOne({_id:ObjectId(orderId)},
         {
             $set:{status}
         })     
-}                            
+};                            
 
 
 exports.orders = async () => {  
-    // const orderDetails = await orderDb.find();
-
-    // console.log(orderDetails,'orfer444444444444444444');
-
-    // const orderPro = await orderDb.aggregate([
-    //     {
-    //         $unwind: "$products"
-    //     }, 
-    //     {
-    //         $project: {
-    //             deliveryDetails: 1, userId: 1, paymentMethod: 1, date: 1,
-    //             totalAmount: 1, status: 1, 
-    //             item:'$products.item',
-    //             quantity:'$products.quantity'  
-    //         }
-    //     }, 
-    //     {
-    //         $lookup: {
-    //             from: 'productDb',
-    //             localField: 'item',
-    //             foreignField: '_id',
-    //             as: 'product'
-
-    //         }
-    //     },
-    //     {
-    //         $project: {
-    //             deliveryDetails: 1, userId: 1, paymentMethod: 1, date: 1,
-    //             totalAmount: 1, status: 1,
-
-    //             item: 1, quantity: 1, product: { $arrayElemAt: ['$product', 0] }
-    //         }
-    //     }
-
-    // ])
-    // return orderPro;
-
     const orders = await orderDb.find();
     return orders;
 };
@@ -176,7 +128,6 @@ exports.orderedProduct = async (orderId) =>{
             }
         }
     ])
-    console.log(orderedProducts,'-------orderedddddpro+++00')
     return orderedProducts;
 };
 
@@ -215,7 +166,6 @@ exports.myOrders = async(userId)=>{
             }
         }
     ])
-    // console.log('+++++++++++++++++++++++++++++',orders,'--------------------');
    return orders;
 }
 
@@ -225,4 +175,4 @@ exports.cancelProQuantity = async(proItems)=>{
     for (const pro of proItems) {
         await productDb.updateOne({_id:ObjectId(pro.item)},{$inc: { quantity: +pro.quantity} }) 
         } 
-    }
+    };

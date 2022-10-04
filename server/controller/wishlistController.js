@@ -1,5 +1,4 @@
 const wishlistServices = require('../services/wishlistService');
-const productServices = require('../services/productService');
 const cartServices = require('../services/cartService'); 
 
 
@@ -11,10 +10,11 @@ exports.addToList = async(req,res)=>{
 };
 
 exports.wishlistPage = async(req,res)=>{
-    const userId = req.session.user._id;
+    const user= req.session.user;
+    const userId = user._id;
     const products = await wishlistServices.wishlistPros(userId);
     let cartCount = await cartServices.count(userId);
-    res.render('user/my-wishlist',{cartCount,products})
+    res.render('user/my-wishlist',{cartCount,products,user,userlogIn:req.session.loggedIn})
 };
 
 exports.removeWishlistProduct = async(req,res)=>{

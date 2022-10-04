@@ -21,11 +21,12 @@
         <link rel="stylesheet" href="assets/css/slick.css">
         <link rel="stylesheet" href="assets/css/nice-select.css">
         <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="assets/css/watchUser.css"
         <!-- Validation -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="js/validation.js"></script>
 </head>
-<body style="overflow-y: hidden;">
+<body class="bodyy" style="overflow: hidden;">
     <header>
         <!-- Header Start -->
         <div class="header-area">
@@ -38,7 +39,7 @@
                         </div>
                         <!-- Main-menu -->
                         <div class="main-menu d-none d-lg-block">
-                           
+                            
                         </div>
                         <!-- Header Right -->
                         <div class="header-right">
@@ -60,58 +61,51 @@
         <!-- Header End -->
     </header>
     <main>
-        <!-- Hero Area End-->
-        <!--================login_part Area =================-->
+        
+        <!--================otp mob number_part Area =================-->
         <hr style="width: 90%;">
-        <div style="text-align: center;"><h3 style="margin: 2rem 0 2rem 0;">Sign Up</h3></div>
 
         <section class="login_part section_padding" style="padding: 5px 0 5rem 0;">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-lg-6 col-md-6">
-                        
+                        <div class="login_part_text text-center">
+                            <div class="login_part_text_iner">
+                                <h2>New to our Shop?</h2>
+                                <p>You have no account?
+                                </p>
+                                <a href="/signup" class="btn_3">Create an Account</a>
+                            </div>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6">
-                        <div class="login_part_form" style="padding-top:0%;">
+                        <div class="login_part_form">
                             <div class="login_part_form_iner">
-                                <form id="signupForm" class="row contact_form" action="" method="" novalidate="novalidate">
-                                    <div class="col-md-12 form-group p_star">
-                                        <input type="text" class="form-control" id="fname" name="fname" oninput="fnamevalid()"
-                                            placeholder="First Name">
-                                            <p id="pname" style="color:red;padding-left:1rem;display: none;"></p>
-                                    </div>
-                                    <div class="col-md-12 form-group p_star">
-                                        <input type="text" class="form-control" id="lname" name="lname" oninput="lnamevalid()"
-                                            placeholder="Last Name">
-                                            <p id="lnam" style="color:red;padding-left:1rem;display: none;"></p>
-                                    </div>
-                                    <div class="col-md-12 form-group p_star">
-                                        <input type="email" class="form-control" id="email" name="email" oninput="emailvalid()"
-                                            placeholder="Email">
-                                            <p id="ename" style="color: red; padding-left:1rem;display: none;"></p>
-                                    </div>
-                                    <div class="col-md-12 form-group p_star">
-                                        <input type="text" class="form-control" id="mobile" name="mobile" oninput="mobvalid()"
-                                            placeholder="Mobile">
-                                            <p id="pmob" style="color: red; padding-left:1rem;display: none;"></p>
-                                    </div>
+                                <h3>Welcome Back ! <br>
+                                    otp Sign in </h3>
+
+                                    
+
+                                <form class="row contact_form" action="/otp" method="post" >
+
+                                    <!-- <p class="wrong" style="color: red;"> <%=error%> </p> -->
 
                                     <div class="col-md-12 form-group p_star">
-                                        <input type="password" class="form-control" id="password" name="password" oninput="passwordvalid()"
-                                            placeholder="Password">
-                                            <p id="pPswd" style="color: red; padding-left:1rem;display: none;"></p>
+                                        <input type="number" class="form-control" id="mob" name="number" value=""
+                                            placeholder="Mobile">
                                     </div>
+                                   
+                                     
+                                    
 
                                     <div class="col-md-12 form-group">
-                                       
-
-
-                                        <button type="submit" class="btn_3" onclick="fnamevalid();lnamevalid();emailvalid();mobvalid();passwordvalid()">
-                                            Sign up
+                                      
+                                        <button type="submit" class="btn_3">
+                                            
+                                            Submit
                                         </button>
-                                        
-                                        <a  class="lost_pass" href="/login">Already have account? Login</a>
+                                         
+                                       
                                     </div>
                                 </form>
                             </div>
@@ -122,20 +116,7 @@
         </section>
         <!--================login_part end =================-->
     </main>
-    <hr>
-
-
-    
-
-
-
-
-
-
-
-
-    
-    <!-- Search model end -->
+   <hr>
     
     <!-- JS here -->
 
@@ -171,28 +152,6 @@
     <!-- Jquery Plugins, main Jquery -->	
     <script src="./assets/js/plugins.js"></script>
     <script src="./assets/js/main.js"></script>
-
-
-<script>
-    $('#signupForm').submit((e)=>{
-        e.preventDefault();
-        if(value1 && value2 && value3 && value4 && value5 && value6 && value7){
-
-        $.ajax({
-        url: '/signup',
-        type: 'post',
-        data: $('#signupForm').serialize(),
-        success: (response) => {
-                   if(response.user){
-                    location.href = '/'
-                   }
-                 }
-    })};
-       
-    });
-
-</script>
-
 
 </body>
     

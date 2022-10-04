@@ -3,7 +3,6 @@ const couponUsedDb = require('../model/couponUsedModel');
 
 
 exports.couponAdd = async(couponDetails)=>{
-    // console.log(proDetails)
    await couponDetails.save()
 };
 exports.couponOffer = async()=>{
@@ -34,15 +33,7 @@ exports.couponHistory = async()=>{
                 foreignField: '_id',
                 as: 'user'
             }
-        },
-        // {
-        //     $lookup: {
-        //         from: 'coupondbs',
-        //         localField: 'coupon',
-        //         foreignField: 'code',
-        //         as: 'coupon'
-        //     }
-        // },
+        },       
         {
             $project: {
                 discount: 1,
@@ -53,7 +44,6 @@ exports.couponHistory = async()=>{
             }
         }
     ]);
-    console.log(coupons,'%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
     return coupons;
 }
 
@@ -67,9 +57,9 @@ exports.couponDiscount = async (code,total) =>{
 exports.couponUsed = async(user,code) =>{
     const usedCoupon = await couponUsedDb.findOne({user:user,coupon:code})
     return usedCoupon;
-}
+};
 
 exports.coupon = async(usedCouponObj) =>{
     const couponUsed = new couponUsedDb(usedCouponObj);
     await couponUsed.save();
-}
+};

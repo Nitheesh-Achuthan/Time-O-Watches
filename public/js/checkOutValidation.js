@@ -101,7 +101,7 @@ function addressvalid() {
         return;
     }
 
-}
+} 
 
 // ----------------------------------------
 
@@ -116,7 +116,6 @@ function couponCheck(total,coupon) {
         url:`/applycoupon/${coupon}/${total}`,
         method:'POST',
         success:(response)=>{
-            alert(JSON.stringify(response))
             if (response.error) {
                 document.getElementById("pcoupon").style.display = "block";
                 document.getElementById("pcoupon").innerText = response.error;
@@ -126,6 +125,7 @@ function couponCheck(total,coupon) {
                 $("#applied_btn").show();
 
                 document.getElementById("totalShow").innerText =`${response.couponPrice}`;
+                document.getElementById("totalOff").innerText = parseInt(`${response.discountPrice}`);
                 // document.getElementById("discountPrice").innerText =`Discount : $ ${response.discountPrice}`;
             } else {
                 document.getElementById("pcoupon").style.display = "none";

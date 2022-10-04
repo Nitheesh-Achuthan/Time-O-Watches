@@ -11,37 +11,19 @@ const offerController = require('../controller/offerController');
 const couponController = require('../controller/couponController');
 const bannerController = require('../controller/bannerController');
 const categoryDb = require('../model/categoryModel');
-const services = require('../services/categoryService');
 
-adminRoute.get('/', (req, res) => {  
-    if (req.session.isAdminLogin) {
+// ---admin signin---//
+adminRoute.get('/',controller.adminSignIn)  
 
-        userDb.find()
-            .then(data => {
-                res.render('admin/tables', { users: data });
-            })
-    } else {
-        res.render('admin/sign-in', { error: '' })
-    };
-
-});
-
-adminRoute.get('/tables',(req,res)=>{
-    res.redirect('/admin')
-})
+// adminRoute.get('/tables',controller.adminHome);
 
 
 // -------------- admin log out -------------//
 
-adminRoute.get('/logout',(req,res)=>{
-    req.session.isAdminLogin = false;
-    req.session.admin = null;
-    res.redirect('/admin')
-
-})
+adminRoute.get('/logout',controller.adminLogout)
 
 
-// middleware///
+// middleware for query ///
 
 adminRoute.use((req, res, next) => {
     if (req.query._method == "DELETE") {
@@ -61,11 +43,11 @@ adminRoute.post('/tables', controller.find);
 
 // ----middleware for checking admin---//
 
-// adminRoute.use((req, res, next) => {
-//     if (!req.session.isAdminLogin) {
-//         res.redirect("/admin");
-//     } else next();
-// });
+adminRoute.use((req, res, next) => {
+    if (!req.session.isAdminLogin) {
+        res.redirect("/admin");
+    } else next();
+});
 
 
 
@@ -74,13 +56,13 @@ adminRoute.patch("/:id", async (req, res) => {
 
     try {
         const user = await userDb.findById(req.params.id);
+        console.log(user,'iiii')
 
         if (user.isBlocked) {
             await userDb.updateOne({ _id: req.params.id }, { $set: { isBlocked: false } })
 
             const users = await userDb.find();
 
-            // console.log('ddddddddddddddddddddddddddd', users);
 
             res.status(200).render('admin/tables', { users });
 
@@ -92,7 +74,7 @@ adminRoute.patch("/:id", async (req, res) => {
 
     }
     catch (error) {
-        res.redirect('/admin/tables');
+        res.redirect('/admin/tables'); 
     }
 });
 
@@ -125,7 +107,7 @@ adminRoute.get('/category',(req,res)=>{
         res.render('admin/category-manage',{ cate: data })
     }) 
     .catch(err=>{
-        console.log(err.message);
+        console.log(err);
     })
 })
 
@@ -194,17 +176,7 @@ adminRoute.get('/banner-management',bannerController.showBanner);
 
 adminRoute.get('/editbanner/:id',bannerController.editBanner);
 
-adminRoute.post('/update-banner/:id',bannerController.updateBanner)
-
-
-
-
-
-
-
-
-
-    
+adminRoute.post('/update-banner/:id',bannerController.updateBanner);    
 
      
 module.exports = adminRoute;              

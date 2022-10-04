@@ -65,15 +65,7 @@
                 <div class="card-body">
                   <form action="/admin/update-banner/<%=banner._id%>" method="post" enctype="multipart/form-data" role="form">
 
-                    <!-- <div class="input-group input-group-outline mb-3">
-                      <input type="text" name="name"  class="form-control" placeholder="Name">
-                      <select value="" name="product" id="products"
-                        style="width: 23rem; height: 2.7rem;border-radius: 5px; border-width: 0.1px;">
-                        <% for (prod of product) { %>
-                          <option value="<%=prod._id %>"><%=prod.name%></option>
-                        <% } %>
-                      </select>
-                    </div>                -->
+                    
                     <div class="input-group input-group-outline mb-3">
                       <input type="text" name="name" class="form-control" value="<%=banner.name %>" placeholder="Name">
                     </div>
@@ -108,12 +100,7 @@
                     </div>
                   </form>
                 </div>
-                <!-- <div class="card-footer text-center pt-0 px-lg-2 px-1">
-                  <p class="mb-2 text-sm mx-auto">
-                    Already have an account?
-                    <a href="../pages/sign-in.html" class="text-primary text-gradient font-weight-bold">Sign in</a>
-                  </p>
-                </div> -->
+                
               </div>
             </div>
           </div>

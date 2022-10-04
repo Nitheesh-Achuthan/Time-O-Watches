@@ -1,22 +1,12 @@
 const offerServices = require('../services/offerService');
 const productServices = require('../services/productService');
 const offerDb = require('../model/offerModel');
-
-
-let userDb = require('../model/model');
-let adminDb = require('../model/adminModel');
-let categoryDb = require('../model/categoryModel');
 let productDb = require('../model/productModel');
-let categoryServices = require('../services/categoryService');
 let cartServices = require('../services/cartService'); 
-let userServices = require('../services/userServices');
 
 
 exports.offers = async (req,res)=>{
-    const offers = await offerServices.proOffer()
-    // const products = await productServices.offerProduct(proId)
-    // const offers = await offerServices.totalOffers()
-
+    const offers = await offerServices.proOffer();
     res.render('admin/offer',{offers})
 }
 
@@ -118,17 +108,9 @@ exports.offerHome = async(req,res)=>{
             }
         }
     ])
-    // const offerProIds = []
-
-    // for ( const pro of offer ) {
-    //     offerProIds.push(pro.id)
-    // }
-    // console.log(offer,'++++++++++++++++++++++++++________________+++')
-    // console.log(offer[0].proDetail[0].name,'++++++++++++++++++++++++++________________+++');
-    console.log(req.session,"sesiiiiioooooooonnnn&&&&&&&&&&&&&&&&&&&&&&&&&&&&&%%%%%%%%%%")
+    
     let cartCount = await cartServices.count(req.session.user._id) 
     const product = await productDb.find()
-    // console.log("offerProIds",offer,'-----------------',product,'--------------');
     res.render('user/offers',{ watches:product,cartCount,offer})
     return offer;
 }

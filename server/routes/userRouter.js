@@ -15,127 +15,37 @@ const orderController = require('../controller/orderController');
 const offerController = require('../controller/offerController');
 const couponController = require('../controller/couponController');
 const wishlistController = require('../controller/wishlistController');
-
-const cartServices = require('../services/cartService'); 
+const otpController = require('../controller/otpController');
 const ObjectId = require('mongoose').Types.ObjectId;
 
+// ---- landing and home page ----//
+userRoute.get('/',controller.logg)
 
-var serviceSID = process.env.serviceSID
-var accountSID = process.env.accountSID
-var authToken = process.env.authToken
-const client = require('twilio')(accountSID,authToken)
+// ---- user login ---//
+userRoute.get('/login',controller.userLogIn)
 
-
-userRoute.get('/',controller.landing)
-
-
-userRoute.get('/',(req,res)=>{
-    
-    if(req.session.loggedIn){
-        
-        res.redirect('/home')
-    }else
-    res.render('user/login',{error:''});
-});
-
-userRoute.get('/signUp',(req,res)=>{
-    res.render('user/signup');   
-});
+// ---user signup
+userRoute.get('/signUp',controller.userSignUp);
 
 userRoute.post('/signUp',controller.Create);
 
-userRoute.post('/otp',async (req,res)=>{
-     if(req.session.loggedIn) {
-            res.redirect('/home')
-        } else {
-            const user = await userDb.findOne({mobile:req.body.number})
-            if(user){ 
-                   if(user.isBlocked){
-                        res.render('user/login',{error:"u r blocked"})
-                    }else{
-                        client.verify
-                        .services(serviceSID)
-                            .verifications.create({
-                                to:`+91${req.body.number}`,
-                                channel : "sms"
-                            })
+// --- otp page---//
+userRoute.get('/otplogin',otpController.otplogIn);
 
-                                res.status(200).render('user/otp',{error:"",number:req.body.number})
-                         
-                            
-                        } 
-                }else {
-                    res.render('user/login',{error:"user not exist"})
-                }
-            }
-     
-}); 
+// ----- otp page mob----//
+userRoute.post('/otp',otpController.otpCheck);
 
-userRoute.post('/homePage/:number',async(req,res)=>{
-    if(req.session.loggedIn){
-        res.redirect('/home')
-    } else {
-    const  otp  = req.body.otp
-    console.log(otp,'999999999999999999999999999999999999')
-    client.verify
-    .services(serviceSID)
-    .verificationChecks.create({
-        to:`+91${req.params.number}`,
-        code: otp
-    }).then(async(resp) =>{
-        console.log(resp,'____________++++++++++++++00000000')
-        if(resp.valid) {
-            const user = await userDb.findOne({mobile:req.params.number})
-            req.session.user = user;
-            const userId = req.session.user?._id
-            let cartCount = 0
-            let cart = await cartDb.findOne({user:user._id})
-            if(cart) {
-                cartCount = cart.products.length
-            }
-            const offers = await offerDb.aggregate([
-                {  
-                    $lookup:{
-                        from:'productDb',
-                        localField:'proId',
-                        foreignField:'_id',
-                        as:'products'
-                    }
-                },
-                {
-                    $unwind:'$products'
-                },
-                {
-                    $project:{
-                        id:'$products._id',
-                        price:'$products.price',
-                        products:'$products',
-                        percentage:'$percentage',
-                        offerPrice:{$divide:[{$multiply:['$products.price','$percentage']},100]}
-                    }
-                }
-            ])  
-            const product = await productDb.find()
-            const wishlist = await wishlistDb.findOne({user:ObjectId(userId)})
-            fav = wishlist?.products
-            req.session.loggedIn = true;
-            res.redirect('/home')
-        } else {
-            res.render('user/otp',{error:"invalid otp",number:req.params.number})
+// ----- otp verification ---//
+userRoute.post('/homePage/:number',otpController.otpVerify)
 
-        }
-        // console.log('otp res',res);        
-        // res.redirect('/home')   
-       
-      })
-    } 
-})
+// ----- otp error page ----//
+userRoute.get('/otp-number',otpController.otpPage)
 
+
+// --- user login---//
 userRoute.post('/home',controller.Find);
 
-userRoute.get('/watch',(req,res)=>{
-      res.render('user/watch',{error:""})
-});
+userRoute.get('/loginError',controller.logInError);
 
 // ====================middleware for checking user====================//
 userRoute.use((req, res, next) => {
@@ -145,26 +55,22 @@ userRoute.use((req, res, next) => {
 });
 
 userRoute.use(async (req,res,next) => {
-   const userId = req.session.user._id 
+   const userId = req.session.user?._id 
    const blocked = await userDb.findOne({_id:userId,isBlocked:true})
    if(blocked){
     req.session.user=null;
     req.session.loggedIn = false;
     res.redirect('/');
    } else next()
-})
- 
+});
 
-  
+// -- user home---//
 userRoute.get('/home',controller.logg);
 
+// ---- product details---//
+userRoute.get('/product-details/:id',productController.proDetails);
 
-userRoute.get('/product-details/:id',productController.proDetails)
-
-
-
-
-// middleware //
+// middleware for query-- //
 userRoute.use((req, res, next) => {
     if (req.query._method == "DELETE") {
         req.method = "DELETE";
@@ -176,17 +82,10 @@ userRoute.use((req, res, next) => {
     next();
 });
 
+// --- user logout---//
+userRoute.get('/logout',controller.logOut);
 
-
-
-
-
-userRoute.get('/logout',(req,res)=>{
-    req.session.loggedIn = false;
-    req.session.user = null;
-    res.redirect('/') 
-})
-
+// ----cart----//
 userRoute.get('/cart',cartController.cart);
 
 userRoute.post('/add-to-cart/:id',cartController.addCart);
@@ -195,11 +94,13 @@ userRoute.post('/change-product-quantity',cartController.changeProductQuantity);
 
 userRoute.post('/remove-product-cart',cartController.removeProCart)
 
-userRoute.get('/buy-now',orderController.buyNowFromHome);
-
 userRoute.get('/checkout',cartController.checkout);
 
-userRoute.post('/saveaddress',saveAddressController.saveAddress)
+// --- address save--- //
+userRoute.post('/saveaddress',saveAddressController.saveAddress);
+
+// --- buy product from home---//
+userRoute.get('/buy-now',orderController.buyNowFromHome);
   
 // place order from home //
 userRoute.post('/place-order-fromhome',orderController.placeOrderHome)
@@ -233,21 +134,13 @@ userRoute.post('/add-to-wishlist/:id',wishlistController.addToList);
 
 userRoute.get('/my-wishlist',wishlistController.wishlistPage);
 
-// userRoute.put('/remove-wishlist',wishlistController.removeWishlistProduct);
-userRoute.put('/remove-wishlist',wishlistController.removeWishlistProduct)
-// (req,res)=>{
-//     console.log(req.body,'------------------88888888888')
-// })
-
+userRoute.put('/remove-wishlist',wishlistController.removeWishlistProduct);
 
 // -----offers-----//
-userRoute.get('/offers',offerController.offerHome)
-
-
+userRoute.get('/offers',offerController.offerHome);
   
 // --------- coupon -------------------//
-
-userRoute.post("/applycoupon/:coupon/:total", couponController.applyCoupon)
+userRoute.post("/applycoupon/:coupon/:total", couponController.applyCoupon);
    
 
 module.exports=userRoute;    

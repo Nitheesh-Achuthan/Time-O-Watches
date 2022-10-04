@@ -63,7 +63,7 @@ exports.wishlistRemove = async(proId,userId)=>{
             $pull:{products:{item:ObjectId(proId)}}
         })
 }; 
-// -----remaining-----
+// -----fav color -----
 
 // exports.favourites = async(userId)=>{
 //     const fav = await wishlistDb.findOne({user:userId});

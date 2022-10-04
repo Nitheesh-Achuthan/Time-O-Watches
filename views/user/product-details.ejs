@@ -15,14 +15,7 @@
                             <img src="../<%= watches.image %>" id="imaage" alt="#" class="img-fluid">
                         </div>
 
-                        <!-- <div class="single_product_img">
-                        <img src="../assets/img/gallery/gallery01.png" alt="#" class="img-fluid">
-                    </div>
-                    <div class="single_product_img">
-                        <img src="../assets/img/gallery/gallery1.png" alt="#" class="img-fluid">
-                    </div> -->
-
-                        <!-- </div> -->
+                     
                     </div>
                     <div class="col-lg-6">
                         <div class=" single_product_text text-center">
@@ -34,25 +27,28 @@
                             </p>
                             <div class="card_area">
                                 <div class="product_count_area">
-                                    <!-- <p>Quantity</p> -->
-                                    <!-- <div class="product_count d-inline-block">
-                                        <span class="product_count_item inumber-decrement"> <i
-                                                class="ti-minus"></i></span>
-                                        <input class="product_count_item input-number" type="text" value="1" min="0"
-                                            max="10">
-                                        <span class="product_count_item number-increment"> <i
-                                                class="ti-plus"></i></span>
-                                    </div> -->
+                                   
                                     
                                     <p><h4>Rs.<%= watches.price %></h4></p>
                                 </div>
                                 <% if(watches.quantity < 1) { %>
                                 <h4 style="color: red;padding-top: 2rem;">Out of Stock</h4>
-                                <% }  %>
+                               
                                 <div class="add_to_cart" style="margin-top: 18px;">
-                                    <button type="submit" onclick="addCart('<%= watches._id %>')" class="btn_3">add to cart</button>
+                                    <button type="submit" disabled onclick="addCart('<%= watches._id %>')" class="btn_3">add to cart</button>
+                                    <!-- <a href="/buy-now?id=<%=watches._id%>"><button class="buy-now-btn">Buy Now</button></a> -->
+                                    <a href="/buy-now?id=<%=watches._id%>"><button disabled type="button" class="btn_3">Buy Now</button></a>
+                                    
+                                    
                                     
                                 </div>
+                                <% } else { %>
+                                    <div class="add_to_cart" style="margin-top: 18px;">
+                                        <button type="submit" onclick="addCart('<%= watches._id %>')" class="btn_3">add to cart</button>
+                                        <a href="/buy-now?id=<%=watches._id%>"><button type="button" class="btn_3">Buy Now</button></a>
+                                        
+                                    </div>
+                                    <% } %>
                                 
                             </div>
                         </div>

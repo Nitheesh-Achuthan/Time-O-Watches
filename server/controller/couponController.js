@@ -116,8 +116,7 @@ exports.applyCoupon = async (req,res)=>{
             res.json({ error: 'Coupon not found' })
         }
     } catch (error) {
-        console.log(error,'err0r------')
         res.render('error')
     }   
                   
-    }
+    };

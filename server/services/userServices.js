@@ -1,16 +1,22 @@
 let userDb = require('../model/model');
-let adminDb = require('../model/adminModel');
-let categoryDb = require('../model/categoryModel');
-let productDb = require('../model/productModel');
 const ObjectId = require('mongoose').Types.ObjectId;
 
-
+// --- new user saving--//
+exports.saveUser = async (userObj) =>{
+    const user = new userDb(userObj);
+    return user;
+};
+// --- user finding---
+exports.getUser = async(email,password) =>{
+    const user = await userDb.findOne({ email:email, password:password });   
+    return user;
+} 
+// ---- 
 exports.myProfile= async (userId) => {
     const user = await userDb.findOne({_id:userId})
     return user;
 }
 exports.profileEdit = async (userId,userDetails)=>{
-    console.log(userDetails,'00000000usrerererer');
     await userDb.updateOne({_id:userId},{
         $set:{
             firstName:userDetails.fname,  
@@ -22,7 +28,6 @@ exports.profileEdit = async (userId,userDetails)=>{
 }
 exports.passwordChange = async (body,userId)=>{
     let user = await userDb.findOne({_id:userId,password:body.oldPswd})
-    console.log(user,'usrerererer');
     return user;
     
 }
@@ -32,4 +37,5 @@ exports.updatePassword = async (body,userId) =>{
             password:body.confirmPsw
         }
     })
-}
+};
+

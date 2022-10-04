@@ -1,6 +1,4 @@
-const saveAddressModel = require('../model/saveAddressModel');
 const saveAddressDb = require('../model/saveAddressModel');
-const ObjectId = require('mongoose').Types.ObjectId;
 
 // ------------ To Save Address------------//
 

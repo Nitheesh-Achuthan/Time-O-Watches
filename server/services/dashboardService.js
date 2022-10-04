@@ -1,6 +1,4 @@
 let userDb = require('../model/model');
-let adminDb = require('../model/adminModel');
-let categoryDb = require('../model/categoryModel');
 let productDb = require('../model/productModel');
 let orderDb = require('../model/orderModel');
 
@@ -16,7 +14,6 @@ exports.totalUsers = async ()=>{
             }
         }
     ])
-    // console.log(users,'+++allusers')
     return users;
 }
 
@@ -30,7 +27,6 @@ exports.totalProducts = async ()=>{
 // ------------Total Orders----------//
 
 exports.totalOrders = async ()=>{
-    // const orders = await orderDb.find({status: {$ne: 'Canceled'}})
     const orders = await orderDb.aggregate([
         {
             $project: {
@@ -58,7 +54,6 @@ exports.revenueTotal = async ()=>{
             }
         }
     ])
-    // console.log(totalRevenue,'======');
     
     return totalRevenue;
-}  
+};  

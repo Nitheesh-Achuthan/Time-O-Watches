@@ -1,19 +1,6 @@
 <%-include('../include/user-header')%>
   <main>
-    <!-- Hero Area Start-->
-    <!-- <div class="slider-area ">
-      <div class="single-slider slider-height2 d-flex align-items-center">
-        <div class="container">
-          <div class="row">
-            <div class="col-xl-12">
-              <div class="hero-cap text-center">
-                <h2>Cart List</h2>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
+   
 
 
     <!--================Cart Area =================-->
@@ -51,12 +38,7 @@
                           <img style="width: 70px; height: 70px" src="<%= products[i].product.image %>" alt="">
 
                         </div>
-                        <!-- <div class="media-body">
-                          <p>
-                            <%= products[i].product.name %>
-                          </p>
-
-                        </div> -->
+                        
                       </div>
                     </td>
 
@@ -88,11 +70,7 @@
                         onclick="changeQuantity('<%=products[i]._id%>' , '<%=products[i].product._id%>','<%=user._id%>',  1)">
                         +
                       </button>
-                      <!-- <div class="product_count">
-                          <span class="input-number-decrement"> <i class="ti-minus"></i></span>
-                          <input class="input-number" type="text">
-                          <span class="input-number-increment"> <i class="ti-plus"></i></span>
-                        </div> -->
+                      
                     </td>
                     
                     <td> 
@@ -105,108 +83,7 @@
                   </tr>
 
                   <% } %>
-
-                 
-
-
-                  
-
-
-
-                    <!-- <tr>
-                    <td>
-                      <div class="media">
-                        <div class="d-flex">
-                          <img src="assets/img/gallery/card2.png" alt="" />
-                        </div>
-                        <div class="media-body">
-                          <p>Minimalistic shop for multipurpose use</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <h5>$360.00</h5>
-                    </td>
-                    <td>
-                      <div class="product_count">
-                          <span class="input-number-decrement"> <i class="ti-minus"></i></span>
-                          <input class="input-number" type="text" value="1" min="0" max="10">
-                          <span class="input-number-increment"> <i class="ti-plus"></i></span>
-                      </div>
-                    </td>
-                    <td>
-                      <h5>$720.00</h5>
-                    </td>
-                  </tr> -->
-
-
-
-                    <!-- <tr class="bottom_button">
-                    <td>
-                      <a class="btn_1" href="#">Update Cart</a>
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                      <div class="cupon_text float-right">
-                        <a class="btn_1" href="#">Close Coupon</a>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td>
-                      <h5>Subtotal</h5>
-                    </td>
-                    <td>
-                      <h5>$2160.00</h5>
-                    </td>
-                  </tr>
-                  <tr class="shipping_area">
-                    <td></td>
-                    <td></td>
-                    <td>
-                      <h5>Shipping</h5>
-                    </td> -->
-                    <!-- <td>
-                      <div class="shipping_box">
-                        <ul class="list">
-                          <li>
-                            Flat Rate: $5.00
-                            <input type="radio" aria-label="Radio button for following text input">
-                          </li>
-                          <li>
-                            Free Shipping
-                            <input type="radio" aria-label="Radio button for following text input">
-                          </li>
-                          <li>
-                            Flat Rate: $10.00
-                            <input type="radio" aria-label="Radio button for following text input">
-                          </li>
-                          <li class="active">
-                            Local Delivery: $2.00
-                            <input type="radio" aria-label="Radio button for following text input">
-                          </li>
-                        </ul>
-                        <h6>
-                          Calculate Shipping
-                          <i class="fa fa-caret-down" aria-hidden="true"></i>
-                        </h6>
-                        <select class="shipping_select">
-                          <option value="1">Bangladesh</option>
-                          <option value="2">India</option>
-                          <option value="4">Pakistan</option>
-                        </select>
-                        <select class="shipping_select section_bg">
-                          <option value="1">Select a State</option>
-                          <option value="2">Select a State</option>
-                          <option value="4">Select a State</option>
-                        </select>
-                        <input class="post_code" type="text" placeholder="Postcode/Zipcode" />
-                        <a class="btn_1" href="#">Update Details</a>
-                      </div>
-                    </td> -->
+                   
                     </tr>
               </tbody>
             </table>
@@ -216,22 +93,20 @@
 
               <!-- offer details start  -->
 
-              <!-- <div style=" width: 360px;
-              border: 1px solid green;
-              padding: 15px;
-              margin: 0px; float: left; margin-left: 1rem;">
-              <p style="font-size: 1.1rem;">Total Price: &nbsp;&nbsp;&nbsp;&nbsp;<%=parseInt(totalValue)%></p>
-              <p style="font-size: 1.1rem;">You Saved: &nbsp;&nbsp;&nbsp;&nbsp;<%=parseInt(totalOffer)%></p>
+              <div style=" width: 305px;height: 7rem; margin-right: 20rem;
+              border: 1px solid green;border-radius: .3rem;
+              padding: 1rem;float: left; margin-left: 1rem;">
+              <h5 class="" style="font-size:1.1rem;">Total Price: RS.<span id="totalVal"><%=parseInt(totalValue)%></span><hr></h5>
+              <h5 class="" style="font-size:1.1rem;">You Saved: RS.<span id="totalOff"><%=parseInt(totalOffer)%><hr></span></h5>
+
           
-              </div> -->
+              </div>
 
               <!-- offer details end -->
 
 
 
 
-              <!-- <a class="btn_1" href="#">Continue Shopping</a> -->
-              <!-- <h5 class="float-left mr-5" style="padding-top: 10px;">TOTAL: RS.<span id="total"><%=totalValue%><hr></span></h5> -->
               <h5 class="float-left mr-5" style="padding-top: 10px;">TOTAL: RS.<span id="total"><%=parseInt(totalOfferPrice)%><hr></span></h5>
               <a class="btn_1 checkout_btn_1" href='/checkout'>Proceed to checkout</a>
             </div>
@@ -255,10 +130,7 @@
     <script>
       function changeQuantity(cartId, proId, userId,count) {
         const quantity = parseInt(document.getElementById(proId).innerHTML)
-        // console.log(userId, 'lllllllllllllllllllllllllllllllll');
-        // console.log(count);
         count = parseInt(count)
-        // console.log(count);
         $.ajax({
           url: '/change-product-quantity',
           data: {
@@ -297,10 +169,10 @@
                 // location.reload()
               })
             } else {
-              // console.log(res)
               document.getElementById(proId).innerHTML = quantity + count
               document.getElementById("total").innerHTML = res.total
-              // console.log(res.total,'000000000000000000000000');
+              document.getElementById('totalVal').innerHTML=res.totalValue
+              document.getElementById('totalOff').innerHTML=res.totalOffer
             }
 
 
@@ -376,19 +248,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="col-xl-3 col-lg-3 col-md-4 col-sm-7">
-                        <div class="single-footer-caption mb-50">
-                            <div class="footer-tittle">
-                                <h4>New Products</h4>
-                                <ul>
-                                    <li><a href="#">Woman Cloth</a></li>
-                                    <li><a href="#">Fashion Accessories</a></li>
-                                    <li><a href="#"> Man Accessories</a></li>
-                                    <li><a href="#"> Rubber made Toys</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div> -->
+                   
                     <div class="col-xl-3 col-lg-3 col-md-5 col-sm-7">
                         <div class="single-footer-caption mb-50">
                             <div class="footer-tittle">

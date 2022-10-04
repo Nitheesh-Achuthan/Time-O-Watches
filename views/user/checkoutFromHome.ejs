@@ -1,16 +1,7 @@
 <%-include('../include/user-header')%>
   <main>
 
-    <!-- <div class="cupon_area">
-              <div class="check_title">
-                <h2>
-                  Have a coupon?
-                  <a href="#">Click here to enter your code</a>
-                </h2>
-              </div>
-              <input type="text" placeholder="Enter coupon code" />
-              <a class="tp_btn" href="#">Apply Coupon</a>
-            </div> -->
+    
   <hr style="width: 80%;">
     <div class="billing_details">
       <div class="row" style="padding: 3rem 0; padding-left: 15rem;">
@@ -51,11 +42,7 @@
 
 
 
-              <!-- <select class="country_select">
-                        <option value="1">Country</option>
-                        <option value="2">Country</option>
-                        <option value="4">Country</option>
-                      </select> -->
+              
             </div>
             <div class="col-md-12  form-group p_star">
               <textarea class="form-control" name="address" id="address" rows="1" placeholder="Address" 
@@ -72,36 +59,9 @@
               <button class="save-address" type="button"
               onclick="firstnamevalid();lastnamevalid();mobvalid();emailvalid();countryvalid();addressvalid();
               saveAddress(document.getElementById('fname').value,document.getElementById('lname').value,document.getElementById('mobile').value,document.getElementById('email').value,document.getElementById('country').value,document.getElementById('address').value)">Save Address</button>
-                      <!-- <input type="text" class="form-control" id="add1" name="add1" /> -->
-                      <!-- <span class="placeholder" data-placeholder="Address line 01"></span> -->
+                      
                     </div>
-                    <!-- <div class="col-md-12 form-group p_star">
-                      <input type="text" class="form-control" id="add2" name="add2" />
-                      <span class="placeholder" data-placeholder="Address line 02"></span>
-                    </div>
-                    <div class="col-md-12 form-group p_star">
-                      <input type="text" class="form-control" id="city" name="city" />
-                      <span class="placeholder" data-placeholder="Town/City"></span>
-                    </div>
-                    <div class="col-md-12 form-group p_star">
-                      <input type="text" class="form-control" id="district" name="country" />
-                      <span class="placeholder" data-placeholder="District"></span> -->
-
-            <!-- <select class="country_select">
-                        <option value="1">District</option>
-                        <option value="2">District</option>
-                        <option value="4">District</option>
-                      </select> -->
-            <!-- </div>
-                    <div class="col-md-12 form-group">
-                      <input type="text" class="form-control" id="zip" name="zip" placeholder="Postcode/ZIP" />
-                    </div> -->
-            <!-- <div class="col-md-12 form-group">
-                      <div class="creat_account">
-                        <input type="checkbox" id="f-option2" name="selector" />
-                        <label for="f-option2">Create an account?</label>
-                      </div>
-                    </div> -->
+                    
 
                     <p style="color: red;" id="psavedAddress"></p>
                     
@@ -133,10 +93,7 @@
                 </div>
 
             <%  } %>
-              <!-- <div class="creat_account">
-                <h3>Saved Addresses</h3>
-              </div> -->
-              <!-- <textarea class="form-control" name="message" id="message" rows="1" placeholder="Order Notes"></textarea> -->
+              
             </div>
           </div>
 
@@ -149,41 +106,12 @@
                     <span>Watch</span>
                   </a>
                 </li>
-                <!-- <li>
-                  <a href="#">Fresh Blackberry
-                    <span class="middle">x 02</span>
-                    <span class="last">$720.00</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">Fresh Tomatoes
-                    <span class="middle">x 02</span>
-                    <span class="last">$720.00</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">Fresh Brocoli
-                    <span class="middle">x 02</span>
-                    <span class="last">$720.00</span>
-                  </a>
-                </li>
-              </ul>
-              <ul class="list list_2">
-                <li>
-                  <a href="#">Subtotal
-                    <span>$2160.00</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="#">Shipping
-                    <span>Flat rate: $50.00</span>
-                  </a>
-                </li> -->
+                
                 
                 <li>
                   <a href="#">Total
-                    <span id="totalShow">
-                      <%= total%>
+                    <span id="totalShow"><h3>
+                      <%= total%></h3>
                     </span>
                   </a>
                 </li>
@@ -222,6 +150,12 @@
               <button style="width: 100%;cursor:pointer" class="btn_3" type="submit" 
               onclick="firstnamevalid();lastnamevalid();mobvalid();emailvalid();countryvalid();addressvalid()">Proceed</button>
             </div>
+
+            <div style="width: 26rem;height: 7rem;border: 1px solid green;border-radius: 0.3rem;padding: 1rem;margin: 1rem 0;">            
+              <h5 class="" style="font-size:1.1rem;">Total Price: Rs.<span id="totalVal"><%=parseInt(total)%><hr></span></h5>
+              <h5 class="" style="font-size:1.1rem;">You Saved: Rs.<span id="totalOff">0<hr></span></h5>        
+              </div>
+            
 
             <div class="cupon_area">
               <div class="check_title">
@@ -283,19 +217,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="col-xl-3 col-lg-3 col-md-4 col-sm-7">
-                        <div class="single-footer-caption mb-50">
-                            <div class="footer-tittle">
-                                <h4>New Products</h4>
-                                <ul>
-                                    <li><a href="#">Woman Cloth</a></li>
-                                    <li><a href="#">Fashion Accessories</a></li>
-                                    <li><a href="#"> Man Accessories</a></li>
-                                    <li><a href="#"> Rubber made Toys</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div> -->
+                   
                     <div class="col-xl-3 col-lg-3 col-md-5 col-sm-7">
                         <div class="single-footer-caption mb-50">
                             <div class="footer-tittle">
@@ -434,7 +356,6 @@
     })
 
     function razorpayPaymentbuynow(order){
-      // console.log('hkjghfjtk',order);
       var options = {
     "key": "rzp_test_BoMoTPGRO7eBOr", // Enter the Key ID generated from the Dashboard
     "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
