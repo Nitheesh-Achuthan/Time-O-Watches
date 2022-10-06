@@ -11,7 +11,7 @@ exports.addToWishlist = async(proId,user)=>{
             await wishlistDb.updateOne({user:user._id},
                {
                 $pull:{products:{item:ObjectId(proId)}}
-               })
+               }) 
         } else {
             await wishlistDb.updateOne({user:user._id},
                 { $push: {products:{item:ObjectId(proId)}}})

@@ -101,12 +101,13 @@ exports.productDetailsOffer = async(proId)=>{
         {
             $project:{
                 id:'$proDetail._id',
-                price:'$proDetail.price',
+                price:'$proDetail.price', 
                 products:'$proDetail',
                 percentage:'$percentage',
                 offerPrice: {$subtract: ['$proDetail.price',{$divide: [{ $multiply: ['$proDetail.price','$percentage']},100]}]}
             }
         }
     ])
+    
     return product;
 }

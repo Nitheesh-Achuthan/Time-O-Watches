@@ -2,37 +2,41 @@ const express = require('express');
 const app = express();
 const session = require('express-session');
 const path= require('path');
-const mongoose = require('mongoose');
 const morgan = require('morgan');
 const { v4: uuidv4 } = require('uuid');
 const methodOverride = require('method-override');
 const fileUpload = require('express-fileupload');
-const imageZoom = require('js-image-zoom');
-const Razorpay = require('razorpay')
+const connectDB = require('./server/database/mongoConnection');
 require('dotenv').config();
 
 const port = process.env.PORT
      
 app.set("view engine","ejs"); 
                                                           
-mongoose.connect(process.env.MONGO_URL,(err)=>{
-    if(err){  
-     console.log("Could not connect to database");  
-    }else{
-        console.log('mongodb connected successfully');    
-    }                
-});                  
+// mongoose.connect(process.env.MONGO_URL,(err)=>{
+//     if(err){  
+//      console.log("Could not connect to database");  
+//     }else{
+//         console.log('mongodb connected successfully');    
+//     }                
+// });       
+// ---mongodb connection----//
+connectDB();
                  
 // override the method in form   
-app.use(methodOverride('_method'));  
-                    
-app.use(morgan('tiny'));     
- 
+app.use(methodOverride('_method'));
+
+//log requests...........//                   
+app.use(morgan('tiny'));
+
+ //parse json bodies...//
 app.use(express.json());    
-      
-app.use(express.urlencoded({extended:true}));      
+
+app.use(express.urlencoded({extended:true})); 
+
 app.use(fileUpload());
  
+//..session handling....//
 app.use(
     session({   
         secret: uuidv4(), 
@@ -42,7 +46,6 @@ app.use(
 );
 
 // cache control///
-
 app.use(function(req, res, next) {
     res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
     next();
@@ -66,4 +69,6 @@ app.use((req,res,next)=>{
              
 app.listen(port,()=>{          
     console.log(`http://localhost:${port}`);          
-});                                                      
+});         
+
+
